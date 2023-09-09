@@ -2,6 +2,7 @@
 package una.ac.cr.sistema_transporte.jpa;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class camionJpa implements camionService{
         return camionRepository.findAll();
         
     }
+    
+     @Override
+     public Optional<Camion> obtenerCamionPorId(int id) {
+        return camionRepository.findById(id);
+    }
+    
     
     
 }

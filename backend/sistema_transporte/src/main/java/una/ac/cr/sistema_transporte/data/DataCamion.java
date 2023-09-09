@@ -71,4 +71,40 @@ public class DataCamion extends DataBase{
     
     }
     
+    
+    public Camion obtenerPorId(int id){
+    
+    String query="SELECT * FROM " + TB_CAMION + " WHERE " + " =?;";
+        Connection con =getConexion();
+        
+        try {
+            PreparedStatement prepare = con.prepareStatement(query);
+            prepare.setInt(1, id);
+            ResultSet result = prepare.executeQuery();
+            Camion cam = null;
+            if(result.next()){
+            
+            cam = new Camion();
+            
+                cam.setId_camion(result.getInt(ID_CAMION));
+                cam.setMatricula(result.getString(MATRICULA));
+                cam.setModelo(result.getString(MODELO));
+                cam.setEstado(result.getBoolean(ESTADO));
+                cam.setAnio(result.getInt(ANIO));
+                cam.setNumero_bin(result.getString(NUMERO_BIN));
+                cam.setKilometraje(result.getDouble(KILOMETRAJE));
+                cam.setTipo_camion(result.getString(TIPO_CAMION));
+                          
+            }
+            prepare.close();
+            result.close();
+            return cam;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }  
+    
+    }
+    
 }
