@@ -1,0 +1,36 @@
+/* formulario.css */
+
+/* Estilos para el contenedor del formulario */
+.form-container {
+    max-width: 450px;
+    margin: 0 auto; /* Esto centrará el contenedor horizontalmente */
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    display: flex; /* Utiliza flexbox para centrar verticalmente */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-weight: bold;
+
+}
+
+.input-field {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+}
+
+/* Estilo adicional para el botón */
+.btn {
+    margin-top: 3px; /* Espacio entre los campos y el botón */
+}
