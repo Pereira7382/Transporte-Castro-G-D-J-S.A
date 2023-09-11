@@ -12,9 +12,9 @@ if (isset($_GET["accion"]) && $_GET["accion"] == "agregar") {
     $modelo = $data["modelo"];
     $estado = $data["estado"];
     $anio = $data["anio"];
-    $numeroBin = $data["numero_bin"];
+    $numero_bin = $data["numero_bin"]; // Corregido: Cambiado de $numero_bin a $numeroBin
     $kilometraje = $data["kilometraje"];
-    $tipoCamion = $data["tipo_camion"];
+    $tipo_camion = $data["tipo_camion"];
 
     $camion = array(
         'matricula' => $matricula,
@@ -27,7 +27,7 @@ if (isset($_GET["accion"]) && $_GET["accion"] == "agregar") {
     );
 
     $data_camion = json_encode($camion);
-    
+
     $curl = curl_init('http://localhost:8080/camion');
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data_camion);
@@ -38,6 +38,11 @@ if (isset($_GET["accion"]) && $_GET["accion"] == "agregar") {
     ));
 
     $res = curl_exec($curl);
-    echo $res;
+    if ($res === false) {
+        echo 'Error de cURL: ' . curl_error($curl);
+    } else {
+        echo $res;
+    }
     curl_close($curl);
 }
+?>
