@@ -20,6 +20,7 @@ import una.ac.cr.sistema_transporte.service.camionService;
 
 @Controller
 @RequestMapping("/camion")
+@CrossOrigin(origins = "*")
 public class camionController {
     @Autowired
     private camionService camionRepository;
