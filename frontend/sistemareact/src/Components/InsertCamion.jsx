@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './formulario.css';
+import axios from 'axios';
+
 
 function InsertCamion() {
 
-    const [matricula, setMatricula] = useState(""); // Estado para el valor de la matrícula
+    const [matricula, setMatricula] = useState(""); 
     const [modelo, setModelo] = useState(""); 
+    const [estado, setEstado] = useState(1);
     const [anio, setAnio] = useState(""); 
-    const [numeroBin, setNumeroBin] = useState("");
+    const [numero_bin, setNumeroBin] = useState("");
     const [kilometraje, setKilometraje] = useState("");
-
+    const [tipo_camion, setTipoCamion] = useState('selec');
 
     //validad la matricula del carro el campo solo acepta letras y numeros
     const handleMatriculaChange = (event) => {
@@ -35,6 +38,12 @@ function InsertCamion() {
             setModelo(inputValue);
         }
     };
+
+    const handleEstadoChange = (event) => {
+        // Cuando cambie la selección en el grupo de radio, actualiza el estado con el nuevo valor seleccionado
+        setEstado(Number(event.target.value)); // Convierte el valor a un número si es necesario
+      };
+
 
     const handleAnioChange = (event) => {
         const inputValue = event.target.value;
@@ -70,13 +79,45 @@ function InsertCamion() {
     };
 
 
+    const handleTipoCamionChange = (event) => {
+        
+        setTipoCamion(event.target.value);
+      };
+    
+
+  //conexion con springboot
+       const handleSubmit = async(event) =>{
+        event.preventDefault();
+
+        const camionData = {
+            matricula,
+            modelo,
+            estado,
+            anio,
+            numero_bin,
+            kilometraje,
+            tipo_camion
+          
+        };
+
+        try {
+            const response = await axios.post("http://localhost:8080/camion", camionData); 
+            console.log("Camión registrado con éxito:", response.camionData);
+            
+        } catch (error) {
+            console.error("Error al registrar el camión:", error);
+        }
+    }
+
+
+
     return (
 
 
         <div className="form-container">
             <h3>Registro de Camiones</h3>
             <br></br>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                
                
                 <div className="form-group">
@@ -105,17 +146,30 @@ function InsertCamion() {
                 />
             </div>
 
-
-
+            <div className="form-group">
                 <label htmlFor="estado" className="label">Estado:</label>
                 <br></br>
-                <input type="radio" id="true" name="fav_language" value="TRUE" />
+                <input
+                    type="radio"
+                    id="true"
+                    name="fav_language"
+                    value={1}
+                    checked={estado === 1}
+                    onChange={handleEstadoChange}
+                />
                 <label htmlFor="true">True</label>
                 <br></br>
-                <input type="radio" id="false" name="fav_language" value="False" />
+                <input
+                    type="radio"
+                    id="false"
+                    name="fav_language"
+                    value={2}
+                    checked={estado === 2}
+                    onChange={handleEstadoChange}
+                />
                 <label htmlFor="false">False</label>
-
-
+               
+                </div>
 
                <div className="form-group">
                 <br></br>
@@ -139,7 +193,7 @@ function InsertCamion() {
                     id="numeroBin"
                     className="input-field"
                     placeholder="Ingrese el número de bin"
-                    value={numeroBin}
+                    value={numero_bin}
                     onInput={handleNumeroBinChange}
                 />
             </div>
@@ -158,14 +212,16 @@ function InsertCamion() {
                 />
             </div>
 
-
+            <div className="form-group">
             <label htmlFor="tipo" className="label">Tipo de Camión:</label>
                 <br></br>
-                <select id="tipo">
-                    <option value="slec">Seleccionar</option>
+                <select id="tipo" name="tipoCamion" value={tipo_camion} onChange={handleTipoCamionChange}>
+                    <option value="selec">Seleccionar</option>
                     <option value="pesado">Pesado</option>
                     <option value="libeano">Libeano</option>
                 </select>
+
+                </div>
                 <br></br> <br></br>
                 <button type="submit" className="btn btn-primary">Registrar</button>
             </form>
