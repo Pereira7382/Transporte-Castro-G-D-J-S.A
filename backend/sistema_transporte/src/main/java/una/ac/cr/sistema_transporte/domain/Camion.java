@@ -17,13 +17,13 @@ public class Camion {
     private boolean estado;
     private int anio;
     private String numero_bin;
-    private double kilometraje;
+    private int kilometraje;
     private String tipo_camion;
     
     public Camion() {
     }
 
-    public Camion(int id_camion, String matricula, int anio, String modelo, boolean estado, String tipo_camion, String numero_bin, double kilometraje) {
+    public Camion(int id_camion, String matricula, int anio, String modelo, boolean estado, String tipo_camion, String numero_bin, int kilometraje) {
         this.id_camion = id_camion;
         this.matricula = matricula;
         this.anio = anio;
@@ -90,11 +90,11 @@ public class Camion {
         this.numero_bin = numero_bin;
     }
 
-    public double getKilometraje() {
+    public int getKilometraje() {
         return kilometraje;
     }
 
-    public void setKilometraje(double kilometraje) {
+    public void setKilometraje(int kilometraje) {
         this.kilometraje = kilometraje;
     }
 }

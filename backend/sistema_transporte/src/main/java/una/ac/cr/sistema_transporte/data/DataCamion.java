@@ -52,7 +52,7 @@ public class DataCamion extends DataBase{
                 cam.setEstado(result.getBoolean(ESTADO));
                 cam.setAnio(result.getInt(ANIO));
                 cam.setNumero_bin(result.getString(NUMERO_BIN));
-                cam.setKilometraje(result.getDouble(KILOMETRAJE));
+                cam.setKilometraje(result.getInt(KILOMETRAJE));
                 cam.setTipo_camion(result.getString(TIPO_CAMION));
                        
                 camion.add(cam);
@@ -92,7 +92,7 @@ public class DataCamion extends DataBase{
                 cam.setEstado(result.getBoolean(ESTADO));
                 cam.setAnio(result.getInt(ANIO));
                 cam.setNumero_bin(result.getString(NUMERO_BIN));
-                cam.setKilometraje(result.getDouble(KILOMETRAJE));
+                cam.setKilometraje(result.getInt(KILOMETRAJE));
                 cam.setTipo_camion(result.getString(TIPO_CAMION));
                           
             }
