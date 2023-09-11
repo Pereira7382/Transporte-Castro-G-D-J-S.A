@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function InsertCamion() {
 
-    const [matricula, setMatricula] = useState(""); // Estado para el valor de la matrícula
+    const [matricula, setMatricula] = useState(""); 
     const [modelo, setModelo] = useState(""); 
     const [estado, setEstado] = useState(1);
     const [anio, setAnio] = useState(""); 
@@ -80,7 +80,7 @@ function InsertCamion() {
 
 
     const handleTipoCamionChange = (event) => {
-        // Cuando cambie la selección en el <select>, actualiza el estado con el nuevo valor seleccionado
+        
         setTipoCamion(event.target.value);
       };
     
@@ -101,9 +101,9 @@ function InsertCamion() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8080/camion", camionData); // Reemplaza la URL con la dirección de tu controlador en Spring Boot
+            const response = await axios.post("http://localhost:8080/camion", camionData); 
             console.log("Camión registrado con éxito:", response.camionData);
-            // Puedes hacer lo que desees después de registrar el camión, como limpiar el formulario o mostrar un mensaje de éxito.
+            
         } catch (error) {
             console.error("Error al registrar el camión:", error);
         }
