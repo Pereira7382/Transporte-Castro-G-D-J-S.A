@@ -31,26 +31,21 @@ public class camionController {
     public Camion guardarCamion(@RequestBody Camion camion) {
         System.out.println("llego a la controller");
         camionRepository.insertarCamion(camion);
-
         return camion;
     }
     
     @GetMapping
     @ResponseBody
-    
-    public List<Camion>mostrarRegistrosCamiones(){
-    
-        List<Camion> camion  = camionRepository.listarCamion();
-        
+    public List<Camion> mostrarRegistrosCamiones() {
+        List<Camion> camion = camionRepository.listarCamion();
         return camion;
-    
     }
     
     @GetMapping("/{id}")
     @ResponseBody
     public Optional<Camion> obtenerCamionPorId(@PathVariable int id) {
-           Optional<Camion> optionalCamion = camionRepository.obtenerCamionPorId(id);
-            return optionalCamion;
+        Optional<Camion> optionalCamion = camionRepository.obtenerCamionPorId(id);
+        return optionalCamion;
 
     }
     

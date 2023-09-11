@@ -1,31 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; // Importamos React y Component desde sus módulos correspondientes.
+import axios from 'axios'; // Importamos Axios para realizar solicitudes HTTP.
 
-class CamionesTabla extends Component {
-  constructor(props) {
-    super(props);
+class CamionesTabla extends Component { // Definimos la clase CamionesTabla que extiende Component de React.
+  constructor(props) { // Constructor del componente.
+    super(props); // Llamamos al constructor de la clase base con las propiedades (props) recibidas.
     this.state = {
-      camiones: [] // Aquí almacenarás los datos de los camiones obtenidos de la API
+      camiones: [] // Inicializamos el estado del componente con un arreglo vacío para almacenar los datos de camiones.
     };
   }
 
-  componentDidMount() {
-    // Aquí puedes realizar la llamada a la API para obtener los datos de los camiones
-    // Luego, actualiza el estado camiones con los datos obtenidos
+  componentDidMount() { // Método del ciclo de vida de React que se ejecuta después de que el componente se monta.
+    axios.get("http://localhost:8080/camion") // Realizamos una solicitud GET a la URL de la API de camiones.
+      .then((response) => { // Manejamos la respuesta exitosa de la solicitud.
+        // Actualizamos el estado del componente con los datos de camiones obtenidos de la respuesta.
+        this.setState({ camiones: response.data });
+      })
+      .catch((error) => { // Manejamos cualquier error que ocurra durante la solicitud.
+        console.error('Error al obtener datos de camiones:', error);
+      });
   }
 
-  render() {
+  render() { // Método para renderizar el componente en el DOM.
     return (
       <div>
         <h2>Camiones Registrados</h2>
         <input
           type="text"
           placeholder="Filtrar por matrícula..."
-          // Aquí puedes agregar la lógica para filtrar los camiones
+          // Aquí agregar la lógica para filtrar los camiones
         />
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Matrícula</th>
               <th>Modelo</th>
               <th>Estado</th>
@@ -39,10 +45,10 @@ class CamionesTabla extends Component {
           <tbody>
             {this.state.camiones.map((camion) => (
               <tr key={camion.id_camion}>
-                <td>{camion.id_camion}</td>
+                <td style={{ display: 'none' }}>{camion.id_camion}</td>
                 <td>{camion.matricula}</td>
                 <td>{camion.modelo}</td>
-                <td>{camion.estado}</td>
+                <td>{camion.estado === 1 ? 'Activo' : 'Inactivo'}</td>
                 <td>{camion.anio}</td>
                 <td>{camion.numero_bin}</td>
                 <td>{camion.kilometraje}</td>
@@ -61,4 +67,4 @@ class CamionesTabla extends Component {
   }
 }
 
-export default CamionesTabla;
+export default CamionesTabla; // Exportamos el componente CamionesTabla para su uso en otras partes de la aplicación.
