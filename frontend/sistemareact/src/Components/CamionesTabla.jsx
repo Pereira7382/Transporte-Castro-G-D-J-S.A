@@ -1,36 +1,40 @@
-import React, { Component } from 'react'; // Importamos React y Component desde sus módulos correspondientes.
-import axios from 'axios'; // Importamos Axios para realizar solicitudes HTTP.
+import React, { Component } from 'react';
+import axios from 'axios';
 
-class CamionesTabla extends Component { // Definimos la clase CamionesTabla que extiende Component de React.
-  constructor(props) { // Constructor del componente.
-    super(props); // Llamamos al constructor de la clase base con las propiedades (props) recibidas.
+class CamionesTabla extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      camiones: [] // Inicializamos el estado del componente con un arreglo vacío para almacenar los datos de camiones.
+      camiones: []
     };
   }
 
-  componentDidMount() { // Método del ciclo de vida de React que se ejecuta después de que el componente se monta.
-    axios.get("http://localhost:8080/camion") // Realizamos una solicitud GET a la URL de la API de camiones.
-      .then((response) => { // Manejamos la respuesta exitosa de la solicitud.
-        // Actualizamos el estado del componente con los datos de camiones obtenidos de la respuesta.
+  componentDidMount() {
+    axios.get("http://localhost:8080/camion")
+      .then((response) => {
         this.setState({ camiones: response.data });
       })
-      .catch((error) => { // Manejamos cualquier error que ocurra durante la solicitud.
+      .catch((error) => {
         console.error('Error al obtener datos de camiones:', error);
       });
   }
 
-  render() { // Método para renderizar el componente en el DOM.
+  render() {
     return (
-      <div>
-        <h2>Camiones Registrados</h2>
-        <input
-          type="text"
-          placeholder="Filtrar por matrícula..."
-          // Aquí agregar la lógica para filtrar los camiones
-        />
-        <table className="table table-striped">
-          <thead>
+      <div className="container mt-4">
+        <h2 className="text-center mb-4">Camiones Registrados</h2>
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Filtrar por matrícula..."
+          />
+          <div className="input-group-append">
+            <button className="btn btn-primary" type="button">Filtrar</button>
+          </div>
+        </div>
+        <table className="table table-bordered table-hover">
+          <thead className="thead-dark">
             <tr>
               <th>Matrícula</th>
               <th>Modelo</th>
@@ -45,7 +49,6 @@ class CamionesTabla extends Component { // Definimos la clase CamionesTabla que 
           <tbody>
             {this.state.camiones.map((camion) => (
               <tr key={camion.id_camion}>
-                <td style={{ display: 'none' }}>{camion.id_camion}</td>
                 <td>{camion.matricula}</td>
                 <td>{camion.modelo}</td>
                 <td>{camion.estado === 1 ? 'Activo' : 'Inactivo'}</td>
@@ -54,9 +57,9 @@ class CamionesTabla extends Component { // Definimos la clase CamionesTabla que 
                 <td>{camion.kilometraje}</td>
                 <td>{camion.tipo_camion}</td>
                 <td>
-                  <button className="btn btn-primary">Actualizar</button>
-                  <button className="btn btn-danger">Eliminar</button>
-                  <button className="btn btn-success">Agregar Mantenimiento</button>
+                  <button className="btn btn-sm btn-primary mr-2">Actualizar</button>
+                  <button className="btn btn-sm btn-danger mr-2">Eliminar</button>
+                  <button className="btn btn-sm btn-success">Agregar Mantenimiento</button>
                 </td>
               </tr>
             ))}
@@ -67,4 +70,4 @@ class CamionesTabla extends Component { // Definimos la clase CamionesTabla que 
   }
 }
 
-export default CamionesTabla; // Exportamos el componente CamionesTabla para su uso en otras partes de la aplicación.
+export default CamionesTabla;
