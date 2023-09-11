@@ -41,3 +41,23 @@ if (isset($_GET["accion"]) && $_GET["accion"] == "agregar") {
     echo $res;
     curl_close($curl);
 }
+
+if (isset($_GET["accion"]) && $_GET["accion"] == "listar") {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, "http://localhost:8080/camion");
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($curl);
+    
+    if (curl_error($curl)) {
+        echo curl_error($curl);
+    }
+    
+    curl_close($curl);
+
+    $camion = json_decode($response, true);
+
+    $responseModified = json_encode($camion);
+    
+    echo $responseModified; 
+}
