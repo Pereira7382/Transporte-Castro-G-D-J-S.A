@@ -57,8 +57,7 @@ const TablaCamiones = ({lista}) => {
             localization={MRT_Localization_ES} //lenguaje en español
             enableRowActions //habilita los botones de acciones
             positionActionsColumn="last"
-            options={{
-              exportButton: true,
+            options={{              exportButton: true,
             }}
             //enableRowSelection//habilita el checkbox de seleccionar
             //enableSelectAll={false}//habilita el checkbox de seleccionar todos
