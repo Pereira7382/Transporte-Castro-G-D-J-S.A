@@ -20,7 +20,7 @@ import una.ac.cr.sistema_transporte.domain.Camion;
 public class DataCamion extends DataBase{
     
      public final static String TB_CAMION="tb_camion";
-     public final static String ID_CAMION="id_camion";
+     public final static String ID_CAMION="id";
      public final static String MATRICULA="matricula";
      public final static String MODELO="modelo";
      public final static String ESTADO="estado";
@@ -46,7 +46,7 @@ public class DataCamion extends DataBase{
                 
                 cam = new Camion();
                 
-                cam.setId_camion(result.getInt(ID_CAMION));
+                cam.setId(result.getInt(ID_CAMION));
                 cam.setMatricula(result.getString(MATRICULA));
                 cam.setModelo(result.getString(MODELO));
                 cam.setEstado(result.getInt(ESTADO));
@@ -86,7 +86,7 @@ public class DataCamion extends DataBase{
             
             cam = new Camion();
             
-                cam.setId_camion(result.getInt(ID_CAMION));
+                cam.setId(result.getInt(ID_CAMION));
                 cam.setMatricula(result.getString(MATRICULA));
                 cam.setModelo(result.getString(MODELO));
                 cam.setEstado(result.getInt(ESTADO));
@@ -107,4 +107,30 @@ public class DataCamion extends DataBase{
     
     }
     
+    public void eliminarCamionPorId(int id) {
+        String query = "DELETE FROM " + TB_CAMION + " WHERE id_camion = ?;";
+        Connection con = getConexion();
+        PreparedStatement prepare = null;
+
+        try {
+            prepare = con.prepareStatement(query);
+            prepare.setInt(1, id);
+            int rowsDeleted = prepare.executeUpdate();
+            System.out.println("Filas eliminadas: " + rowsDeleted);
+        } catch (SQLException ex) {
+            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

@@ -130,8 +130,6 @@ function InsertCamion() {
                     />
                 </div>
 
-
-
                 <div className="form-group">
                 <label htmlFor="modelo" className="label">Modelo:</label>
                 <input

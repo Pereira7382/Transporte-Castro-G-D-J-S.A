@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import una.ac.cr.sistema_transporte.data.DataCamion;
 import una.ac.cr.sistema_transporte.domain.Camion;
 import una.ac.cr.sistema_transporte.service.camionService;
 
@@ -24,7 +26,7 @@ import una.ac.cr.sistema_transporte.service.camionService;
 public class camionController {
     @Autowired
     private camionService camionRepository;
-    
+    private DataCamion dataCamion = new DataCamion();
     @PostMapping ( consumes =  MediaType.APPLICATION_JSON_VALUE , produces = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -47,6 +49,13 @@ public class camionController {
         Optional<Camion> optionalCamion = camionRepository.obtenerCamionPorId(id);
         return optionalCamion;
 
+    }
+    
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void eliminarCamion(@PathVariable int id){
+        System.out.println("\n llego a eliminar a la controlleeeeeeer ");
+        camionRepository.eliminarCamion(id);
     }
     
     
