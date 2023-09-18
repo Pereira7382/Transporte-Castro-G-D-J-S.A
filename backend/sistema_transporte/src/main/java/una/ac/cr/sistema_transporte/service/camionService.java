@@ -8,9 +8,11 @@ import una.ac.cr.sistema_transporte.domain.Camion;
 public interface camionService {
     public void insertarCamion(Camion camion);
     
-     public List<Camion> listarCamion() ;
+    public List<Camion> listarCamion() ;
      
-       public Optional<Camion>obtenerCamionPorId( int id);
+    public Optional<Camion>obtenerCamionPorId( int id);
+    
+    public void eliminarCamion(int id);
 }
 
 

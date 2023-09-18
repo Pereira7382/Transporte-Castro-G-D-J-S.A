@@ -1,4 +1,3 @@
-
 package una.ac.cr.sistema_transporte.jpa;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import una.ac.cr.sistema_transporte.service.camionService;
 @Service
 @Primary
 //public class sociosJpa implements sociosService
-public class camionJpa implements camionService{
+public class camionJpa implements camionService {
 
     @Autowired
     private camionRepository camionRepository;
@@ -22,19 +21,22 @@ public class camionJpa implements camionService{
     public void insertarCamion(Camion camion) {
         camionRepository.save(camion);
     }
-    
+
     @Override
-    public List<Camion>listarCamion(){
-    
+    public List<Camion> listarCamion() {
         return camionRepository.findAll();
-        
     }
-    
-     @Override
-     public Optional<Camion> obtenerCamionPorId(int id) {
+
+    @Override
+    public Optional<Camion> obtenerCamionPorId(int id) {
         return camionRepository.findById(id);
     }
-    
-    
-    
+
+    @Override
+    public void eliminarCamion(int id) {
+        System.out.println("\n llego a eliminar al JPAAA ");
+        camionRepository.deleteById(id);
+        System.out.println("\n EJECUTO EL DELETE BY ID  ");
+    }
+
 }

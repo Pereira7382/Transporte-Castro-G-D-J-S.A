@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class Camion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_camion;   
+    private int id;   
     private String matricula;
     private String modelo;
     private int estado;
@@ -22,8 +22,8 @@ public class Camion {
     public Camion() {
     }
 
-    public Camion(int id_camion, String matricula, int anio, String modelo, int estado, String tipo_camion, String numero_bin, int kilometraje) {
-        this.id_camion = id_camion;
+    public Camion(int id, String matricula, int anio, String modelo, int estado, String tipo_camion, String numero_bin, int kilometraje) {
+        this.id = id;
         this.matricula = matricula;
         this.anio = anio;
         this.modelo = modelo;
@@ -33,12 +33,12 @@ public class Camion {
         this.kilometraje = kilometraje;
     }
     
-    public int getId_camion() {
-        return id_camion;
+    public int getId() {
+        return id;
     }
 
-    public void setId_camion(int id_camion) {
-        this.id_camion = id_camion;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMatricula() {
