@@ -7,6 +7,7 @@ import ModalInsertar from "./ModalInsertar";
 import ModalActualizarCamion from "./ModalActualizarCamion"; // Importa el nuevo componente
 import { FaPlus } from "react-icons/fa";
 
+
 // Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
 const TablaCamiones = ({ lista }) => {
   const [camionAActualizar, setCamionAActualizar] = useState(null);

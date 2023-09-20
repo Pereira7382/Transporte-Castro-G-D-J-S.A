@@ -100,6 +100,7 @@ function InsertCamion() {
 
         try {
             const response = await axios.post("http://localhost:8080/camion", camionData); 
+            
             console.log("Camión registrado con éxito:", response.camionData);
             
         } catch (error) {
@@ -214,7 +215,7 @@ function InsertCamion() {
                 <select id="tipo" name="tipoCamion" value={tipo_camion} onChange={handleTipoCamionChange}>
                     <option value="selec">Seleccionar</option>
                     <option value="pesado">Pesado</option>
-                    <option value="libeano">Libeano</option>
+                    <option value="liveano">Liveano</option>
                 </select>
 
                 </div>

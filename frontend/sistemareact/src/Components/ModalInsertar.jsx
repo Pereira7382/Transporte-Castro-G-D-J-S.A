@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ModalInsertar = () => {
   // Estado inicial del formulario, incluyendo el estado por defecto de 1 para "Estado"
@@ -15,14 +16,24 @@ const ModalInsertar = () => {
   // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
     if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
       return; // No actualizar el estado si no es un número
     }
-
+  
+    // Validar que solo se puedan ingresar letras y números en el input de Matrícula y Modelo y numero de bin
+    if (name === 'matricula' || name === 'modelo' || name ==='numero_bin') {
+      const regex = /^[A-Za-z0-9]+$/;
+  
+      if (!regex.test(value)) {
+        return; // No actualizar el estado si no cumple con la expresión regular
+      }
+    }
+  
     setFormData({ ...formData, [name]: value });
   };
+  
 
   // Función para manejar el envío del formulario
   const handleSubmit = async () => {
@@ -38,6 +49,7 @@ const ModalInsertar = () => {
       });
 
       if (response.ok) {
+
         // Limpiar el formulario
         setFormData({
           matricula: '',
@@ -54,6 +66,8 @@ const ModalInsertar = () => {
         document.body.classList.remove('modal-open');
         document.body.style.paddingRight = '0';
 
+        // Mostrar notificación alerta de éxito
+        toast.success('Datos ingresados correctamente');
         // Puedes agregar una función para cerrar el modal aquí
       } else {
         console.error('Error al guardar el registro');
@@ -111,8 +125,8 @@ const ModalInsertar = () => {
               </div>
               <div className="modal-footer">
                 {/* Botones para cerrar el modal o guardar cambios */}
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
               </div>
             </div>
           </div>
