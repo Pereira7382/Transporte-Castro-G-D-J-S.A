@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { toast } from 'react-toastify';
+
 
 const ModalActualizarCamion = ({ camion, actualizarTablaCamiones }) => {
   const [formData, setFormData] = useState({
