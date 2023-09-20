@@ -1,92 +1,82 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const ModalActualizarCamion = ({camion}) => {
-  // Inicializa el estado del formulario con los datos del camión si se proporcionan,
-  // de lo contrario, usa valores por defecto
+const ModalActualizarCamion = ({ camion, actualizarTablaCamiones }) => {
   const [formData, setFormData] = useState({
-    matricula: '',
-    modelo: '',
-    estado: 1, // Estado por defecto en 1
-    anio: '',
-    numero_bin: '',
-    kilometraje: '',
-    tipo_camion: 'pesado',
+    matricula: "",
+    modelo: "",
+    estado: 1,
+    anio: "",
+    numero_bin: "",
+    kilometraje: "",
+    tipo_camion: "pesado",
   });
 
   useEffect(() => {
-    if(camion){
-      setFormData({...camion});
+    if (camion) {
+      setFormData({ ...camion });
     }
-  }, [camion])
+  }, [camion]);
 
-  console.log(formData);
-  // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
-    if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
-      return; // No actualizar el estado si no es un número
+    if ((name === "anio" || name === "kilometraje") && !/^\d+$/.test(value)) {
+      return;
     }
 
     setFormData({ ...formData, [name]: value });
   };
 
-  // Función para manejar el envío del formulario
   const handleSubmit = async () => {
     try {
-      // Aquí debes realizar la conexión con el servidor en NetBeans
-      // y enviar los datos del formulario para guardar el registro
-      const response = await fetch('http://localhost:8080/camion', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8080/camion", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // Limpiar el formulario
         setFormData({
-          matricula: '',
-          modelo: '',
-          estado: 1, // Estado por defecto en 1
-          anio: '',
-          numero_bin: '',
-          kilometraje: '',
-          tipo_camion: 'pesado',
+          matricula: "",
+          modelo: "",
+          estado: 1,
+          anio: "",
+          numero_bin: "",
+          kilometraje: "",
+          tipo_camion: "pesado",
         });
 
-        // Cerrar el modal
-        document.getElementById('modalActualizarCamion').classList.remove('show');
-        document.body.classList.remove('modal-open');
-        document.body.style.paddingRight = '0';
+        // Cierra el modal
+        document.getElementById("modalActualizarCamion").classList.remove("show");
+        document.body.classList.remove("modal-open");
+        document.body.style.paddingRight = "0";
 
-        // Puedes agregar una función para cerrar el modal aquí
+        // Llama a la función para actualizar la tabla
+        if (typeof actualizarTablaCamiones === "function") {
+          actualizarTablaCamiones(formData);
+        }
       } else {
-        console.error('Error al guardar el registro');
+        console.error("Error al guardar el registro");
       }
     } catch (error) {
-      console.error('Error en la conexión con el servidor:', error);
+      console.error("Error en la conexión con el servidor:", error);
     }
   };
 
   return (
     <>
       <div>
-        {/* Modal */}
-        <div className="modal fade" id="modalActualizarCamion" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="modalActualizarCamion" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                {/* Título del modal */}
                 <h1 className="modal-title fs-5" id="exampleModalLabel">Actualizar Camión</h1>
-                {/* Botón para cerrar el modal */}
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
               </div>
               <div className="modal-body">
                 <form>
-                  {/* Campos del formulario */}
                   <div className="mb-3">
                     <label htmlFor="matricula" className="form-label">Matrícula</label>
                     <input type="text" className="form-control" id="matricula" name="matricula" value={formData.matricula} onChange={handleChange} />
@@ -118,9 +108,9 @@ const ModalActualizarCamion = ({camion}) => {
                 </form>
               </div>
               <div className="modal-footer">
-                {/* Botones para cerrar el modal o guardar cambios */}
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleSubmit}>Save changes</button>
+
               </div>
             </div>
           </div>
