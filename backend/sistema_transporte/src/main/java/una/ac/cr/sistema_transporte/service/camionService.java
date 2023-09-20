@@ -13,6 +13,8 @@ public interface camionService {
     public Optional<Camion>obtenerCamionPorId( int id);
     
     public void eliminarCamion(int id);
+    
+    public void actualizarCamion(Camion camion);
 }
 
 

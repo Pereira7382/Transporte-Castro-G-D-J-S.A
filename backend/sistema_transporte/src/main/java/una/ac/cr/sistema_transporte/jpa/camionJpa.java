@@ -34,9 +34,14 @@ public class camionJpa implements camionService {
 
     @Override
     public void eliminarCamion(int id) {
-        System.out.println("\n llego a eliminar al JPAAA ");
         camionRepository.deleteById(id);
-        System.out.println("\n EJECUTO EL DELETE BY ID  ");
+    }
+    
+    @Override
+    public void actualizarCamion(Camion camion) {
+        System.out.println("\n llego a actualizar al JPAAA ");
+        camionRepository.save(camion);
+        System.out.println("\n EJECUTO EL actualizar ");
     }
 
 }
