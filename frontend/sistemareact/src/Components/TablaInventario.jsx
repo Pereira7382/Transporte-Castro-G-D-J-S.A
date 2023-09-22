@@ -4,16 +4,20 @@ import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { FaPlus } from "react-icons/fa";
+import ModalInventario from "./ModalInventario";
 
 
 // Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
-const TablaInventario = ({ lista }) => {
 
+  const TablaInventario = ({ lista }) => {
+    const [inventario, setInventario] = useState(lista);
+  
+
+   
   // Función exportPDF que podría ser implementada para exportar la tabla a PDF
   const exportPDF = () => {
     // Implementar la lógica para exportar la tabla a PDF aquí
   };
-
   const columns = useMemo(
     () => [
       {
@@ -100,13 +104,21 @@ const TablaInventario = ({ lista }) => {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Registro Herramienta">
-              <IconButton
+            <IconButton
+                size="small"
+                color="success"
+                id="btnModalInventario"
+                data-bs-toggle="modal"
+                data-bs-target="#modalInventario"
               >
                 <FaPlus />
               </IconButton>
             </Tooltip>
           </Box>
         )}
+      />
+      
+      <ModalInventario 
       />
     </>
   );

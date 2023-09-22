@@ -17,9 +17,19 @@ public class inventarioJpa implements inventarioService{
     @Autowired
     private inventarioRepository inventarioRepository;
     
+ 
     @Override
     public List<Inventario> listarInventario() {
         return inventarioRepository.findAll();
     }
     
+    
+    @Override
+    public void insertarInventario(Inventario inventario){
+        inventarioRepository.save(inventario);
+    }
+    
+    /*
+    public void insertarInventario(Inventario inventario)
+    */
 }
