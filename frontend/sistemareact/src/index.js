@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './Asset/Css/Style.css';
+import './Asset/Css/loginEstilos.css';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,6 +15,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='*' element={<App />} />
+        
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
