@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-const ModalInsertar = () => {
-  // Estado inicial del formulario, incluyendo el estado por defecto de 1 para "Estado"
+const ModalActualizarCamion = ({camion}) => {
+  // Inicializa el estado del formulario con los datos del camión si se proporcionan,
+  // de lo contrario, usa valores por defecto
   const [formData, setFormData] = useState({
     matricula: '',
     modelo: '',
@@ -13,27 +14,33 @@ const ModalInsertar = () => {
     tipo_camion: 'pesado',
   });
 
+  useEffect(() => {
+    if(camion){
+      setFormData({...camion});
+    }
+  }, [camion])
+
+  console.log(formData);
   // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
     if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
       return; // No actualizar el estado si no es un número
     }
-  
-    // Validar que solo se puedan ingresar letras y números en el input de Matrícula y Modelo y numero de bin
-    if (name === 'matricula' || name === 'modelo' || name ==='numero_bin') {
-      const regex = /^[A-Za-z0-9]+$/;
-  
-      if (!regex.test(value)) {
-        return; // No actualizar el estado si no cumple con la expresión regular
-      }
-    }
-  
+
+        // Validar que solo se puedan ingresar letras y números en el input de Matrícula y Modelo y numero de bin
+        if (name === 'matricula' || name === 'modelo' || name ==='numero_bin') {
+          const regex = /^[A-Za-z0-9]+$/;
+      
+          if (!regex.test(value)) {
+            return; // No actualizar el estado si no cumple con la expresión regular
+          }
+        }
+
     setFormData({ ...formData, [name]: value });
   };
-  
 
   // Función para manejar el envío del formulario
   const handleSubmit = async () => {
@@ -49,7 +56,6 @@ const ModalInsertar = () => {
       });
 
       if (response.ok) {
-
         // Limpiar el formulario
         setFormData({
           matricula: '',
@@ -62,12 +68,12 @@ const ModalInsertar = () => {
         });
 
         // Cerrar el modal
-        document.getElementById('modalInsertar').classList.remove('show');
+        document.getElementById('modalActualizarCamion').classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.paddingRight = '0';
 
-        // Mostrar notificación alerta de éxito
-        toast.success('Datos ingresados correctamente');
+         // Mostrar notificación alerta de éxito
+         toast.success('Datos Actualizados');
         // Puedes agregar una función para cerrar el modal aquí
       } else {
         console.error('Error al guardar el registro');
@@ -81,12 +87,12 @@ const ModalInsertar = () => {
     <>
       <div>
         {/* Modal */}
-        <div className="modal fade" id="modalInsertar" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="modalActualizarCamion" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 {/* Título del modal */}
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar Camión</h1>
+                <h1 className="modal-title fs-5" id="exampleModalLabel">Actualizar Camión</h1>
                 {/* Botón para cerrar el modal */}
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
               </div>
@@ -136,4 +142,4 @@ const ModalInsertar = () => {
   );
 }
 
-export default ModalInsertar;
+export default ModalActualizarCamion;
