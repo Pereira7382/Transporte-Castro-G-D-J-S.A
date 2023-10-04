@@ -12,11 +12,11 @@ function App() {
       <div>
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
         <Routes>
-        <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/admin-camiones" element={<CamionesTabla />} />
           <Route path="/admin-form-camiones" element={<InsertCamion />} />
           <Route path="/admin-inventario" element={<AdminInventario />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </div>
   );
