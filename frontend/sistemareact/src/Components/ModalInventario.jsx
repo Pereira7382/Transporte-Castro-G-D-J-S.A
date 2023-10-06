@@ -85,7 +85,10 @@ const ModalInventario = ({actualizarTablaInventario}) => {
             actualizarTablaInventario(formData);
           }
 
-          
+      // Recargar la página después de un breve retraso
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
         // Puedes agregar una función para cerrar el modal aquí
       } else {
         console.error('Error al guardar el registro');
