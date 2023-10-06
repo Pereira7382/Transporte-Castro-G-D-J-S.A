@@ -5,7 +5,7 @@ import AdminInventario from './Components/AdminInventario';
 import Home from './Pages/Home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Login from './Components/Login'
+import Login from './Components/Login';
 
 function App() {
   return (

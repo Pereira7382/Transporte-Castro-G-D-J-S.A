@@ -30,4 +30,22 @@ public class LogicaLogin {
         return acceso;
         
     }
+    
+    public boolean agregarUsuario(Usuario usuario){
+        boolean agregado = false;
+        
+        //aqui encriptar la contraseña que trae el usuario y enviarla al acceso a datos encriptada
+        
+        //encriptar la contraseña
+        String contraseniaEncriptada = "";
+        contraseniaEncriptada = encriptacion.encriptarContrasena(usuario.getClave());
+        usuario.setClave(contraseniaEncriptada);
+        agregado = dataLogin.agregarUsuario(usuario);
+        //enviarsela a la capa de acceso a datos para que esta haga la comparacion.
+        
+        
+        return agregado;
+        
+    }
+    
 }
