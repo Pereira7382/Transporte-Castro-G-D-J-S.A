@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import una.ac.cr.sistema_transporte.Logica.LogicaLogin;
 import una.ac.cr.sistema_transporte.domain.Usuario;
 
@@ -19,12 +20,9 @@ public class LoginController {
     
     LogicaLogin logicaLogin = new LogicaLogin();
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
+    @PostMapping(value = "/validar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<Boolean> validarAcceso(@RequestBody Usuario usuario) {
-        
-        //a continuacion enviamos a logica el usuario para que esta se conecte a los datos 
-        //y valide el usuario.
         boolean acceso = logicaLogin.validarAcceso(usuario);
         if (acceso) {
             return ResponseEntity.ok(true); // Acceso permitido
@@ -32,5 +30,12 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false); // Acceso no autorizado
         }
     }
-
+    
+    @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public boolean agregarUsuario(@RequestBody Usuario usuario) {
+        // Lógica para agregar un usuario aquí
+        return true; // Indica que el usuario se agregó exitosamente
+    }
 }
