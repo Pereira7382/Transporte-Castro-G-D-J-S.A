@@ -15,10 +15,6 @@ import java.util.logging.Logger;
 
 import una.ac.cr.sistema_transporte.domain.Proveedor;
 
-/**
- *
- * @author Fernanda Gonzalez
- */
 public class DataProveedor extends DataBase{
     
     public final static String PROVEEDOR = "proveedor";
@@ -60,10 +56,9 @@ public class DataProveedor extends DataBase{
             }
 
             prepared.close();
-            con.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return proveedo;
@@ -97,7 +92,7 @@ public class DataProveedor extends DataBase{
             return pro;
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataProveedor.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 
@@ -114,20 +109,8 @@ public class DataProveedor extends DataBase{
             int rowsDeleted = prepare.executeUpdate();
             System.out.println("Filas eliminadas: " + rowsDeleted);
         } catch (SQLException ex) {
-            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Logger.getLogger(DataProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
 }
