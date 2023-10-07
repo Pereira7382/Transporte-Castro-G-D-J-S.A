@@ -1,48 +1,73 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const ModalInsertar = () => {
+const ModalInsertarProveedor = () => {
   // Estado inicial del formulario, incluyendo el estado por defecto de 1 para "Estado"
   const [formData, setFormData] = useState({
-    matricula: '',
-    modelo: '',
-    estado: 1, // Estado por defecto en 1
-    anio: '',
-    numero_bin: '',
-    kilometraje: '',
-    tipo_camion: 'pesado',
+     correo_electronico: '',
+     telefono: '',    
+     contacto: '',
+     direccion: '',
+     estado: 1, // Valor predeterminado en 1
+    
+   
   });
 
   // Función para manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+
+    
+// Validar campo de correo electrónico
+if (name === 'correo_electronico') {
+    const emailRegex = /^[A-Za-z@]+$/;
   
-    // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
-    if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
-      setFormData({ ...formData, [name]: value });
-      return; // No actualizar el estado si no es un número
-    }
-  
-    // Validar que solo se puedan ingresar letras y números en el input de Matrícula y Modelo y numero de bin
-    if (name === 'matricula' || name === 'modelo' || name ==='numero_bin') {
-      const regex = /^[A-Za-z0-9]+$/;
-  
-      if (!regex.test(value)) {
+    if (!emailRegex.test(value)) {
         setFormData({ ...formData, [name]: value });
-        return; // No actualizar el estado si no cumple con la expresión regular
-      }
+ 
+      return; // No actualizar el estado si no cumple con la expresión regular de correo electrónico
     }
-  
+  }
+
+  // Validar campo de teléfono (solo números)
+  if (name === 'telefono') {
+    const phoneRegex = /^[0-9]+$/;
+
+    if (!phoneRegex.test(value)) {
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de teléfono
+    }
+  }
+
+  // Validar campo de contacto (números, letras y espacios)
+  if (name === 'contacto') {
+    const contactRegex = /^[A-Za-z0-9\s]+$/;
+
+    if (!contactRegex.test(value)) {
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de contacto
+    }
+  }
+
+  // Validar campo de dirección (números, letras y espacios)
+  if (name === 'direccion') {
+    const addressRegex = /^[A-Za-z0-9\s]+$/;
+
+    if (!addressRegex.test(value)) {
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de dirección
+    }
+  }
     setFormData({ ...formData, [name]: value });
   };
-  
 
   // Función para manejar el envío del formulario
   const handleSubmit = async () => {
     try {
       // Aquí debes realizar la conexión con el servidor en NetBeans
       // y enviar los datos del formulario para guardar el registro
-      const response = await fetch('http://localhost:8080/camion', {
+      const response = await fetch('http://localhost:8080/proveedor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,13 +79,12 @@ const ModalInsertar = () => {
 
         // Limpiar el formulario
         setFormData({
-          matricula: '',
-          modelo: '',
-          estado: 1, // Estado por defecto en 1
-          anio: '',
-          numero_bin: '',
-          kilometraje: '',
-          tipo_camion: 'pesado',
+            correo_electronico: '',
+            telefono: '',    
+            contacto: '',
+            direccion: '',
+            estado: 1, // Valor predeterminado en 1
+           
         });
 
         // Cerrar el modal
@@ -92,7 +116,7 @@ const ModalInsertar = () => {
             <div className="modal-content">
               <div className="modal-header">
                 {/* Título del modal */}
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar Camión</h1>
+                <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar Proveedor</h1>
                 {/* Botón para cerrar el modal */}
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
               </div>
@@ -100,33 +124,26 @@ const ModalInsertar = () => {
                 <form>
                   {/* Campos del formulario */}
                   <div className="mb-3">
-                    <label htmlFor="matricula" className="form-label">Matrícula</label>
-                    <input type="text" className="form-control" id="matricula" name="matricula" value={formData.matricula} onChange={handleChange} />
+                    <label htmlFor="correo_electronico" className="form-label">Correo Electronico</label>
+                    <input type="text" className="form-control" id="correo_electronico" name="correo_electronico" value={formData.correo_electronico} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="modelo" className="form-label">Modelo</label>
-                    <input type="text" className="form-control" id="modelo" name="modelo" value={formData.modelo} onChange={handleChange} />
+                    <label htmlFor="telefono" className="form-label">Telefono</label>
+                    <input type="text" className="form-control" id="telefono" name="telefono" value={formData.telefono} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="anio" className="form-label">Año</label>
-                    <input type="text" className="form-control" id="anio" name="anio" value={formData.anio} onChange={handleChange} />
+                    <label htmlFor="contacto" className="form-label">Contacto</label>
+                    <input type="text" className="form-control" id="contacto" name="contacto" value={formData.contacto} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="numero_bin" className="form-label">Número BIN</label>
-                    <input type="text" className="form-control" id="numero_bin" name="numero_bin" value={formData.numero_bin} onChange={handleChange} />
+                    <label htmlFor="direccion" className="form-label">Dirección</label>
+                    <input type="text" className="form-control" id="direccion" name="direccion" value={formData.direccion} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="kilometraje" className="form-label">Kilometraje</label>
-                    <input type="text" className="form-control" id="kilometraje" name="kilometraje" value={formData.kilometraje} onChange={handleChange} />
+                    
+                    <input type="hidden" className="form-control" id="estado" name="estado" value={formData.estado} onChange={handleChange} />
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="tipo_camion" className="form-label">Tipo de Camión</label>
-                    <select className="form-select" id="tipo_camion" name="tipo_camion" value={formData.tipo_camion} onChange={handleChange}>
-                      <option value="pesado">Pesado</option>
-                      <option value="liviano">Liviano</option>
-                      <option value="de carga">De Carga</option>
-                    </select>
-                  </div>
+             
                 </form>
               </div>
               <div className="modal-footer">
@@ -142,4 +159,4 @@ const ModalInsertar = () => {
   );
 }
 
-export default ModalInsertar;
+export default ModalInsertarProveedor;

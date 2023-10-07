@@ -31,6 +31,7 @@ const ModalActualizarCamion = ({ camion, actualizarTablaCamiones }) => {
           const regex = /^[A-Za-z0-9]+$/;
       
           if (!regex.test(value)) {
+            setFormData({ ...formData, [name]: value });
             return; // No actualizar el estado si no cumple con la expresión regular
           }
         }

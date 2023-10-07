@@ -55,6 +55,8 @@
     ]
   },
   "devDependencies": {
+    "@csstools/css-tokenizer": "^2.2.1",
+    "postcss-preset-env": "^9.1.4",
     "react-scripts": "^5.0.1"
   }
 }
