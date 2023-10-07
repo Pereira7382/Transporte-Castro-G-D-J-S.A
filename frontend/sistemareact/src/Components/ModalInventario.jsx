@@ -18,7 +18,6 @@ const ModalInventario = ({actualizarTablaInventario}) => {
     // Validaciones para campos "cantidad" (aceptar solo números)
     if (name === 'cantidad') {
       if (value !== '' && !/^\d+$/.test(value)) {
-        setFormData({ ...formData, [name]: value });
         return; // No actualizar el estado si no es un número y no está vacío
       }
     }
@@ -28,7 +27,6 @@ const ModalInventario = ({actualizarTablaInventario}) => {
       const regex = /^[A-Za-z0-9\s]+$/;
   
       if (value !== '' && !regex.test(value)) {
-        setFormData({ ...formData, [name]: value });
         return; // No actualizar el estado si no cumple con la expresión regular y no está vacío
       }
     }
@@ -38,7 +36,6 @@ const ModalInventario = ({actualizarTablaInventario}) => {
       const regex = /^[A-Za-z\s]+$/;
   
       if (value !== '' && !regex.test(value)) {
-        setFormData({ ...formData, [name]: value });
         return; // No actualizar el estado si no cumple con la expresión regular y no está vacío
       }
     }

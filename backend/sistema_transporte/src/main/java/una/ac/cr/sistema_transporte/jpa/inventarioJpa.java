@@ -45,9 +45,4 @@ public class inventarioJpa implements inventarioService{
     public Optional<Inventario> obtenerInventarioPorId(int id) {
        return inventarioRepository.findById(id);
     }
-    
-    @Override
-    public void eliminarInventario(int id) {
-        inventarioRepository.deleteById(id);
-    }
 }

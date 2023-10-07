@@ -13,17 +13,14 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
 
   const validateForm = (name, value) => {
     if (name === "cantidad" && !/^\d+$/.test(value)) {
-      setFormData({ ...formData, [name]: value });
       return false;
     }
     
     if ((name === "codigo" || name === "descripcion") && !/^[A-Za-z0-9\s]+$/.test(value)) {
-      setFormData({ ...formData, [name]: value });
       return false;
     }
 
     if ((name === "nombre" || name === "tipo") && !/^[A-Za-z\s]+$/.test(value)) {
-      setFormData({ ...formData, [name]: value });
       return false;
     }
 
