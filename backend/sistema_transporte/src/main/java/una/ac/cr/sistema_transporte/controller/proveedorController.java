@@ -41,7 +41,7 @@ public class proveedorController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Proveedor guardarProveedor(@RequestBody Proveedor proveedor) {
-        System.out.println("llego a la controller");
+        System.out.println("llego a la controllerrrrrrrrrrrrrr");
         proveedorRepository.insertarProveedor(proveedor);
         return proveedor;
     }
