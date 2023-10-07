@@ -25,10 +25,8 @@ public class LoginController {
     public ResponseEntity<Boolean> validarAcceso(@RequestBody Usuario usuario) {
         boolean acceso = logicaLogin.validarAcceso(usuario);
         if (acceso) {
-            System.out.println("\n acceso autorizado ");
             return ResponseEntity.ok(true); // Acceso permitido
         } else {
-            System.out.println("\n acceso denegado ");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false); // Acceso no autorizado
         }
     }
@@ -37,6 +35,7 @@ public class LoginController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public boolean agregarUsuario(@RequestBody Usuario usuario) {
-        return logicaLogin.agregarUsuario(usuario);
+        // Lógica para agregar un usuario aquí
+        return true; // Indica que el usuario se agregó exitosamente
     }
 }

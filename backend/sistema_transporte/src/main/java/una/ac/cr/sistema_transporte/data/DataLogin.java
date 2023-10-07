@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import una.ac.cr.sistema_transporte.domain.Usuario;
 
 public class DataLogin extends DataBase {
@@ -16,36 +13,26 @@ public class DataLogin extends DataBase {
     public final static String USUARIO = "usuario";
     public final static String CONTRASENIA = "contrasenia";
 
-    public LinkedList<Usuario> obtenerUsuarios() {
+    public boolean validarAcceso(String usuario, String contrasenia) {
         boolean acceso = false;
         // Consulta SQL parametrizada
-        String query = "SELECT * FROM " + TB_USUARIOS ;
+        String query = "SELECT * FROM " + TB_USUARIOS + " WHERE " + USUARIO + " = ? AND " + CONTRASENIA + " = ?";
 
-        LinkedList<Usuario> listaUsuarios = new LinkedList<Usuario>();
-        
-        Connection con = getConexion();
+        try (Connection con = getConexion(); PreparedStatement prepare = con.prepareStatement(query)) {
 
-        try {
-            PreparedStatement prepared = con.prepareStatement(query);
-            ResultSet result = prepared.executeQuery();
-            Usuario usuario = null;
-            while (result.next()) {
+            // Establecer los parámetros de la consulta
+            prepare.setString(1, usuario);
+            prepare.setString(2, contrasenia);
 
-                usuario = new Usuario();
-                usuario.setClave(result.getString(CONTRASENIA));
-                usuario.setUsuario(result.getString(USUARIO));
-                listaUsuarios.add(usuario);
-
+            try (ResultSet result = prepare.executeQuery()) {
+                if (result.next()) {
+                    acceso = true;
+                }
             }
-
-            prepared.close();
-            return listaUsuarios;
-
         } catch (SQLException ex) {
-            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return acceso;
     }
 
     public boolean agregarUsuario(Usuario usuario){

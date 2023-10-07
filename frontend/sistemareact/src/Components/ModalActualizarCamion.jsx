@@ -71,7 +71,6 @@ const ModalActualizarCamion = ({ camion, actualizarTablaCamiones }) => {
          // Mostrar notificación alerta de éxito
          toast.success('Datos Actualizados');
         // Puedes agregar una función para cerrar el modal aquí
-        
       } else {
         console.error("Error al guardar el registro");
       }

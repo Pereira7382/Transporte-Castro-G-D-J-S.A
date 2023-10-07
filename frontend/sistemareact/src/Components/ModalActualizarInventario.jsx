@@ -64,10 +64,6 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
         });
 
         toast.success('Datos actualizados correctamente');
-        // Recargar la página después de un breve retraso
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
 
         if (typeof actualizarTablaInventario === "function") {
           actualizarTablaInventario(formData);

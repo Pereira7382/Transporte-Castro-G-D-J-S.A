@@ -69,10 +69,6 @@ const ModalInsertar = () => {
         // Mostrar notificación alerta de éxito
         toast.success('Datos ingresados correctamente');
         // Puedes agregar una función para cerrar el modal aquí
-        // Recargar la página después de un breve retraso
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
       } else {
         console.error('Error al guardar el registro');
       }
