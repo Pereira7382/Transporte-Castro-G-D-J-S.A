@@ -20,7 +20,7 @@ public class DataBase {
       private final static String USER = "root";
         private final static String PASSW = "";
 
-        private final static String DATA = "bd_sistema_transporte";
+        private final static String DATA = "db_sistema_transporte";
         private final static String SERVER = "localhost:";
         private final static String URL = "jdbc:mysql://" + SERVER + "3306/" + DATA;
         private Connection conexion;

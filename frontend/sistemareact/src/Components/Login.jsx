@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as Components from '../Asset/Js/Components';
 
 function Login() {
-  const [signIn, toggle] = useState(true);
+  const [signIn, setSignIn] = useState(true);
   const [formData, setFormData] = useState({
     usuario: "",
     clave: "",
@@ -31,7 +31,7 @@ function Login() {
         clave: formData.clave,
       };
   
-      const response = await axios.post("http://localhost:8080/register", registro); 
+      const response = await axios.post("http://localhost:8080/login/agregar", registro); 
   
       console.log("Usuario registrado con éxito:", response.data);
       
@@ -41,8 +41,9 @@ function Login() {
   };
   
   // Conexión con Spring Boot para iniciar sesión
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
     try {
+      e.preventDefault();
       if (!formData.usuario || !formData.clave) {
         console.error("Por favor, complete todos los campos requeridos.");
         return;
@@ -53,10 +54,10 @@ function Login() {
         clave: formData.clave,
       };
 
-      const response = await axios.post("http://localhost:8080/login", acceso); 
+      const response = await axios.post("http://localhost:8080/login/validar", acceso); 
 
       console.log("Inicio de sesión exitoso:", response.data);
-      navigate("/home"); 
+      navigate("/Home"); 
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     }
@@ -112,7 +113,7 @@ function Login() {
               <Components.Paragraph>
                 Para mantenerse conectado con nosotros, inicie sesión con su información personal
               </Components.Paragraph>
-              <Components.GhostButton onClick={() => toggle(true)}>
+              <Components.GhostButton onClick={() => setSignIn(true)}>
                 Acceder
               </Components.GhostButton>
             </Components.LeftOverlayPanel>
@@ -122,7 +123,7 @@ function Login() {
               <Components.Paragraph>
                 Introduce tus datos personales para crear una cuenta con nosotros.
               </Components.Paragraph>
-              <Components.GhostButton onClick={() => toggle(false)}>
+              <Components.GhostButton onClick={() => setSignIn(false)}>
                 Registrarse
               </Components.GhostButton>
             </Components.RightOverlayPanel>
