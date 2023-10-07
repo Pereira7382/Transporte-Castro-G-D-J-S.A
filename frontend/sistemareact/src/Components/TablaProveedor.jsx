@@ -3,6 +3,8 @@ import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import ModalInsertarProveedor from "./ModalInsertarProveedor";
 import ModalActualizarProveedor from "./ModalActualizarProveedor";
 import { FaPlus } from "react-icons/fa";
@@ -14,7 +16,13 @@ const TablaProveedor = ({ lista }) => {
   const [proveedores, setProveedores] = useState(lista);
 
   const exportPDF = () => {
-    // Implementa la lógica para exportar la tabla a PDF aquí
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [columns.map(column => column.header)],
+      body: proveedores.map(item => columns.map(column => item[column.accessorKey])),
+    });
+    doc.save("tabla_proveedores.pdf");
+
   };
 
   const columns = useMemo(
