@@ -4,6 +4,8 @@ import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { FaPlus } from "react-icons/fa";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
 
@@ -12,7 +14,12 @@ const TablaInventario = ({ lista }) => {
   const [inventario, setInventario] = useState(lista);
 
   const exportPDF = () => {
-    // Implementa la lógica para exportar la tabla a PDF aquí
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [columns.map(column => column.header)],
+      body: inventario.map(item => columns.map(column => item[column.accessorKey])),
+    });
+    doc.save("tabla_inventario.pdf");
   };
 
   const columns = useMemo(

@@ -1,0 +1,87 @@
+/* Footer.css */
+
+.footer-container {
+    background-color: #191f20;
+    color: #fff;
+    padding: 15px 0;
+    font-family: 'Georgia', serif;
+}
+  
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+  
+.footer-section {
+    flex: 1;
+    padding: 0 10px; /* Reducir el espacio interno */
+    text-align: center;
+}
+  
+.footer-icon {
+    font-size: 28px; /* Tamaño de los iconos reducido */
+    margin-bottom: 8px; /* Margen inferior reducido */
+}
+  
+.footer-heading {
+    font-size: 20px; /* Tamaño de la fuente reducido */
+    margin-bottom: 4px; /* Margen inferior reducido */
+}
+  
+.footer-subheading {
+    font-size: 18px; /* Tamaño de la fuente reducido */
+    margin-bottom: 4px; /* Margen inferior reducido */
+}
+  
+.footer-text {
+    font-size: 16px; /* Tamaño de la fuente reducido */
+    margin-bottom: 10px; /* Margen inferior reducido */
+}
+  
+.footer-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+  
+.footer-link:hover {
+    color: #0088a9;
+}
+  
+/* Animaciones */
+@keyframes iconBounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px); /* Menor desplazamiento vertical */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+  
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(7px); /* Menor desplazamiento vertical */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  
+/* Aplicar animaciones a los iconos y textos */
+.footer-icon {
+    animation: iconBounce 1s infinite;
+}
+  
+.footer-heading,
+.footer-subheading,
+.footer-text {
+    opacity: 0;
+    animation: textFadeIn 1s forwards;
+}
