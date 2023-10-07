@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ModalInsertar from "./ModalInsertar";
 import ModalActualizarCamion from "./ModalActualizarCamion";
@@ -14,8 +16,15 @@ const TablaCamiones = ({ lista }) => {
   const [camiones, setCamiones] = useState(lista);
 
   const exportPDF = () => {
-    // Implementa la lógica para exportar la tabla a PDF aquí
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [columns.map(column => column.header)],
+      body: camiones.map(item => columns.map(column => item[column.accessorKey])),
+    });
+    doc.save("tabla_inventario.pdf");
+
   };
+
 
   const columns = useMemo(
     () => [
