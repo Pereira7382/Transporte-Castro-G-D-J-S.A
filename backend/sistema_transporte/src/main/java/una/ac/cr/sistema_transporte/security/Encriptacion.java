@@ -11,8 +11,8 @@ public class Encriptacion {
         return contraseñaEncriptada;
     }
     
-    public boolean compararPasswords(String contraseñaUsuario, String contraseñaAlmacenadaEncriptada){
+    public boolean compararPasswords(String contraseniaUsuario, String contraseniaAlmacenadaEncriptada){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(contraseñaUsuario, contraseñaAlmacenadaEncriptada);
+        return passwordEncoder.matches(contraseniaUsuario, contraseniaAlmacenadaEncriptada);
     }
 }
