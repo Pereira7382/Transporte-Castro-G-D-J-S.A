@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,5 +78,11 @@ public class inventarioController {
         }
     }
     
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void eliminarInventario(@PathVariable int id) {
+        System.out.println("\n llego a eliminar a la controlleeeeeeer ");
+        inventarioRepository.eliminarInventario(id);
+    }
     
 }

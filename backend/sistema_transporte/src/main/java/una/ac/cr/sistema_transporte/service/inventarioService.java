@@ -16,4 +16,6 @@ public interface inventarioService {
  
     public void actualizarInventario(Inventario inventario);
     
+    public void eliminarInventario(int id);
+    
 }
