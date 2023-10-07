@@ -3,8 +3,6 @@ import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import ModalInsertar from "./ModalInsertar";
 import ModalActualizarCamion from "./ModalActualizarCamion";
 import { FaPlus } from "react-icons/fa";
@@ -16,12 +14,7 @@ const TablaCamiones = ({ lista }) => {
   const [camiones, setCamiones] = useState(lista);
 
   const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.autoTable({
-      head: [columns.map(column => column.header)],
-      body: camiones.map(item => columns.map(column => item[column.accessorKey])),
-    });
-    doc.save("tabla_camiones.pdf");
+    // Implementa la lógica para exportar la tabla a PDF aquí
   };
 
   const columns = useMemo(

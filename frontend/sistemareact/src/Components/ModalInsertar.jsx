@@ -19,6 +19,7 @@ const ModalInsertar = () => {
   
     // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
     if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
+      setFormData({ ...formData, [name]: value });
       return; // No actualizar el estado si no es un número
     }
   
@@ -27,6 +28,7 @@ const ModalInsertar = () => {
       const regex = /^[A-Za-z0-9]+$/;
   
       if (!regex.test(value)) {
+        setFormData({ ...formData, [name]: value });
         return; // No actualizar el estado si no cumple con la expresión regular
       }
     }
@@ -69,6 +71,10 @@ const ModalInsertar = () => {
         // Mostrar notificación alerta de éxito
         toast.success('Datos ingresados correctamente');
         // Puedes agregar una función para cerrar el modal aquí
+        // Recargar la página después de un breve retraso
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       } else {
         console.error('Error al guardar el registro');
       }
