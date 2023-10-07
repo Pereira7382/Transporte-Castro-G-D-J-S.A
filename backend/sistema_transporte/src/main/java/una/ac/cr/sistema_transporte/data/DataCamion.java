@@ -17,35 +17,35 @@ import una.ac.cr.sistema_transporte.domain.Camion;
  *
  * @author josep
  */
-public class DataCamion extends DataBase{
-    
-     public final static String TB_CAMION="tb_camion";
-     public final static String ID_CAMION="id";
-     public final static String MATRICULA="matricula";
-     public final static String MODELO="modelo";
-     public final static String ESTADO="estado";
-     public final static String ANIO="anio";
-     public final static String NUMERO_BIN="numero_bin";
-     public final static String KILOMETRAJE="kilometraje";
-     public final static String TIPO_CAMION="tipo_camion";
-    
-    public LinkedList<Camion>obtnerCamiones(){
-    
+public class DataCamion extends DataBase {
+
+    public final static String TB_CAMION = "tb_camion";
+    public final static String ID_CAMION = "id";
+    public final static String MATRICULA = "matricula";
+    public final static String MODELO = "modelo";
+    public final static String ESTADO = "estado";
+    public final static String ANIO = "anio";
+    public final static String NUMERO_BIN = "numero_bin";
+    public final static String KILOMETRAJE = "kilometraje";
+    public final static String TIPO_CAMION = "tipo_camion";
+
+    public LinkedList<Camion> obtnerCamiones() {
+
         LinkedList<Camion> camion = new LinkedList<Camion>();
-        
+
         String query = "SELECT * FROM " + TB_CAMION + ";";
-        
+
         Connection con = getConexion();
-        
+
         try {
             PreparedStatement prepared = con.prepareStatement(query);
             ResultSet result = prepared.executeQuery();
             Camion cam = null;
-            
+
             while (result.next()) {
-                
+
                 cam = new Camion();
-                
+
                 cam.setId(result.getInt(ID_CAMION));
                 cam.setMatricula(result.getString(MATRICULA));
                 cam.setModelo(result.getString(MODELO));
@@ -54,38 +54,36 @@ public class DataCamion extends DataBase{
                 cam.setNumero_bin(result.getString(NUMERO_BIN));
                 cam.setKilometraje(result.getInt(KILOMETRAJE));
                 cam.setTipo_camion(result.getString(TIPO_CAMION));
-                       
+
                 camion.add(cam);
-                
+
             }
-            
+
             prepared.close();
             con.close();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return camion;
-        
-    
+
     }
-    
-    
-    public Camion obtenerPorId(int id){
-    
-    String query="SELECT * FROM " + TB_CAMION + " WHERE " + " =?;";
-        Connection con =getConexion();
-        
+
+    public Camion obtenerPorId(int id) {
+
+        String query = "SELECT * FROM " + TB_CAMION + " WHERE " + " =?;";
+        Connection con = getConexion();
+
         try {
             PreparedStatement prepare = con.prepareStatement(query);
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
             Camion cam = null;
-            if(result.next()){
-            
-            cam = new Camion();
-            
+            if (result.next()) {
+
+                cam = new Camion();
+
                 cam.setId(result.getInt(ID_CAMION));
                 cam.setMatricula(result.getString(MATRICULA));
                 cam.setModelo(result.getString(MODELO));
@@ -94,19 +92,19 @@ public class DataCamion extends DataBase{
                 cam.setNumero_bin(result.getString(NUMERO_BIN));
                 cam.setKilometraje(result.getInt(KILOMETRAJE));
                 cam.setTipo_camion(result.getString(TIPO_CAMION));
-                          
+
             }
             prepare.close();
             result.close();
             return cam;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }  
-    
+        }
+
     }
-    
+
     public void eliminarCamionPorId(int id) {
         String query = "DELETE FROM " + TB_CAMION + " WHERE id_camion = ?;";
         Connection con = getConexion();
