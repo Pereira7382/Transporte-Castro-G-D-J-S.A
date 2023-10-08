@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Asset/Css/recuperacion.css';
+//import '../Asset/Css/recuperacion.css';
 const RecuperarContrasena = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
