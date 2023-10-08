@@ -19,50 +19,48 @@ const ModalActualizarProveedor = ({ proveedor, actualizarTablaProveedor }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    let newValue = value; // Valor que se actualizará en el estado
   
-// Validar campo de correo electrónico
-if (name === 'correo_electronico') {
-    const emailRegex = /^[A-Za-z@]+$/;
+    // Validar campo de correo electrónico
+    if (name === 'correo_electronico') {
+      const emailRegex = /^[A-Za-z0-9@.]+$/;
   
-    if (!emailRegex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      return; // No actualizar el estado si no cumple con la expresión regular de correo electrónico
+      if (!emailRegex.test(value)) {
+        newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de correo electrónico
+      }
     }
-  }
-
-  // Validar campo de teléfono (solo números)
-  if (name === 'telefono') {
-    const phoneRegex = /^[0-9]+$/;
-
-    if (!phoneRegex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      return; // No actualizar el estado si no cumple con la expresión regular de teléfono
+  
+    // Validar campo de teléfono (solo números)
+    if (name === 'telefono') {
+      const phoneRegex = /^[0-9]+$/;
+  
+      if (!phoneRegex.test(value)) {
+        newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de teléfono
+      }
     }
-  }
-
-  // Validar campo de contacto (números, letras y espacios)
-  if (name === 'contacto') {
-    const contactRegex = /^[A-Za-z0-9\s]+$/;
-
-    if (!contactRegex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      return; // No actualizar el estado si no cumple con la expresión regular de contacto
+  
+    // Validar campo de contacto (números, letras y espacios)
+    if (name === 'contacto') {
+      const contactRegex = /^[A-Za-z0-9\s]+$/;
+  
+      if (!contactRegex.test(value)) {
+        newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de contacto
+      }
     }
-  }
-
-  // Validar campo de dirección (números, letras y espacios)
-  if (name === 'direccion') {
-    const addressRegex = /^[A-Za-z0-9\s]+$/;
-
-    if (!addressRegex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      return; // No actualizar el estado si no cumple con la expresión regular de dirección
+  
+    // Validar campo de dirección (números, letras y espacios)
+    if (name === 'direccion') {
+      const addressRegex = /^[A-Za-z0-9\s]+$/;
+  
+      if (!addressRegex.test(value)) {
+        newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de dirección
+      }
     }
-  }
-
-    setFormData({ ...formData, [name]: value });
+  
+    // Actualizar el estado con el nuevo valor
+    setFormData({ ...formData, [name]: newValue });
   };
+  
 
   const handleSubmit = async () => {
     try {

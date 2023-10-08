@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './Components/Login'
 import RecuperarContrasena from './Components/RecuperacionContrasenia';
+import AdminProveedor from './Components/AdminProveedor';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/admin-camiones" element={<CamionesTabla />} />
           <Route path="/admin-form-camiones" element={<InsertCamion />} />
           <Route path="/admin-inventario" element={<AdminInventario />} />
+          <Route path="/proveedor" element={<AdminProveedor />} />
           <Route path="/admin-RecuperarContrasena" element={<RecuperarContrasena />} />
           <Route path="/" element={<Login />} />
         </Routes>
