@@ -101,7 +101,7 @@ function Login() {
               placeholder="Clave"
               onChange={handleChange}
             />
-            <Components.Anchor href="#">¿Olvidaste tu contraseña?</Components.Anchor>
+            <Components.Anchor href="/admin-RecuperarContrasena">¿Olvidaste tu contraseña?</Components.Anchor>
             <Components.Button onClick={handleSignIn}>Acceder</Components.Button>
           </Components.Form>
         </Components.SignInContainer>
