@@ -17,12 +17,16 @@ const Navbar = () => {
               <a className="nav-link" href="/admin-inventario">Administrar Inventario</a>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="/proveedor">Administrar Proveedor</a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="/admin-camiones">Administrar Camiones</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/admin-form-camiones">Pricing</a>
             </li>
             <li className="nav-item">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a className="nav-link disabled" aria-disabled="true">Disabled</a>
             </li>
           </ul>
