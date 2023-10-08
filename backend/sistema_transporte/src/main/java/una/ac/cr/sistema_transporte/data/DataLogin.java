@@ -1,6 +1,7 @@
 package una.ac.cr.sistema_transporte.data;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,10 +20,10 @@ public class DataLogin extends DataBase {
     public LinkedList<Usuario> obtenerUsuarios() {
         boolean acceso = false;
         // Consulta SQL parametrizada
-        String query = "SELECT * FROM " + TB_USUARIOS ;
+        String query = "SELECT * FROM " + TB_USUARIOS;
 
         LinkedList<Usuario> listaUsuarios = new LinkedList<Usuario>();
-        
+
         Connection con = getConexion();
 
         try {
@@ -35,42 +36,76 @@ public class DataLogin extends DataBase {
                 usuario.setClave(result.getString(CONTRASENIA));
                 usuario.setUsuario(result.getString(USUARIO));
                 listaUsuarios.add(usuario);
-
             }
 
             prepared.close();
             return listaUsuarios;
 
         } catch (SQLException ex) {
-            Logger.getLogger(DataCamion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
     }
+    
 
-    public boolean agregarUsuario(Usuario usuario){
-        boolean agregado = false;
-        // Consulta SQL parametrizada para insertar un nuevo usuario
+    /*public boolean agregarUsuario(Usuario usuario) throws SQLException {
         String query = "INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ") VALUES (?, ?)";
 
-        try (Connection con = getConexion(); PreparedStatement prepare = con.prepareStatement(query)) {
-            // Establece los parámetros de la consulta con los valores del nuevo usuario
+        Connection con = getConexion(); PreparedStatement prepare = con.prepareStatement(query);
+        try {
+
+            // Desactivar el modo de autocommit
+            con.setAutoCommit(false);
+
             prepare.setString(1, usuario.getUsuario());
             prepare.setString(2, usuario.getClave());
 
-            // Ejecuta la consulta de inserción
-            int filasAfectadas = prepare.executeUpdate();
+            prepare.executeUpdate();
 
-            // Si se insertó al menos una fila, se considera que el usuario fue agregado con éxito
-            if (filasAfectadas > 0) {
-                agregado = true;
-            }
+            // Confirmar manualmente la transacción
+            con.commit();
+
+            return true;
         } catch (SQLException ex) {
             // Manejo de excepciones
             ex.printStackTrace();
+
+            try {
+                // Si se produce una excepción, realizar un rollback para deshacer la transacción
+                if (con != null) {
+                    con.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        } finally {
+            try {
+                // Restaurar el modo de autocommit a true y cerrar la conexión
+                if (con != null) {
+                    con.setAutoCommit(true);
+                    con.close();
+                }
+            } catch (SQLException closeEx) {
+                closeEx.printStackTrace();
+            }
         }
 
-        return agregado;
-    }
+        return false;
+    }*/
 
+    
+    public boolean agregarUsuario(Usuario usuario) {
+        try {
+            Connection cn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/db_sistema_transporte", "root", "");
+            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ") VALUES (?, ?)");
+            
+            sentencia.setString(1, usuario.getUsuario());
+            sentencia.setString(2, usuario.getClave());
+            sentencia.execute();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
