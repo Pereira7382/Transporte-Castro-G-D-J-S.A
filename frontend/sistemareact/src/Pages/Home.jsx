@@ -1,11 +1,16 @@
 import React from 'react'
 import Layout from '../Components/Layout/Layout'
-import { FaBeer } from 'react-icons/fa';
+
+
+import Carrusel from '../Components/paginaPrincipal';
 
 const Home = () => {
   return (
     <Layout>
-        <h1 className='text-primary text-center'>HoL <FaBeer/></h1>
+        <br></br>
+        <h1 className='text-primary text-center'>Sistema de Transporte </h1>
+        <br></br>
+        <Carrusel />
     </Layout>
   )
 }
