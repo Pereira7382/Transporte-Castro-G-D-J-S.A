@@ -77,10 +77,10 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
         document.body.classList.remove("modal-open");
         document.body.style.paddingRight = "0";
       } else {
-        console.error("Error al actualizar el registro");
+        toast.error("Error al actualizar el registro");
       }
     } catch (error) {
-      console.error("Error en la conexión con el servidor:", error);
+      toast.error("Error en la conexión con el servidor:", error);
     }
   };
 

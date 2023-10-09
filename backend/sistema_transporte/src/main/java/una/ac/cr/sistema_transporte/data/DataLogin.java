@@ -48,53 +48,6 @@ public class DataLogin extends DataBase {
         return null;
     }
     
-
-    /*public boolean agregarUsuario(Usuario usuario) throws SQLException {
-        String query = "INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ") VALUES (?, ?)";
-
-        Connection con = getConexion(); PreparedStatement prepare = con.prepareStatement(query);
-        try {
-
-            // Desactivar el modo de autocommit
-            con.setAutoCommit(false);
-
-            prepare.setString(1, usuario.getUsuario());
-            prepare.setString(2, usuario.getClave());
-
-            prepare.executeUpdate();
-
-            // Confirmar manualmente la transacción
-            con.commit();
-
-            return true;
-        } catch (SQLException ex) {
-            // Manejo de excepciones
-            ex.printStackTrace();
-
-            try {
-                // Si se produce una excepción, realizar un rollback para deshacer la transacción
-                if (con != null) {
-                    con.rollback();
-                }
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
-        } finally {
-            try {
-                // Restaurar el modo de autocommit a true y cerrar la conexión
-                if (con != null) {
-                    con.setAutoCommit(true);
-                    con.close();
-                }
-            } catch (SQLException closeEx) {
-                closeEx.printStackTrace();
-            }
-        }
-
-        return false;
-    }*/
-
-    
     public boolean agregarUsuario(Usuario usuario) {
         try {
             Connection cn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/db_sistema_transporte", "root", "");
