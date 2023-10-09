@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static una.ac.cr.sistema_transporte.data.DataMovimiento.ID_PIEZA;
 import una.ac.cr.sistema_transporte.domain.Inventario;
 
 public class DataInventario extends DataBase {

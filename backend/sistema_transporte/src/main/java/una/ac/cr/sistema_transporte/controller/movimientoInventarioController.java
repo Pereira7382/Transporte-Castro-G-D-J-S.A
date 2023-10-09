@@ -1,13 +1,16 @@
 
 package una.ac.cr.sistema_transporte.controller;
 
+import java.util.LinkedList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import una.ac.cr.sistema_transporte.Logica.LogicaMovimientos;
@@ -26,5 +29,13 @@ public class movimientoInventarioController {
     public MovimientoInventario guardarMovimiento(@RequestBody MovimientoInventario movimiento) {
         logica.registrarMovimiento(movimiento);
         return movimiento;
+    }
+    
+    
+    @GetMapping()
+    @ResponseBody
+    public LinkedList<MovimientoInventario> movimientosPieza(@RequestParam int pieza) {
+        LinkedList<MovimientoInventario> movimientosPieza = logica.obtenerMovimientosPieza(pieza);
+        return movimientosPieza;
     }
 }

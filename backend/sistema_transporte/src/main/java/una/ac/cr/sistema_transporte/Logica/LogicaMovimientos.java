@@ -1,5 +1,6 @@
 package una.ac.cr.sistema_transporte.Logica;
 
+import java.util.LinkedList;
 import una.ac.cr.sistema_transporte.data.DataInventario;
 import una.ac.cr.sistema_transporte.data.DataMovimiento;
 import una.ac.cr.sistema_transporte.domain.Inventario;
@@ -31,6 +32,10 @@ public class LogicaMovimientos {
         }
         //mando a actualizar el inventario
         return dataInv.actualizarPieza(pieza);
+    }
+    
+    public LinkedList<MovimientoInventario> obtenerMovimientosPieza(int id_pieza){
+        return data.movimientosPieza(id_pieza);
     }
 
 }
