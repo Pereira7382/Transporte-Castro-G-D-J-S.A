@@ -8,11 +8,12 @@ import "jspdf-autotable";
 import { FaPlus } from "react-icons/fa";
 import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
+import ModalMovimientoInventario from "./ModalMovimientoInventario";
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
   const [inventario, setInventario] = useState(lista);
-
+  const [modalPiezaId, setModalPiezaId] = useState(null);
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -88,6 +89,12 @@ const TablaInventario = ({ lista }) => {
     setInventarioAActualizar({ ...item });
   };
 
+  const handleOpenModal = (piezaId) => {
+    // Abre el modal y pasa el ID de la pieza al componente ModalMovimientoInventario
+    setModalPiezaId(piezaId); // Suponiendo que tienes un estado para el ID de la pieza en el componente padre
+  };
+  
+
   useEffect(() => {
     setInventario(lista);
   }, [lista]);
@@ -124,12 +131,20 @@ const TablaInventario = ({ lista }) => {
             >
               Actualizar
             </button>
-            <button variant="contained" color="default">
+            <button
+              variant="contained"
+              color="primary"
+              id="btnModalMovimientoInventario"
+              data-bs-toggle="modal"
+              data-bs-target="#modalMovimientoInventario"
+              onClick={() => handleOpenModal(row.original.id)} // Pasa el ID de la pieza al abrir el modal
+            >
               Movimiento
             </button>
+
           </Box>
         )}
-        renderTopToolbarCustomActions={({ table }) => (
+        renderTopToolbarCustomActions={({ }) => (
           <Box
             sx={{
               display: "flex",
@@ -167,6 +182,8 @@ const TablaInventario = ({ lista }) => {
           setInventario(updatedInventario);
         }}
       />
+      <ModalMovimientoInventario pieza={modalPiezaId} />
+
     </>
   );
 };

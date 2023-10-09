@@ -14,17 +14,19 @@ const ModalInsertarProveedor = () => {
   });
 
   // Función para manejar cambios en los campos del formulario
-// Función para manejar cambios en los campos del formulario
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  let newValue = value; // Valor que se actualizará en el estado
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
 
-  // Validar campo de correo electrónico
-  if (name === 'correo_electronico') {
-    const emailRegex = /^[A-Za-z0-9@.]+$/;
-
+    
+// Validar campo de correo electrónico
+if (name === 'correo_electronico') {
+    const emailRegex = /^[A-Za-z@]+$/;
+  
     if (!emailRegex.test(value)) {
-      newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de correo electrónico
+        setFormData({ ...formData, [name]: value });
+ 
+      return; // No actualizar el estado si no cumple con la expresión regular de correo electrónico
     }
   }
 
@@ -33,7 +35,8 @@ const handleChange = (e) => {
     const phoneRegex = /^[0-9]+$/;
 
     if (!phoneRegex.test(value)) {
-      newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de teléfono
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de teléfono
     }
   }
 
@@ -42,7 +45,8 @@ const handleChange = (e) => {
     const contactRegex = /^[A-Za-z0-9\s]+$/;
 
     if (!contactRegex.test(value)) {
-      newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de contacto
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de contacto
     }
   }
 
@@ -51,14 +55,12 @@ const handleChange = (e) => {
     const addressRegex = /^[A-Za-z0-9\s]+$/;
 
     if (!addressRegex.test(value)) {
-      newValue = ''; // Establecer el valor como cadena vacía si no cumple con la expresión regular de dirección
+        setFormData({ ...formData, [name]: value });
+      return; // No actualizar el estado si no cumple con la expresión regular de dirección
     }
   }
-
-  // Actualizar el estado con el nuevo valor
-  setFormData({ ...formData, [name]: newValue });
-};
-
+    setFormData({ ...formData, [name]: value });
+  };
 
   // Función para manejar el envío del formulario
   const handleSubmit = async () => {
