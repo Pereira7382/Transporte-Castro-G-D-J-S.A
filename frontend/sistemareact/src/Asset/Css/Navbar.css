@@ -2,24 +2,28 @@
 
 /* Estilos para el navbar */
 .navbar {
-    background-color: #0088a9;
-    color: black;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilos para los enlaces del navbar */
-  .navbar-nav .nav-link {
-    color: black;
-    text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
-    padding: 10px 20px; /* Añade espacio interno al enlace para que se comporte como un botón */
-    border-radius: 5px; /* Añade bordes redondeados al enlace */
-    background-color: transparent; /* Establece el fondo transparente inicialmente */
-    transition: 0.3s ease;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: white; /* Cambia el color del texto al pasar el cursor sobre él */
-    background-color: #3b4e53; /* Cambia el fondo del enlace al pasar el cursor sobre él */
-  }
-  
+  background-color: #0088a9;
+  color: black;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los enlaces del navbar */
+.navbar-nav .nav-link {
+  color: black;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: 0.3s ease;
+}
+
+
+.nav-item-move-right {
+  margin-left: 10px; 
+}
+
+.navbar-nav .nav-link:hover {
+  color: white;
+  background-color: #3b4e53;
+}
