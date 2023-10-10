@@ -109,7 +109,7 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
                 </div>
                 <div className="mb-3">
                   <label htmlFor="cantidad" className="form-label">Cantidad</label>
-                  <input type="text" className="form-control" id="cantidad" name="cantidad" value={formData.cantidad} onChange={handleChange} />
+                  <input type="text" className="form-control" id="cantidad" name="cantidad" value={formData.cantidad} onChange={handleChange} readOnly/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="tipo" className="form-label">Tipo</label>

@@ -15,8 +15,10 @@ public class LogicaMovimientos {
         //primero registrar el movimiento en la tabla de movimientos 
         if (data.registrarMovimiento(movimiento)) {
             return actualizarInventario(movimiento);
+        }else{
+            return false;
         }
-        return false;
+        
     }
 
     public boolean actualizarInventario(MovimientoInventario movimiento) {

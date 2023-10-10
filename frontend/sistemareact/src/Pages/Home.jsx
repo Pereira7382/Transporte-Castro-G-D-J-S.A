@@ -7,8 +7,6 @@ import Carrusel from '../Components/paginaPrincipal';
 const Home = () => {
   return (
     <Layout>
-        
-        
         <Carrusel />
     </Layout>
   )
