@@ -61,4 +61,46 @@ public class DataLogin extends DataBase {
             return false;
         }
     }
+    
+    
+     public boolean buscarEmail(String email) {
+        boolean encontrado = false;
+        String query = "SELECT COUNT(*) FROM " + TB_USUARIOS + " WHERE " + USUARIO + " = ?";
+        Connection con = getConexion();
+
+        try {
+            PreparedStatement prepared = con.prepareStatement(query);
+            prepared.setString(1, email);
+            ResultSet result = prepared.executeQuery();
+            if (result.next()) {
+                int count = result.getInt(1);
+                encontrado = (count == 1);
+            }
+
+            prepared.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return encontrado;
+    }
+     
+     
+     public boolean asociarTokenRecuperacion(String email, String token) {
+    Connection con = getConexion();
+    String query = "UPDATE " + TB_USUARIOS + " SET token_recuperacion = ? WHERE " + USUARIO + " = ?";
+
+    try (PreparedStatement prepared = con.prepareStatement(query)) {
+        prepared.setString(1, token);
+        prepared.setString(2, email);
+        int rowsUpdated = prepared.executeUpdate();
+
+        return rowsUpdated > 0;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        // Manejar la excepción, por ejemplo, loggear el error
+        return false;
+    }
+}
+
 }

@@ -4,15 +4,20 @@
  */
 package una.ac.cr.sistema_transporte.Logica;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.LinkedList;
 import una.ac.cr.sistema_transporte.data.DataLogin;
 import una.ac.cr.sistema_transporte.domain.Usuario;
 import una.ac.cr.sistema_transporte.security.Encriptacion;
+import una.ac.cr.sistema_transporte.service.ServiceEmail;
 
 public class LogicaLogin {
     
     Encriptacion encriptacion = new Encriptacion();
     DataLogin dataLogin = new DataLogin();
+   
     
     public boolean validarAcceso(Usuario usuario){
         //recuperar lista de usuarios registrados en la base de datos.
@@ -47,4 +52,20 @@ public class LogicaLogin {
         
     }
     
+
+public String generarTokenUnico(String informacionUnica) {
+         try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(informacionUnica.getBytes());
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
+
+
+    
+

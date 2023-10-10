@@ -1,5 +1,6 @@
 package una.ac.cr.sistema_transporte.controller;
 
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import una.ac.cr.sistema_transporte.domain.Usuario;
 public class LoginController {
     
     LogicaLogin logicaLogin = new LogicaLogin();
+    
 
     @PostMapping(value = "/validar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
     @ResponseBody
@@ -37,6 +39,12 @@ public class LoginController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public boolean agregarUsuario(@RequestBody Usuario usuario) {
+        System.out.println("entrooooooooooooo");
         return logicaLogin.agregarUsuario(usuario);
     }
+
+    
+    
+    
+    
 }

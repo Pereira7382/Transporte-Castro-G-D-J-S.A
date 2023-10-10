@@ -10,7 +10,7 @@ const RecuperarContrasena = () => {
 
     try {
       // Enviar la solicitud de recuperación de contraseña al backend
-      const response = await fetch("http://localhost:8080/login/recuperar-contrasena", {
+      const response = await fetch("http://localhost:8080/loginRep/recuperar-contrasena", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
