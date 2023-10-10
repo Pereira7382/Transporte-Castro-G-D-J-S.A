@@ -111,7 +111,7 @@ const ModalActualizarCamion = ({ camion, actualizarTablaCamiones }) => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="kilometraje" className="form-label">Kilometraje</label>
-                    <input type="text" className="form-control" id="kilometraje" name="kilometraje" value={formData.kilometraje} onChange={handleChange} />
+                    <input type="text" className="form-control" id="kilometraje" name="kilometraje" value={formData.kilometraje} onChange={handleChange} readOnly/>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="tipo_camion" className="form-label">Tipo de Camión</label>

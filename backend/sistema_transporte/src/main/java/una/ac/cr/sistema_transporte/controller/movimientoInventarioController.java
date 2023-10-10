@@ -31,11 +31,11 @@ public class movimientoInventarioController {
         return movimiento;
     }
     
-    
     @GetMapping()
     @ResponseBody
     public LinkedList<MovimientoInventario> movimientosPieza(@RequestParam int pieza) {
         LinkedList<MovimientoInventario> movimientosPieza = logica.obtenerMovimientosPieza(pieza);
+        System.out.println("\n cantidad de movimientos encontrados: " + movimientosPieza.size());
         return movimientosPieza;
     }
 }

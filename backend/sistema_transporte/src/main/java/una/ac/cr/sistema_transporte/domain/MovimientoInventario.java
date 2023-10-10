@@ -1,12 +1,15 @@
 
 package una.ac.cr.sistema_transporte.domain;
 
+import java.sql.Date;
+
 public class MovimientoInventario {
     private int id;
     private String descripcion;
     private String tipo_movimiento;
     private int cantidad;
     private int id_pieza;
+    private Date fecha_movimiento;
 
     public int getId() {
         return id;
@@ -48,14 +51,22 @@ public class MovimientoInventario {
         this.id_pieza = id_pieza;
     }
 
-    public MovimientoInventario(int id, String descripcion, String tipo_movimiento, int cantidad, int id_pieza) {
+    public Date getFecha_movimiento() {
+        return fecha_movimiento;
+    }
+
+    public void setFecha_movimiento(Date fecha_movimiento) {
+        this.fecha_movimiento = fecha_movimiento;
+    }
+
+    public MovimientoInventario(int id, String descripcion, String tipo_movimiento, int cantidad, int id_pieza, Date fecha_movimiento) {
         this.id = id;
         this.descripcion = descripcion;
         this.tipo_movimiento = tipo_movimiento;
         this.cantidad = cantidad;
         this.id_pieza = id_pieza;
+        this.fecha_movimiento = fecha_movimiento;
     }
-
     public MovimientoInventario() {
     }
 }

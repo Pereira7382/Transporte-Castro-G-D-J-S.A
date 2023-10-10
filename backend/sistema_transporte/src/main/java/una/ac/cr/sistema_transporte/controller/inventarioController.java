@@ -50,7 +50,7 @@ public class inventarioController {
     }
     
     
-       @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> actualizarInventario(@PathVariable int id, @RequestBody Inventario inventarioActualizado) {
         Optional<Inventario> optionalInventario = inventarioRepository.obtenerInventarioPorId(id);
