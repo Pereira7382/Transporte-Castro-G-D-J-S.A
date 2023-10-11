@@ -4,7 +4,7 @@
 .navbar {
   background-color: #0088a9;
   color: black;
-  padding: 2px;
+  padding: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -31,7 +31,10 @@
 /* Navbar.css */
 .title {
   /* Agrega tus estilos CSS aquí */
-  font-size: 25px; /* Ejemplo de estilo */
+  font-size: 15px; /* Ejemplo de estilo */
   margin-left: -320px; /* Ejemplo de margen derecho para mover la posición */
   /* Agrega más estilos según tus necesidades */
+  font-family: 'Tu Fuente Personalizada', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* Cambia 'Tu Fuente Personalizada' a la fuente que desees */
+  font-size: 24px; /* Cambia el tamaño de fuente a tu preferencia */
+  font-weight: bold; /* Cambia el grosor de la fuente si es necesario */
 }
