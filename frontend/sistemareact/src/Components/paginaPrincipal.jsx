@@ -1,9 +1,11 @@
 import React from 'react'; 
+
+import camion1 from '../Asset/images/camion1.jpg'
 import camion2 from '../Asset/images/camion2.jpg'
-import camion3 from '../Asset/images/camion2.jpg'
-import camion4 from '../Asset/images/camion3.jpg'
+import camion3 from '../Asset/images/camion3.jpg'
 
 
+import '../Asset/Css/estiloPrincipal.css';
 
 const Carrusel = () => {
 
@@ -18,14 +20,15 @@ const Carrusel = () => {
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src={camion2} className="d-block w-100" alt="..." />
+                        <img src={camion1} className="d-block w-100 carousel-image" alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src={camion3} className="d-block w-100" alt="..." />
+                        <img src={camion2} className="d-block w-100 carousel-image" alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src={camion4} className="d-block w-100" alt="..." />
+                        <img src={camion3} className="d-block w-100 carousel-image" alt="..." />
                     </div>
+                 
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
