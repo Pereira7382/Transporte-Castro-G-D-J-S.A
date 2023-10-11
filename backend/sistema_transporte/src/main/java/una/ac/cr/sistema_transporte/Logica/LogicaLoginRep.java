@@ -38,7 +38,7 @@ public class LogicaLoginRep {
             String linkRecuperacion = "http://localhost:3000/admin-CambioContrasenia?token=" + token;
             String cuerpoCorreo = "Haz clic en el siguiente enlace para recuperar tu contraseña: " + linkRecuperacion;
             System.out.println(email + "      " + cuerpoCorreo);
-            serviceEmail.enviarCorreo(email, "josepablopereira2002@gmail.com", "Recuperación de Contraseña", cuerpoCorreo);
+            serviceEmail.enviarCorreo(email, "Recuperación de Contraseña", cuerpoCorreo);
 
             return true;
         } else {
