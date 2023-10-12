@@ -16,6 +16,8 @@ public class DataLogin extends DataBase {
     public final static String ID_USUARIO = "id";
     public final static String USUARIO = "usuario";
     public final static String CONTRASENIA = "contrasenia";
+    public final static String TOKEN = "token_recuperacion";
+    public final static String ESTADO = "estado";
 
     public LinkedList<Usuario> obtenerUsuarios() {
         boolean acceso = false;
@@ -51,13 +53,17 @@ public class DataLogin extends DataBase {
     public boolean agregarUsuario(Usuario usuario) {
         try {
             Connection cn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/db_sistema_transporte", "root", "");
-            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ") VALUES (?, ?)");
+            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA +", "+
+                    TOKEN+ ", " + ESTADO + ") VALUES (?, ?, ?, ?)");
             
             sentencia.setString(1, usuario.getUsuario());
             sentencia.setString(2, usuario.getClave());
+            sentencia.setString(3, usuario.getToken_recuperacion());
+            sentencia.setInt(4, usuario.getEstado());
             sentencia.execute();
             return true;
         } catch (Exception e) {
+            System.out.println("\n error: " +  e.toString());
             return false;
         }
     }
