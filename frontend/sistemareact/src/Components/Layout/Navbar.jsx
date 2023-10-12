@@ -2,12 +2,19 @@ import '../../Asset/Css/Navbar.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'animate.css/animate.min.css'; // Importa las animaciones de Animate.css
+import logo from '../../Asset/images/logo.png'
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">Transportes Castro G D JS.A</Link>
+        <Link to='/'>
+        <img src={logo}  width='150' alt=""/>
+        </Link>
+
+        <Link className="navbar-brand" to="/">
+          <span className="title">Transportes Castro G D JS.A</span>
+        </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
