@@ -2,24 +2,39 @@
 
 /* Estilos para el navbar */
 .navbar {
-    background-color: #0088a9;
-    color: black;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilos para los enlaces del navbar */
-  .navbar-nav .nav-link {
-    color: black;
-    text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
-    padding: 10px 20px; /* Añade espacio interno al enlace para que se comporte como un botón */
-    border-radius: 5px; /* Añade bordes redondeados al enlace */
-    background-color: transparent; /* Establece el fondo transparente inicialmente */
-    transition: 0.3s ease;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: white; /* Cambia el color del texto al pasar el cursor sobre él */
-    background-color: #3b4e53; /* Cambia el fondo del enlace al pasar el cursor sobre él */
-  }
-  
+  background-color: #0088a9;
+  color: black;
+  padding: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los enlaces del navbar */
+.navbar-nav .nav-link {
+  color: black;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: 0.3s ease;
+}
+
+/* Estilos para mover los enlaces específicos hacia la derecha */
+.nav-item-move-right {
+  margin-left: 10px; /* Ajusta el margen izquierdo según tu preferencia */
+}
+
+.navbar-nav .nav-link:hover {
+  color: white;
+  background-color: #3b4e53;
+}
+
+/* Navbar.css */
+.title {
+  /* Agrega tus estilos CSS aquí */
+  font-size: 15px; /* Ejemplo de estilo */
+  margin-left: -215px; /* Ejemplo de margen derecho para mover la posición */
+  /* Agrega más estilos según tus necesidades */
+  font-family: 'Tu Fuente Personalizada', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* Cambia 'Tu Fuente Personalizada' a la fuente que desees */
+  font-size: 24px; /* Cambia el tamaño de fuente a tu preferencia */
+  font-weight: bold; /* Cambia el grosor de la fuente si es necesario */
+}

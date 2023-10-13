@@ -13,14 +13,17 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
 
   const validateForm = (name, value) => {
     if (name === "cantidad" && !/^\d+$/.test(value)) {
+      setFormData({ ...formData, [name]: value });
       return false;
     }
     
     if ((name === "codigo" || name === "descripcion") && !/^[A-Za-z0-9\s]+$/.test(value)) {
+      setFormData({ ...formData, [name]: value });
       return false;
     }
 
     if ((name === "nombre" || name === "tipo") && !/^[A-Za-z\s]+$/.test(value)) {
+      setFormData({ ...formData, [name]: value });
       return false;
     }
 
@@ -109,7 +112,7 @@ const ModalActualizarInventario = ({ inventarioSeleccionado, actualizarTablaInve
                 </div>
                 <div className="mb-3">
                   <label htmlFor="cantidad" className="form-label">Cantidad</label>
-                  <input type="text" className="form-control" id="cantidad" name="cantidad" value={formData.cantidad} onChange={handleChange} />
+                  <input type="text" className="form-control" id="cantidad" name="cantidad" value={formData.cantidad} onChange={handleChange} readOnly/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="tipo" className="form-label">Tipo</label>

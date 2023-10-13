@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import InsertCamion from './Components/InsertCamion';
 import CamionesTabla from './Components/CamionesTabla';
 import AdminInventario from './Components/AdminInventario';
+import AdminProveedor from './Components/AdminProveedor';
 import Home from './Pages/Home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/admin-camiones" element={<CamionesTabla />} />
           <Route path="/admin-form-camiones" element={<InsertCamion />} />
           <Route path="/admin-inventario" element={<AdminInventario />} />
+          <Route path="/admin-proveedor" element={<AdminProveedor />} />
           <Route path="/admin-RecuperarContrasena" element={<RecuperarContrasena />} />
           <Route path="/admin-ModalMovimientoInventario" element={<ModalMovimientoInventario />} />
           <Route path="/admin-CambioContrasenia" element={<CambioContrasenia />} />
