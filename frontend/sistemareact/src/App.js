@@ -9,7 +9,8 @@ import RecuperarContrasena from './Components/RecuperacionContrasenia';
 import Home from './Pages/Home';
 import AdminInventario from './Components/AdminInventario';
 import AdminProveedor from './Components/AdminProveedor';
-
+import ModalMovimientoInventario from './Components/ModalMovimientoInventario';
+import CambioContrasenia from './Components/CambioContrasenia';
 export const AuthContext = React.createContext();
 
 function App() {
@@ -54,6 +55,11 @@ function App() {
             path="/admin_RecuperarContrasena"
             element={<Seguridad element={<RecuperarContrasena />} />}
           />
+          <Route
+            path="/admin-CambioContrasenia"
+            element={<Seguridad element={<CambioContrasenia />} />}
+          />
+
         </Routes>
       </div>
     </AuthContext.Provider>
