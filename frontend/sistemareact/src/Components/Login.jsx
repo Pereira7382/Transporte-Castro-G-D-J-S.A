@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import * as Components from '../Asset/Js/Components';
 
-function Login() {
+function Login({ setAuthenticated }) {
   const [signIn, setSignIn] = useState(true);
   const [formData, setFormData] = useState({
     usuario: "",
@@ -57,6 +57,7 @@ function Login() {
       const response = await axios.post("http://localhost:8080/login/validar", acceso); 
 
       console.log("Inicio de sesión exitoso:", response.data);
+      setAuthenticated(true); // Establecer el estado de autenticación en verdadero.
       navigate("/Home"); 
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
