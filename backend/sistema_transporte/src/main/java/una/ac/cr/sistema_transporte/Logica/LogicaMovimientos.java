@@ -1,5 +1,6 @@
 package una.ac.cr.sistema_transporte.Logica;
 
+import java.sql.Date;
 import java.util.LinkedList;
 import una.ac.cr.sistema_transporte.data.DataInventario;
 import una.ac.cr.sistema_transporte.data.DataMovimiento;
@@ -38,6 +39,10 @@ public class LogicaMovimientos {
     
     public LinkedList<MovimientoInventario> obtenerMovimientosPieza(int id_pieza){
         return data.movimientosPieza(id_pieza);
+    }
+    
+    public LinkedList<MovimientoInventario> obtenerMovimientosPorFecha(Date fechaInicio, Date fechaFin){
+        return data.movimientoPorFecha(fechaInicio, fechaFin);
     }
 
 }

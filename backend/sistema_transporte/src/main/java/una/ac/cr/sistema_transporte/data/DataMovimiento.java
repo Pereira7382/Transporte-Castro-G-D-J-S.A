@@ -1,6 +1,7 @@
 package una.ac.cr.sistema_transporte.data;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,4 +64,27 @@ public class DataMovimiento extends DataBase {
         return movimientos;
     }
 
+    public LinkedList<MovimientoInventario> movimientoPorFecha(Date fechaInicio, Date fechaFin){
+        LinkedList<MovimientoInventario> movimientos = new LinkedList<>();
+        Connection cn = getConexion();
+        String query = "SELECT * FROM " + TABLAMOVIMIENTOS + " WHERE " + FECHA + " BETWEEN '"+ fechaInicio +"' AND '" + fechaFin +"'";
+        try {
+            PreparedStatement prepare = cn.prepareStatement(query);
+            ResultSet result = prepare.executeQuery();
+              while (result.next()) {
+                MovimientoInventario movimiento = new MovimientoInventario();
+                movimiento.setId(result.getInt(ID));
+                movimiento.setCantidad(result.getInt(CANTIDAD));
+                movimiento.setDescripcion(result.getString(DESCRIPCION));
+                movimiento.setTipo_movimiento(result.getString(TIPO));
+                movimiento.setId_pieza(result.getInt(ID_PIEZA));
+                movimiento.setFecha_movimiento(result.getDate(FECHA));
+                movimientos.add(movimiento);
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrio un error al conectarse con la base de datos");
+        }
+        return movimientos;
+    }
+    
 }
