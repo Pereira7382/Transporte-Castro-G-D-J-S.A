@@ -25,7 +25,6 @@ public class DataInventario extends DataBase {
         Inventario pieza = new Inventario();
         Connection con = getConexion();
 
-        //SELECT * FROM `inventario` WHERE id = 3
         String query = "SELECT * FROM " + TABLAINVENTARIO + " WHERE " + ID + " = " + id_pieza;
 
         try {
@@ -44,7 +43,6 @@ public class DataInventario extends DataBase {
             
         }
         return pieza;
-
     }
 
     public boolean actualizarPieza(Inventario pieza) {
@@ -54,6 +52,26 @@ public class DataInventario extends DataBase {
         try {
             PreparedStatement prepare = con.prepareStatement(query);
             prepare.setInt(1, pieza.getCantidad());
+            prepare.setInt(2, pieza.getId());
+
+            prepare.executeUpdate();
+
+            prepare.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean eliminar(Inventario pieza) {
+        Connection con = getConexion();
+        String query = "UPDATE " + TABLAINVENTARIO + " SET activo = ? WHERE ID = ?";
+
+        try {
+            PreparedStatement prepare = con.prepareStatement(query);
+            prepare.setInt(1, pieza.getActivo());
             prepare.setInt(2, pieza.getId());
 
             prepare.executeUpdate();
