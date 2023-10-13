@@ -1,16 +1,14 @@
-import React from 'react'
-import Layout from '../Components/Layout/Layout'
-
+import React from 'react';
+import Layout from '../Components/Layout/Layout';
 
 import Carrusel from '../Components/paginaPrincipal';
-
 
 const Home = () => {
   return (
     <Layout>
-        <Carrusel />
+      <Carrusel />
     </Layout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
