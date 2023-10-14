@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CamionesTabla from './Components/CamionesTabla';
@@ -9,6 +9,7 @@ import RecuperarContrasena from './Components/RecuperacionContrasenia';
 import Home from './Pages/Home';
 import AdminInventario from './Components/AdminInventario';
 import AdminProveedor from './Components/AdminProveedor';
+import GastoCombustible from './Components/GastoCombustible';
 
 export const AuthContext = React.createContext();
 
@@ -53,6 +54,10 @@ function App() {
           <Route
             path="/admin_RecuperarContrasena"
             element={<Seguridad element={<RecuperarContrasena />} />}
+          />
+          <Route
+            path="/admin-gastosC"
+            element={<Seguridad element={<GastoCombustible />} />}
           />
         </Routes>
       </div>

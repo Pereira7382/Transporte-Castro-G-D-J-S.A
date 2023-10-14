@@ -1,9 +1,9 @@
 import '../../Asset/Css/Navbar.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import 'animate.css/animate.min.css'; // Importa las animaciones de Animate.css
 import logo from '../../Asset/images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { NavDropdown } from 'react-bootstrap';
 
 
 const Navbar = () => {
@@ -46,6 +46,13 @@ const Navbar = () => {
         </button>
         <div className="nav-item nav-item-move-right" id="navbarNav">
           <ul className="navbar-nav animate__animated animate__fadeInDown">
+            <li>
+              <NavDropdown title="Gastos" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/admin-gastosC">Combustible</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Cambio de Aceite</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Rodaje de Llantas</NavDropdown.Item>
+              </NavDropdown>
+            </li>
             <li className="nav-item nav-item-move-right">
               <a className="nav-link" href="/admin-inventario">Administrar Inventario</a>
             </li>
@@ -56,6 +63,7 @@ const Navbar = () => {
               <a className="nav-link" href="/admin-camiones">Administrar Camiones</a>
             </li>
           </ul>
+
         </div>
       </div>
     </nav>

@@ -11,8 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- *
- * @author Fernanda Gonzalez
+ * * @author Fernanda Gonzalez
  */
 @Entity
 @Table(name = "proveedor")
