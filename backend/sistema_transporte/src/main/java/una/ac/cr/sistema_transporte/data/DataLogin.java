@@ -19,6 +19,7 @@ public class DataLogin extends DataBase {
     public final static String TOKEN = "token_recuperacion";
     public final static String ESTADO = "estado";
     public final static String ESTADO_TOKEN = "estado_token";
+    
 
     public LinkedList<Usuario> obtenerUsuarios() {
         boolean acceso = false;

@@ -49,7 +49,7 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
     Map<String, String> response = new HashMap<>();
 
     if (logicaLogin.validarEstadoToken(email)) {
-        response.put("message", "El enlace de recuperación enviado al correo aún no ha expirado.");
+        response.put("message", "El enlace de recuperación ya enviado con exito.");
         return ResponseEntity.ok(response);
     } else {
         exitoso = logicaLogin.iniciarRecuperacionContrasena(email, 1);
@@ -58,69 +58,18 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
             response.put("message", "Solicitud de recuperación de contraseña enviada correctamente");
             return ResponseEntity.ok(response);
         } else {
-            response.put("message", "Error al enviar la solicitud de recuperación de contraseña");
+            response.put("message", "El correo ingresado no exite.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }
 
-/*
-    @PostMapping("/reset-password")
-public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
-    String newPassword = request.get("newPassword");
-    String auxCorreo="";
-    Map<String, Object> response = new HashMap<>();
-    // Aquí debes tener la clave secreta que usaste para firmar el token
-    String claveSecreta = "a1b2C3d4E5f6G7h8I9j0KlMnOpQrStUvWxYzAqBpCrDsEtFuGvHwIxJyKzLmNoPjQkRlSmTnUoVpWqXrYsZtUvWxYzA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5ZaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
-
-    byte[] claveBytes = claveSecreta.getBytes(StandardCharsets.UTF_8);
-    Key jwtSecret = new SecretKeySpec(claveBytes, SignatureAlgorithm.HS256.getJcaName());
-
-    try {
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
-                .getBody();
-
-        Date expirationDate = claims.getExpiration();
-        Date currentDate = new Date();
-
-        if (expirationDate.before(currentDate)) {
-            // El token ha expirado
-            logicaLogin.actualizarEstadoToken(token);
-            response.put("type", "error");
-            response.put("message", "El enlace ha expirado");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } else {
-            boolean exitoso = logicaLogin.actualizarContraseniaRecuperacion(token, newPassword);
-
-            if (exitoso) {
-                response.put("message", "Contraseña cambiada exitosamente");
-                return ResponseEntity.ok(response);
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al enviar la solicitud de recuperación de contraseña");
-            }
-        }
-    } catch (ExpiredJwtException ex) {
-        
-      //  logicaLogin.actualizarEstadoToken(correoElectronico); // Actualizar el estado en la base de datos
-        response.put("type", "error");
-        response.put("message", "El enlace ha expirado");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-    } catch (Exception e) {
-        // Manejar otras excepciones
-        response.put("type", "error");
-        response.put("message", "Error al procesar el token");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-}
-*/
 
 @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
         String newPassword = request.get("newPassword");
-        Map<String, Object> response = new HashMap<>();
         String correoElectronico = "";
+        Map<String, Object> response = new HashMap<>();
 
         String claveSecreta = "a1b2C3d4E5f6G7h8I9j0KlMnOpQrStUvWxYzAqBpCrDsEtFuGvHwIxJyKzLmNoPjQkRlSmTnUoVpWqXrYsZtUvWxYzA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5ZaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
 
@@ -156,6 +105,8 @@ public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @Req
                 }
             }
         } catch (ExpiredJwtException ex) {
+            correoElectronico = ex.getClaims().getSubject();
+            System.out.println(correoElectronico);
             logicaLogin.actualizarEstadoToken(correoElectronico);
             response.put("type", "error");
             response.put("message", "El enlace ha expirado");

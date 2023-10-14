@@ -20,8 +20,7 @@ const CambioContrasenia = () => {
   }, []);
 
   useEffect(() => {
-    // Esta función se ejecutará cada vez que responseType cambie
-    // Limpia los campos si responseType es "success"
+    
     if (responseType === "success") {
       setNuevaContrasenia("");
       setConfirmarContrasenia("");
@@ -33,7 +32,7 @@ const CambioContrasenia = () => {
 
     if (nuevaContrasenia !== confirmarContrasenia) {
       setError("Las contraseñas no coinciden");
-      console.log(error); // Agrega este console.log para verificar el valor de error
+      console.log(error); 
       return;
     }
 

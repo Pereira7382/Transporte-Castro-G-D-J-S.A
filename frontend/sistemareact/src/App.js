@@ -55,10 +55,7 @@ function App() {
             path="/admin_RecuperarContrasena"
             element={<Seguridad element={<RecuperarContrasena />} />}
           />
-          <Route
-            path="/admin-CambioContrasenia"
-            element={<Seguridad element={<CambioContrasenia />} />}
-          />
+          <Route path="/admin-CambioContrasenia" element={<CambioContrasenia />} />
 
         </Routes>
       </div>
