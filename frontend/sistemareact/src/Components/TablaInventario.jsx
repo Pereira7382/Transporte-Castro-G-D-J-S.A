@@ -10,12 +10,37 @@ import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
 import ModalMovimientoInventario from "./ModalMovimientoInventario";
 import ModalInsertarFechaReporte from "./ModalInsertarFechaReporte";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Campana from './Campana'; // Importa el componente de la campana de notificaciones
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Notificaciones from './Notificaciones'; // Asegúrate de que la ruta al archivo Notificaciones sea correcta
+
+
+
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
-  const [inventario, setInventario] = useState(lista);
   const [modalPiezaId, setModalPiezaId] = useState(null);
-  const [modalReporteFecha] = useState(null);
+  const [notificaciones, setNotificaciones] = useState([]);;
+  const [cargando, setCargando] = useState(true);
+  const [modalReporteFecha, setModalReporteFecha] = useState(null);
+  const [inventario, setInventario] = useState([]);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8080/inventario') // Reemplaza 'tu-endpoint-api' con la URL real de tu API
+      .then(response => response.json())
+      .then(data => {
+        setInventario(data);
+        setCargando(false);
+      })
+      .catch(error => {
+        console.error('Error al recuperar datos:', error);
+        setCargando(false);
+      });
+  }, []);
 
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -24,7 +49,6 @@ const TablaInventario = ({ lista }) => {
       body: inventario.map(item => columns.map(column => item[column.accessorKey])),
     });
     doc.save("tabla_inventario.pdf");
-
   };
 
   const columns = useMemo(
@@ -71,6 +95,34 @@ const TablaInventario = ({ lista }) => {
     }
   };
 
+  useEffect(() => {
+    if (inventario.length > 0) {
+    
+      const nuevasNotificaciones = inventario.map(item => {
+        let mensaje = '';
+        let severidad = '';
+  
+        if (item.cantidad <= 10) {
+          mensaje = `¡Alerta! El artículo ${item.nombre} está a punto de agotarse. Cantidad: ${item.cantidad}`;
+          severidad = 'warning';
+        } else if (item.cantidad > 10 && item.cantidad < 40) {
+          mensaje = `Recomendación: Reabastecer el artículo ${item.nombre}. Cantidad: ${item.cantidad}`;
+          severidad = 'info';
+        }
+  
+        return {
+          mensaje,
+          severidad,
+        };
+      });
+  
+      setNotificaciones(nuevasNotificaciones);
+    }
+  }, [inventario]);
+
+  
+  
+
   const handleEliminar = (id) => {
     fetch(`http://localhost:8080/inventario/${id}`, {
       method: "DELETE",
@@ -96,12 +148,10 @@ const TablaInventario = ({ lista }) => {
     // Abre el modal y pasa el ID de la pieza al componente ModalMovimientoInventario
     setModalPiezaId(piezaId); // Suponiendo que tienes un estado para el ID de la pieza en el componente padre
   };
-  
 
-
-  useEffect(() => {
-    setInventario(lista);
-  }, [lista]);
+  if (cargando) {
+    return <div>Cargando inventario...</div>;
+  }
 
   return (
     <>
@@ -198,6 +248,10 @@ const TablaInventario = ({ lista }) => {
       />
       <ModalMovimientoInventario pieza={modalPiezaId} />
       <ModalInsertarFechaReporte reporte={modalReporteFecha} />
+      <Campana notificaciones={notificaciones} />
+      <Notificaciones notificaciones={notificaciones} />
+    
+
     </>
   );
 };
