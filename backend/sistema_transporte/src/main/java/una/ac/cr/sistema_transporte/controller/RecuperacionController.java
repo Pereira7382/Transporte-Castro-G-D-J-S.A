@@ -106,7 +106,6 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
             }
         } catch (ExpiredJwtException ex) {
             correoElectronico = ex.getClaims().getSubject();
-            System.out.println(correoElectronico);
             logicaLogin.actualizarEstadoToken(correoElectronico);
             response.put("type", "error");
             response.put("message", "El enlace ha expirado");
