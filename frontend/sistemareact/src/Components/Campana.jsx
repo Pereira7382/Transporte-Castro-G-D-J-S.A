@@ -102,10 +102,20 @@ const Campana = ({ notificaciones }) => {
   const cantidadNotificaciones = notificaciones.filter(
     (notification) => notification.mensaje && notification.severidad
   ).length;
-
   return (
     <div style={styles.campanaContainer} ref={campanaRef}>
-      {/* ... (resto del código) */}
+      <div
+        style={{
+          ...styles.campanaIcon,
+          ...(mostrarNotificaciones && styles.campanaIconHover),
+        }}
+        onClick={handleToggleNotificaciones}
+      >
+        <FiBell /> {/* Ícono de campana */}
+        {cantidadNotificaciones > 0 && (
+          <span style={{ marginLeft: '5px', fontWeight: 'bold' }}>{cantidadNotificaciones}</span>
+        )}
+      </div>
       {mostrarNotificaciones && (
         <div style={styles.notificacionesLista} ref={notificacionesRef}>
           {notificaciones
@@ -131,5 +141,6 @@ const Campana = ({ notificaciones }) => {
     </div>
   );
 };
+
 
 export default Campana;
