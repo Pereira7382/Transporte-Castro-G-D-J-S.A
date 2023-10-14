@@ -9,11 +9,14 @@ import { FaPlus } from "react-icons/fa";
 import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
 import ModalMovimientoInventario from "./ModalMovimientoInventario";
+import ModalInsertarFechaReporte from "./ModalInsertarFechaReporte";
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
   const [inventario, setInventario] = useState(lista);
   const [modalPiezaId, setModalPiezaId] = useState(null);
+  const [modalReporteFecha] = useState(null);
+
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -54,7 +57,7 @@ const TablaInventario = ({ lista }) => {
         header: "Estado",
         accessorKey: "activo",
         cellRenderer: (rowData) => {
-          return rowData.activo == 1 ? "Activo" : "Inactivo";
+          return rowData.activo === 1 ? "Activo" : "Inactivo";
         },
       },
     ],
@@ -94,6 +97,7 @@ const TablaInventario = ({ lista }) => {
     setModalPiezaId(piezaId); // Suponiendo que tienes un estado para el ID de la pieza en el componente padre
   };
   
+
 
   useEffect(() => {
     setInventario(lista);
@@ -141,6 +145,16 @@ const TablaInventario = ({ lista }) => {
             >
               Movimiento
             </button>
+            <button
+              variant="contained"
+              color="primary"
+              id="btnModalInsertarFechaReporte"
+              data-bs-toggle="modal"
+              data-bs-target="#modalInsertar"
+            >
+              ReportePorFecha
+            </button>
+
 
           </Box>
         )}
@@ -183,7 +197,7 @@ const TablaInventario = ({ lista }) => {
         }}
       />
       <ModalMovimientoInventario pieza={modalPiezaId} />
-
+      <ModalInsertarFechaReporte reporte={modalReporteFecha} />
     </>
   );
 };
