@@ -14,6 +14,7 @@ const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
   const [inventario, setInventario] = useState(lista);
   const [modalPiezaId, setModalPiezaId] = useState(null);
+  const [modalPiezaCantidadActual, setModalPiezaCantidadActual] = useState(null);
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -89,9 +90,11 @@ const TablaInventario = ({ lista }) => {
     setInventarioAActualizar({ ...item });
   };
 
-  const handleOpenModal = (piezaId) => {
+  const handleOpenModal = (piezaId, cantidadActual) => {
     // Abre el modal y pasa el ID de la pieza al componente ModalMovimientoInventario
+    console.log("cantidad actual de la pieza seleccionada: " + cantidadActual);
     setModalPiezaId(piezaId); // Suponiendo que tienes un estado para el ID de la pieza en el componente padre
+    setModalPiezaCantidadActual(cantidadActual);
   };
   
 
@@ -137,7 +140,7 @@ const TablaInventario = ({ lista }) => {
               id="btnModalMovimientoInventario"
               data-bs-toggle="modal"
               data-bs-target="#modalMovimientoInventario"
-              onClick={() => handleOpenModal(row.original.id)} // Pasa el ID de la pieza al abrir el modal
+              onClick={() => handleOpenModal(row.original.id, row.original.cantidad)} // Pasa el ID de la pieza al abrir el modal
             >
               Movimiento
             </button>
@@ -182,7 +185,9 @@ const TablaInventario = ({ lista }) => {
           setInventario(updatedInventario);
         }}
       />
-      <ModalMovimientoInventario pieza={modalPiezaId} />
+
+      <ModalMovimientoInventario pieza={modalPiezaId} cantidadActual={modalPiezaCantidadActual} />
+
 
     </>
   );

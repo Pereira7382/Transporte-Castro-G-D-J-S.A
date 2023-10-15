@@ -5,13 +5,13 @@ import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 
 
-const ModalMovimientoInventario = ({ pieza }) => {
+const ModalMovimientoInventario = ({ pieza, cantidadActual}) => {
     const [formData, setFormData] = useState({
         descripcion: '',
         cantidad: '',
         tipo_movimiento: 'Entrada',
         id_pieza: '',
-        fecha_movimiento: obtenerFechaActual(),
+        cantidad_actual:'',
     });
 
     const [movimientosPieza, setMovimientosPieza] = useState(null);
@@ -30,15 +30,6 @@ const ModalMovimientoInventario = ({ pieza }) => {
             });
 
     };
-
-    // Función para obtener la fecha actual en formato 'YYYY-MM-DD'
-    function obtenerFechaActual() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Añadir 1 porque enero es 0
-        const day = today.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
 
     const generatePDF = (movimientos) => {
         if (!movimientos || movimientos.length === 0) {
@@ -90,13 +81,13 @@ const ModalMovimientoInventario = ({ pieza }) => {
             setFormData((prevData) => ({
                 ...prevData,
                 id_pieza: pieza,
-                fecha_movimiento: obtenerFechaActual(),
+                cantidad_actual : cantidadActual,
             }));
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 id_pieza: '',
-                fecha_movimiento: obtenerFechaActual(),
+                cantidad_actual : '',
             }));
         }
     }, [pieza]);
@@ -111,35 +102,46 @@ const ModalMovimientoInventario = ({ pieza }) => {
     };
 
     const handleSubmit = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/movimientoinventario", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                setFormData({
-                    descripcion: '',
-                    cantidad: '',
-                    tipo_movimiento: 'Entrada',
-                    id_pieza: '',
-                    fecha_movimiento: obtenerFechaActual(),
+        //validacion de que la cantidad de piezas en caso de que el movimiento se salida no sea
+        //mayor que la cantidad de piezas que actuales.
+        console.log('Tipo de Movimiento:', formData.tipo_movimiento);
+        console.log('Cantidad en el Formulario:', formData.cantidad);
+        console.log('Cantidad de la Pieza:', formData.cantidad_actual);
+        if (formData.tipo_movimiento === 'Salida' && parseInt(formData.cantidad) > parseInt(formData.cantidad_actual)) {
+            toast.error('La cantidad de salida no puede ser mayor que la cantidad actual de piezas');
+            return;
+        } else {
+            try {
+                const response = await fetch("http://localhost:8080/movimientoinventario", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
                 });
 
-                document.getElementById("modalMovimientoInventario").classList.remove("show");
-                document.body.classList.remove("modal-open");
-                document.body.style.paddingRight = "0";
+                if (response.ok) {
+                    setFormData({
+                        descripcion: '',
+                        cantidad: '',
+                        tipo_movimiento: 'Entrada',
+                        id_pieza: '',
+                        cantidad_actual:'',
+                    });
 
-                toast.success('Movimiento registrado');
-            } else {
-                console.error("Error al guardar el movimiento");
+                    document.getElementById("modalMovimientoInventario").classList.remove("show");
+                    document.body.classList.remove("modal-open");
+                    document.body.style.paddingRight = "0";
+
+                    toast.success('Movimiento registrado');
+                } else {
+                    console.error("Error al guardar el movimiento");
+                }
+            } catch (error) {
+                console.error("Error en la conexión con el servidor:", error);
             }
-        } catch (error) {
-            console.error("Error en la conexión con el servidor:", error);
         }
+
     };
 
     return (
@@ -192,19 +194,6 @@ const ModalMovimientoInventario = ({ pieza }) => {
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="fecha_movimiento" className="form-label">Fecha</label>
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            id="fecha_movimiento"
-                                            name="fecha_movimiento"
-                                            value={formData.fecha_movimiento}
-                                            readOnly // Para hacerlo no editable
-                                        />
-                                    </div>
-
-
-                                    <div className="mb-3">
                                         <label htmlFor="idPieza" className="form-label"></label>
                                         <input
                                             type="hidden"
@@ -214,6 +203,18 @@ const ModalMovimientoInventario = ({ pieza }) => {
                                             value={formData.id_pieza}
                                         />
                                     </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="cant" className="form-label"></label>
+                                        <input
+                                            type="hidden"
+                                            className="form-control"
+                                            id="cant"
+                                            name="cantidad_actual"
+                                            value={formData.cantidad_actual}
+                                        />
+                                    </div>
+
                                 </form>
                             </div>
                             <div className="modal-footer">

@@ -3,11 +3,10 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const ModalInsertarGastoC = () => {
-  // Estado inicial del formulario, incluyendo el estado por defecto de 1 para "Estado"
   const [formData, setFormData] = useState({
     numero_factura: '',
     monto: '',
-    matricula: '', // Estado por defecto en 1
+    matricula: '',
     proveedor: '',
     kilometrajeAnterior: '',
     kilometrajeActual: '',
@@ -15,13 +14,9 @@ const ModalInsertarGastoC = () => {
     id_camion: '',
   });
 
-  // Estado para almacenar la lista de camiones
   const [camiones, setCamiones] = useState([]);
-
-  // Estado para almacenar la lista de proveedores
   const [proveedores, setProveedores] = useState([]);
 
-  // Use useEffect para cargar los camiones una vez que el componente esté montado
   useEffect(() => {
     obtenerCamiones();
     obtenerProveedores();
@@ -30,8 +25,17 @@ const ModalInsertarGastoC = () => {
   const obtenerCamiones = () => {
     axios.get("http://localhost:8080/camion")
       .then((response) => {
-        setCamiones(response.data); // Guardar la lista de camiones en el estado
-        console.log(response.data);
+        setCamiones(response.data);
+        if (response.data.length > 0) {
+          const camionSeleccionado = response.data[0];
+          const kmAnterior = camionSeleccionado.kilometraje;
+          setFormData(prevData => ({
+            ...prevData,
+            matricula: camionSeleccionado.matricula,
+            kilometrajeAnterior: kmAnterior,
+            id_camion: camionSeleccionado.id,
+          }));
+        }
       })
       .catch((error) => {
         console.error('Error al obtener datos de camiones:', error);
@@ -43,11 +47,17 @@ const ModalInsertarGastoC = () => {
     axios.get("http://localhost:8080/proveedor")
       .then((response) => {
         setProveedores(response.data);
-        console.log(response.data);
+        if (response.data.length > 0) {
+          const proveedorSeleccionado = response.data[0];
+          setFormData(prevData => ({
+            ...prevData,
+            proveedor: proveedorSeleccionado.id_proveedor,
+          }));
+        }
       })
       .catch((error) => {
-        console.error('Error al obtener datos de camiones:', error);
-        toast.error('Error al obtener datos de camiones');
+        console.error('Error al obtener datos de proveedores:', error);
+        toast.error('Error al obtener datos de proveedores');
       });
   };
 
@@ -61,31 +71,28 @@ const ModalInsertarGastoC = () => {
     if (name === 'matricula') {
       const camionSeleccionado = camiones.find((camion) => camion.matricula === value);
       const kmAnterior = camionSeleccionado ? camionSeleccionado.kilometraje : '';
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
         [name]: value,
         kilometrajeAnterior: kmAnterior,
-        id_camion: camionSeleccionado ? camionSeleccionado.id : camiones.length > 0 ? camiones[0].id : '',
+        id_camion: camionSeleccionado ? camionSeleccionado.id : '',
       }));
     } else if (name === 'proveedor') {
-      const proveedorSeleccionado = proveedores.find((proveedor) => proveedor.id_proveedor === parseInt(value));
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
-        [name]: proveedorSeleccionado ? proveedorSeleccionado.id_proveedor : '',
-        id_proveedor: proveedorSeleccionado ? proveedorSeleccionado.id_proveedor : proveedores.length > 0 ? proveedores[0].id_proveedor : '',
+        [name]: value,
       }));
     } else {
-      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      setFormData(prevData => ({ ...prevData, [name]: value }));
     }
   };
 
-
-
-  // Función para manejar el envío del formulario
   const handleSubmit = async () => {
+    if (parseInt(formData.kilometrajeActual) <= parseInt(formData.kilometrajeAnterior)) {
+      toast.error('El kilometraje actual debe ser mayor que el anterior');
+      return;
+    }
     try {
-      // Aquí debes realizar la conexión con el servidor en NetBeans
-      // y enviar los datos del formulario para guardar el registro
       const response = await fetch('http://localhost:8080/gastoCombustible', {
         method: 'POST',
         headers: {
@@ -95,27 +102,21 @@ const ModalInsertarGastoC = () => {
       });
 
       if (response.ok) {
-
-        // Limpiar el formulario
         setFormData({
           numero_factura: '',
           monto: '',
-          matricula: '', // Estado por defecto en 1
+          matricula: '',
           proveedor: '',
           kilometrajeAnterior: '',
           kilometrajeActual: '',
           litros: '',
         });
 
-        // Cerrar el modal
-        document.getElementById('ModalInsertarGastoC').classList.remove('show');
+        document.getElementById('modalInsertarGasto').classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.paddingRight = '0';
 
-        // Mostrar notificación alerta de éxito
         toast.success('Datos ingresados correctamente');
-        // Puedes agregar una función para cerrar el modal aquí
-        // Recargar la página después de un breve retraso
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -130,14 +131,11 @@ const ModalInsertarGastoC = () => {
   return (
     <>
       <div>
-        {/* Modal */}
         <div className="modal fade" id="modalInsertarGasto" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                {/* Título del modal */}
                 <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar gasto de combustible</h1>
-                {/* Botón para cerrar el modal */}
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
               </div>
               <div className="modal-body">
@@ -185,7 +183,6 @@ const ModalInsertarGastoC = () => {
                 </form>
               </div>
               <div className="modal-footer">
-                {/* Botones para cerrar el modal o guardar cambios */}
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
               </div>

@@ -36,7 +36,7 @@ public class GastoCombController {
         // Establecer la fecha actual en el objeto GastoCombustible
         gasto.setFecha(sqlDate);
        // System.out.println(gasto.imprimir());
-       // return gasto;
+      //  return gasto;
         if (logica.agregar(gasto)) {
             return gasto;
         } else {

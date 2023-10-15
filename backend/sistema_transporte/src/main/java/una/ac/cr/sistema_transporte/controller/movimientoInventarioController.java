@@ -1,6 +1,7 @@
 
 package una.ac.cr.sistema_transporte.controller;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +28,14 @@ public class movimientoInventarioController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MovimientoInventario guardarMovimiento(@RequestBody MovimientoInventario movimiento) {
+        // Obtener la fecha y hora actual
+        java.util.Date utilDate = Calendar.getInstance().getTime();
+
+        // Convertir java.util.Date a java.sql.Date
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+        // Establecer la fecha actual en el objeto GastoCombustible
+        movimiento.setFecha_movimiento(sqlDate);
         logica.registrarMovimiento(movimiento);
         return movimiento;
     }
