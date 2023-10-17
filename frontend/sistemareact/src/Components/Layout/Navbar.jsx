@@ -3,9 +3,6 @@ import React from 'react';
 import 'animate.css/animate.min.css'; // Importa las animaciones de Animate.css
 import logo from '../../Asset/images/logo.png';
 import { useNavigate } from 'react-router-dom';
-import 'animate.css/animate.min.css'; // Importa las animaciones de Animate.css
-import logo from '../../Asset/images/logo.png';
-import { useNavigate } from 'react-router-dom';
 import { NavDropdown } from 'react-bootstrap';
 
 
