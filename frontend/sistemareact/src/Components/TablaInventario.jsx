@@ -9,12 +9,20 @@ import { FaPlus } from "react-icons/fa";
 import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
 import ModalMovimientoInventario from "./ModalMovimientoInventario";
+import ModalInsertarFechaReporte from "./ModalInsertarFechaReporte";
+import "react-toastify/dist/ReactToastify.css";
+import Campana from './Campana'; 
+import Notificaciones from './Notificaciones'; // Asegúrate de que la ruta al archivo Notificaciones sea correcta
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
   const [inventario, setInventario] = useState(lista);
   const [modalPiezaId, setModalPiezaId] = useState(null);
   const [modalPiezaCantidadActual, setModalPiezaCantidadActual] = useState(null);
+  const [notificaciones, setNotificaciones] = useState([]);;
+  const [cargando, setCargando] = useState(true);
+  const [modalReporteFecha, setModalReporteFecha] = useState(null);
+
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
