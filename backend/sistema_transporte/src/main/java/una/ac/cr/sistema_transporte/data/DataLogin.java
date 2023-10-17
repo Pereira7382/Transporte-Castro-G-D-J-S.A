@@ -51,13 +51,13 @@ public class DataLogin extends DataBase {
 
         return null;
     }
-
+    
     public boolean agregarUsuario(Usuario usuario) {
         try {
             Connection cn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/db_sistema_transporte", "root", "");
-            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ", "
-                    + TOKEN + ", " + ESTADO + ") VALUES (?, ?, ?, ?)");
-
+            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA +", "+
+                    TOKEN+ ", " + ESTADO + ") VALUES (?, ?, ?, ?)");
+            
             sentencia.setString(1, usuario.getUsuario());
             sentencia.setString(2, usuario.getClave());
             sentencia.setString(3, usuario.getToken_recuperacion());
@@ -161,7 +161,6 @@ public class DataLogin extends DataBase {
             return false;
         }
     }
-
 }
 
 

@@ -31,27 +31,12 @@ function Login({ setAuthenticated }) {
         clave: formData.clave,
       };
   
-      const response = await axios.post("http://localhost:8080/login/agregar", registro, {
-        timeout: 5000 // Tiempo de espera en milisegundos (5 segundos en este ejemplo)
-      });
-
-      
+      const response = await axios.post("http://localhost:8080/login/agregar", registro); 
   
       console.log("Usuario registrado con éxito:", response.data);
       
     } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log("La solicitud fue cancelada:", error.message);
-      } else if (error.response) {
-        // El servidor respondió con un estado diferente de 2xx
-        console.error("Error en la respuesta del servidor:", error.response.data);
-      } else if (error.request) {
-        // La solicitud fue hecha pero no se recibió respuesta
-        console.error("No se recibió respuesta del servidor:", error.request);
-      } else {
-        // Ocurrió un error durante la configuración de la solicitud
-        console.error("Error en la configuración de la solicitud:", error.message);
-      }
+      console.error("Error al registrarse:", error);
     }
   };
   

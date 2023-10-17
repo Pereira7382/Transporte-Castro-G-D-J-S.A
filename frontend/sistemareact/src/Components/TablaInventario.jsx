@@ -9,39 +9,12 @@ import { FaPlus } from "react-icons/fa";
 import ModalInventario from "./ModalInventario";
 import ModalActualizarInventario from "./ModalActualizarInventario";
 import ModalMovimientoInventario from "./ModalMovimientoInventario";
-import ModalInsertarFechaReporte from "./ModalInsertarFechaReporte";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Campana from './Campana'; // Importa el componente de la campana de notificaciones
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import Notificaciones from './Notificaciones'; // Asegúrate de que la ruta al archivo Notificaciones sea correcta
-
-
-
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
+  const [inventario, setInventario] = useState(lista);
   const [modalPiezaId, setModalPiezaId] = useState(null);
-  const [notificaciones, setNotificaciones] = useState([]);;
-  const [cargando, setCargando] = useState(true);
-  const [modalReporteFecha, setModalReporteFecha] = useState(null);
-  const [inventario, setInventario] = useState([]);
-
-
-  useEffect(() => {
-    fetch('http://localhost:8080/inventario') // Reemplaza 'tu-endpoint-api' con la URL real de tu API
-      .then(response => response.json())
-      .then(data => {
-        setInventario(data);
-        setCargando(false);
-      })
-      .catch(error => {
-        console.error('Error al recuperar datos:', error);
-        setCargando(false);
-      });
-  }, []);
-
+  const [modalPiezaCantidadActual, setModalPiezaCantidadActual] = useState(null);
   const exportPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -144,14 +117,17 @@ const TablaInventario = ({ lista }) => {
     setInventarioAActualizar({ ...item });
   };
 
-  const handleOpenModal = (piezaId) => {
+  const handleOpenModal = (piezaId, cantidadActual) => {
     // Abre el modal y pasa el ID de la pieza al componente ModalMovimientoInventario
+    console.log("cantidad actual de la pieza seleccionada: " + cantidadActual);
     setModalPiezaId(piezaId); // Suponiendo que tienes un estado para el ID de la pieza en el componente padre
+    setModalPiezaCantidadActual(cantidadActual);
   };
+  
 
-  if (cargando) {
-    return <div>Cargando inventario...</div>;
-  }
+  useEffect(() => {
+    setInventario(lista);
+  }, [lista]);
 
   return (
     <>
@@ -191,20 +167,10 @@ const TablaInventario = ({ lista }) => {
               id="btnModalMovimientoInventario"
               data-bs-toggle="modal"
               data-bs-target="#modalMovimientoInventario"
-              onClick={() => handleOpenModal(row.original.id)} // Pasa el ID de la pieza al abrir el modal
+              onClick={() => handleOpenModal(row.original.id, row.original.cantidad)} // Pasa el ID de la pieza al abrir el modal
             >
               Movimiento
             </button>
-            <button
-              variant="contained"
-              color="primary"
-              id="btnModalInsertarFechaReporte"
-              data-bs-toggle="modal"
-              data-bs-target="#modalInsertar"
-            >
-              ReportePorFecha
-            </button>
-
 
           </Box>
         )}
@@ -251,6 +217,9 @@ const TablaInventario = ({ lista }) => {
       <Campana notificaciones={notificaciones} />
       <Notificaciones notificaciones={notificaciones} />
     
+
+      <ModalMovimientoInventario pieza={modalPiezaId} cantidadActual={modalPiezaCantidadActual} />
+
 
     </>
   );
