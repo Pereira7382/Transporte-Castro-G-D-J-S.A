@@ -45,4 +45,11 @@ public class LogicaMovimientos {
         return data.movimientoPorFecha(fechaInicio, fechaFin);
     }
 
+    public LinkedList<MovimientoInventario> obtenerMovimientos(){
+        return data.obtenerMovimientos();
+    }
+    
+    public boolean eliminarMovimiento(int id){
+        return data.eliminarMovimiento(id);
+    }
 }
