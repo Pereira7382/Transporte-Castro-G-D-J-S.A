@@ -220,7 +220,6 @@ const TablaInventario = ({ lista }) => {
           setInventario(updatedInventario);
         }}
       />
-      <ModalMovimientoInventario pieza={modalPiezaId} />
       <ModalInsertarFechaReporte reporte={modalReporteFecha} />
       <Campana notificaciones={notificaciones} />
       <Notificaciones notificaciones={notificaciones} />
