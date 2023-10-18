@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const CambioContrasenia = () => {
   const [nuevaContrasenia, setNuevaContrasenia] = useState("");
@@ -7,6 +8,7 @@ const CambioContrasenia = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [responseType, setResponseType] = useState("");
   const [token, setToken] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -20,7 +22,6 @@ const CambioContrasenia = () => {
   }, []);
 
   useEffect(() => {
-    
     if (responseType === "success") {
       setNuevaContrasenia("");
       setConfirmarContrasenia("");
@@ -32,7 +33,6 @@ const CambioContrasenia = () => {
 
     if (nuevaContrasenia !== confirmarContrasenia) {
       setError("Las contraseñas no coinciden");
-      console.log(error); 
       return;
     }
 
@@ -71,7 +71,7 @@ const CambioContrasenia = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    textAlign: "center"
+    textAlign: "center",
   };
 
   const inputStyle = {
@@ -103,8 +103,6 @@ const CambioContrasenia = () => {
     marginTop: "10px",
   };
 
-  
-
   return (
     <div style={containerStyle}>
       <h2>Cambio de Contraseña</h2>
@@ -130,12 +128,16 @@ const CambioContrasenia = () => {
             Cambiar Contraseña
           </button>
           {responseType === "success" && <p style={successMessageStyle}>{successMessage}</p>}
-          {responseType === "error" && <p style={errorMessageStyle}>{error}</p>}      
-          
-
+          {responseType === "error" && <p style={errorMessageStyle}>{error}</p>}
         </form>
       ) : (
         <p style={errorMessageStyle}>{error}</p>
+      )}
+
+      {responseType === "success" && (
+        <p>
+          Contraseña cambiada con éxito. Haz clic <Link to="/">aquí</Link> para ir al inicio.
+        </p>
       )}
     </div>
   );
