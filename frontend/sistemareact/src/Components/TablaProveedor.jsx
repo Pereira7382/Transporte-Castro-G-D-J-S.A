@@ -22,6 +22,10 @@ const TablaProveedor = ({ lista }) => {
     () => [
     
       {
+        header: "Nombre",
+        accessorKey: "nombre",
+      },
+      {
         header: "Correo Electronico",
         accessorKey: "correo_electronico",
       },
@@ -52,6 +56,34 @@ const TablaProveedor = ({ lista }) => {
 
   };
 
+  
+  const handleReporteProveedor = (proveedorId) => {
+    // Realizar una solicitud al backend para obtener los datos del proveedor
+    fetch(`http://localhost:8080/proveedor/${proveedorId}`)
+      .then((response) => response.json())
+      .then((proveedorData) => {
+        // Realizar una segunda solicitud al backend para obtener los datos del inventario del proveedor
+        fetch(`http://localhost:8080/inventario/${proveedorId}/inventario`)
+          .then((response) => response.json())
+          .then((inventarioData) => {
+            // Combinar los datos del proveedor y del inventario
+            const datosParaReporte = {
+              proveedor: proveedorData,
+              inventario: inventarioData,
+            };
+  
+            // Ahora, datosParaReporte contiene los datos del proveedor y del inventario
+            // Puedes generar el reporte usando esta información (por ejemplo, con jsPDF)
+          })
+          .catch((error) => {
+            console.error("Error al obtener los datos del inventario:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al obtener los datos del proveedor:", error);
+      });
+  };
+  
 
   const confirmDeleteAlert = (id_proveedor) => {
     const result = window.confirm("¿Estás seguro de eliminar este registro? " + id_proveedor);
@@ -119,6 +151,13 @@ const TablaProveedor = ({ lista }) => {
             </button>
             <button variant="contained" color="default">
               Mantenimiento
+            </button>
+            <button
+              variant="contained"
+              color="default"
+              onClick={() => handleReporteProveedor(row.original.id_proveedor)}
+            >
+              Generar Reporte
             </button>
           </Box>
         )}

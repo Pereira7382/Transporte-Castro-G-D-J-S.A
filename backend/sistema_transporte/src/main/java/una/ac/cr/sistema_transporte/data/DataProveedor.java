@@ -112,5 +112,29 @@ public class DataProveedor extends DataBase{
             Logger.getLogger(DataProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public int obtenerIdProveedorPorNombre(String nombre) {
+    String query = "SELECT " + ID_PROVEEDOR + " FROM " + PROVEEDOR + " WHERE nombre = ?;";
+    Connection con = getConexion();
+
+    try {
+        PreparedStatement prepare = con.prepareStatement(query);
+        prepare.setString(1, nombre);
+        ResultSet result = prepare.executeQuery();
+        int idProveedor = -1; // Valor predeterminado si no se encuentra ningún proveedor
+        if (result.next()) {
+            idProveedor = result.getInt(ID_PROVEEDOR);
+        }
+        prepare.close();
+        result.close();
+        return idProveedor;
+    } catch (SQLException ex) {
+        Logger.getLogger(DataProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        return -1; // Valor predeterminado si ocurre un error
+    }
+}
+
+
 
 }

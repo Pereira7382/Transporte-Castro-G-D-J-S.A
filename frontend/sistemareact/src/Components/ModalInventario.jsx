@@ -1,59 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-
-const ModalInventario = ({actualizarTablaInventario}) => {
+const ModalInventario = ({ actualizarTablaInventario }) => {
   const [formData, setFormData] = useState({
     codigo: '',
     nombre: '',
     descripcion: '',
     cantidad: '',
-    tipo: 'Herramienta', // Valor predeterminado en 'Herramienta'
-    activo: 1, // Valor predeterminado en 1
+    tipo: 'Herramienta',
+    provedor: '', // Nuevo campo para almacenar el nombre del proveedor seleccionado
+    activo: 1,
   });
-  
+
+  const [proveedores, setProveedores] = useState([]);
+
+  useEffect(() => {
+    // Obtener la lista de proveedores al cargar el componente
+    async function fetchProveedores() {
+      try {
+        const response = await fetch('http://localhost:8080/proveedor/nombres');
+        if (response.ok) {
+          const data = await response.json();
+          setProveedores(data);
+        } else {
+          console.error('Error al obtener la lista de proveedores');
+        }
+      } catch (error) {
+        console.error('Error en la conexión con el servidor:', error);
+      }
+    }
+
+    fetchProveedores();
+  }, []); // El segundo argumento [] asegura que este efecto solo se ejecute una vez al cargar el componente
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    // Validaciones para campos "cantidad" (aceptar solo números)
-    if (name === 'cantidad') {
-      if (value !== '' && !/^\d+$/.test(value)) {
-        setFormData({ ...formData, [name]: value });
-        return; // No actualizar el estado si no es un número y no está vacío
-      }
-    }
-  
-    // Validar que solo se puedan ingresar letras, números y espacios en los campos 'codigo' y 'descripcion'
-    if (name === 'codigo' || name === 'descripcion') {
-      const regex = /^[A-Za-z0-9\s]+$/;
-  
-      if (value !== '' && !regex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-        return; // No actualizar el estado si no cumple con la expresión regular y no está vacío
-      }
-    }
-  
-    // Validar que solo se puedan ingresar letras y espacios en los campos 'nombre' y 'tipo'
-    if (name === 'nombre' || name === 'tipo') {
-      const regex = /^[A-Za-z\s]+$/;
-  
-      if (value !== '' && !regex.test(value)) {
-        setFormData({ ...formData, [name]: value });
-        return; // No actualizar el estado si no cumple con la expresión regular y no está vacío
-      }
-    }
-  
     setFormData({ ...formData, [name]: value });
   };
-  
-  
 
   const handleSubmit = async () => {
-
     try {
-
-  
-     
       // Aquí debes realizar la conexión con el servidor en NetBeans
       // y enviar los datos del formulario para guardar el registro
       const response = await fetch('http://localhost:8080/inventario', {
@@ -65,34 +51,32 @@ const ModalInventario = ({actualizarTablaInventario}) => {
       });
 
       if (response.ok) {
-
-        // Limpiar el formulario
+        // Limpiar el formulario y cerrar el modal
         setFormData({
           codigo: '',
           nombre: '',
           descripcion: '',
           cantidad: '',
-          tipo: 'Herramienta', // Valor predeterminado en 'Herramienta'
-          activo: 1, // Valor predeterminado en 1
+          tipo: 'Herramienta',
+          proveedor: '',
+          activo: 1,
         });
-
-        // Cerrar el modal
         document.getElementById('modalInventario').classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.paddingRight = '0';
 
-        // Mostrar notificación alerta de éxito
-          toast.success('Datos ingresados correctamente');
+        // Mostrar notificación de éxito
+        toast.success('Datos ingresados correctamente');
 
-          if (typeof actualizarTablaInventario === "function") {
-            actualizarTablaInventario(formData);
-          }
+        // Actualizar la tabla si la función está definida
+        if (typeof actualizarTablaInventario === 'function') {
+          actualizarTablaInventario(formData);
+        }
 
-      // Recargar la página después de un breve retraso
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-        // Puedes agregar una función para cerrar el modal aquí
+        // Recargar la página después de un breve retraso
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         console.error('Error al guardar el registro');
       }
@@ -100,7 +84,6 @@ const ModalInventario = ({actualizarTablaInventario}) => {
       console.error('Error en la conexión con el servidor:', error);
     }
   };
-
 
 
   return (
@@ -136,6 +119,17 @@ const ModalInventario = ({actualizarTablaInventario}) => {
                   <select className="form-select" id="tipo" name="tipo" value={formData.tipo} onChange={handleChange}>
                     <option value="Herramienta">Herramienta</option>
                     <option value="Inventario">Inventario</option>
+                  </select>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="provedor" className="form-label">Proveedor</label>
+                  <select className="form-select" id="provedor" name="provedor" value={formData.proveedorNombre} onChange={handleChange}>
+                    <option value="">Selecciona un proveedor</option>
+                    {proveedores.map((proveedor) => (
+                      <option key={proveedor.nombre} value={proveedor.nombre}>
+                        {proveedor.nombre}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </form>

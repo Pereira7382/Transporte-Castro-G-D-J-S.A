@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 const ModalInsertarProveedor = () => {
   // Estado inicial del formulario, incluyendo el estado por defecto de 1 para "Estado"
   const [formData, setFormData] = useState({
+     nombre:'',
      correo_electronico: '',
      telefono: '',    
      contacto: '',
@@ -79,6 +80,7 @@ if (name === 'correo_electronico') {
 
         // Limpiar el formulario
         setFormData({
+            nombre:'',
             correo_electronico: '',
             telefono: '',    
             contacto: '',
@@ -123,6 +125,10 @@ if (name === 'correo_electronico') {
               <div className="modal-body">
                 <form>
                   {/* Campos del formulario */}
+                  <div className="mb-3">
+                    <label htmlFor="nombre" className="form-label">Nombre del Proveedor</label>
+                    <input type="text" className="form-control" id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} />
+                  </div>
                   <div className="mb-3">
                     <label htmlFor="correo_electronico" className="form-label">Correo Electronico</label>
                     <input type="text" className="form-control" id="correo_electronico" name="correo_electronico" value={formData.correo_electronico} onChange={handleChange} />

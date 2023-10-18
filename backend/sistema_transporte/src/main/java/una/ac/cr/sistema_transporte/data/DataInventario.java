@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import una.ac.cr.sistema_transporte.domain.Inventario;
 
 public class DataInventario extends DataBase {
@@ -18,8 +20,10 @@ public class DataInventario extends DataBase {
     public final static String NOMBRE = "nombre";
     public final static String DESCRIPCION = "descripcion";
     public final static String CANTIDAD = "cantidad";
+    public final static String PROVEDOR="provedor";
     public final static String TIPO = "tipo";
     public final static String ESTADO = "activo";
+    public final static String ID_PROVEEDOR = " id_proveedor";
 
     public Inventario obtenerPieza(int id_pieza) {
         Inventario pieza = new Inventario();
@@ -84,5 +88,43 @@ public class DataInventario extends DataBase {
             return false;
         }
     }
+    
+    
+    public List<Inventario> obtenerInventarioPorIdProveedor(int idProveedor) {
+    List<Inventario> inventarioList = new ArrayList<>();
+    Connection con = getConexion();
+
+    String query = "SELECT * FROM " + TABLAINVENTARIO + " WHERE " + ID_PROVEEDOR + " = ?";
+    
+    try {
+        PreparedStatement prepare = con.prepareStatement(query);
+        prepare.setInt(1, idProveedor);
+        ResultSet result = prepare.executeQuery();
+
+        while (result.next()) {
+            Inventario inventario = new Inventario();
+            inventario.setId(result.getInt(ID));
+            inventario.setCodigo(result.getString(CODIGO));
+            inventario.setNombre(result.getString(NOMBRE));
+            inventario.setDescripcion(result.getString(DESCRIPCION));
+            inventario.setCantidad(result.getInt(CANTIDAD));
+            inventario.setTipo(result.getString(TIPO));
+            inventario.setActivo(result.getInt(ESTADO));
+
+            inventarioList.add(inventario);
+            
+        }
+        
+        prepare.close();
+        result.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Cerrar la conexión aquí si es necesario
+    }
+
+    return inventarioList;
+}
+
 
 }
