@@ -68,7 +68,7 @@ public class DataMovimiento extends DataBase {
     public LinkedList<MovimientoInventario> movimientoPorFecha(Date fechaInicio, Date fechaFin){
         LinkedList<MovimientoInventario> movimientos = new LinkedList<>();
         Connection cn = getConexion();
-        String query = "SELECT * FROM " + TABLAMOVIMIENTOS + " WHERE " + FECHA + " BETWEEN '"+ fechaInicio +"' AND '" + fechaFin +"'";
+        String query = "SELECT * FROM " + TABLAMOVIMIENTOS + " WHERE " + ESTADO + " =1 AND " + FECHA + " BETWEEN '"+ fechaInicio +"' AND '" + fechaFin +"'";
         try {
             PreparedStatement prepare = cn.prepareStatement(query);
             ResultSet result = prepare.executeQuery();
@@ -113,7 +113,6 @@ public class DataMovimiento extends DataBase {
     }
     
     public boolean eliminarMovimiento(int id){
-        boolean elimino = false;
         Connection cn = getConexion();
         String query = "UPDATE " + TABLAMOVIMIENTOS + " SET estado = ? WHERE id = ?";
         try {
