@@ -14,8 +14,9 @@ import { FaPlus } from "react-icons/fa";
 
 
 const TablaMovimiento = ({ lista }) => {
- 
+  const [movimientoAActualizar, setMovimientoAActualizar] = useState(null);
   const [movimientos, setMovimientos] = useState(lista);
+  const [modalPiezaId] = useState(null);
   const [modalReporteFecha] = useState(null);
 
  
