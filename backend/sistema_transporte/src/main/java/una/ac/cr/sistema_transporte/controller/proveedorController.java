@@ -60,8 +60,9 @@ public class proveedorController {
     @GetMapping("/{id}")
     @ResponseBody
     public Optional<Proveedor> obtenerProvedorPorId(@PathVariable int id) {
-        System.out.println("entrooo proveedor");
+      
         Optional<Proveedor> optionalProveedor = proveedorRepository.obtenerProveedorPorId(id);
+        System.out.println(optionalProveedor.get().getNombre());
         return optionalProveedor;
 
     }

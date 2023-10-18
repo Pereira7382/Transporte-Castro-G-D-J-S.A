@@ -110,7 +110,8 @@ public class DataInventario extends DataBase {
             inventario.setCantidad(result.getInt(CANTIDAD));
             inventario.setTipo(result.getString(TIPO));
             inventario.setActivo(result.getInt(ESTADO));
-
+            System.out.println(inventario.getDescripcion());
+            System.out.println("\n");
             inventarioList.add(inventario);
             
         }

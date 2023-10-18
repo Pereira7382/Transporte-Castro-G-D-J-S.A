@@ -57,14 +57,15 @@ const TablaProveedor = ({ lista }) => {
   };
 
   
+
   const handleReporteProveedor = (proveedorId) => {
     // Realizar una solicitud al backend para obtener los datos del proveedor
     fetch(`http://localhost:8080/proveedor/${proveedorId}`)
-      .then((response) => response.json())
+      .then((responseProveedor) => responseProveedor.json())
       .then((proveedorData) => {
         // Realizar una segunda solicitud al backend para obtener los datos del inventario del proveedor
         fetch(`http://localhost:8080/inventario/${proveedorId}/inventario`)
-          .then((response) => response.json())
+          .then((responseInventario) => responseInventario.json())
           .then((inventarioData) => {
             // Combinar los datos del proveedor y del inventario
             const datosParaReporte = {
@@ -72,8 +73,47 @@ const TablaProveedor = ({ lista }) => {
               inventario: inventarioData,
             };
   
-            // Ahora, datosParaReporte contiene los datos del proveedor y del inventario
-            // Puedes generar el reporte usando esta información (por ejemplo, con jsPDF)
+            // Generar el PDF
+            const doc = new jsPDF();
+  
+            // Agregar datos del proveedor al PDF
+            doc.text("Proveedor:", 20, 20);
+            doc.autoTable({
+              startY: 30,
+              head: [["Campo", "Valor"]],
+              body: [
+                ["Nombre", datosParaReporte.proveedor && datosParaReporte.proveedor.nombre ? datosParaReporte.proveedor.nombre : ""],
+                ["ID Proveedor", datosParaReporte.proveedor && datosParaReporte.proveedor.id_proveedor ? datosParaReporte.proveedor.id_proveedor : ""],
+                ["Correo Electrónico", datosParaReporte.proveedor && datosParaReporte.proveedor.correo_electronico ? datosParaReporte.proveedor.correo_electronico : ""],
+                ["Teléfono", datosParaReporte.proveedor && datosParaReporte.proveedor.telefono ? datosParaReporte.proveedor.telefono : ""],
+                ["Contacto", datosParaReporte.proveedor && datosParaReporte.proveedor.contacto ? datosParaReporte.proveedor.contacto : ""],
+                ["Dirección", datosParaReporte.proveedor && datosParaReporte.proveedor.direccion ? datosParaReporte.proveedor.direccion : ""],
+                ["Estado", datosParaReporte.proveedor && datosParaReporte.proveedor.estado ? "Activo" : "Inactivo"],
+              ],
+              theme: "striped",
+              styles: { fontSize: 12, cellPadding: 3, overflow: "linebreak" },
+            });
+          
+            // Agregar datos del inventario al PDF
+            doc.text("Inventario:", 20, doc.autoTable.previous.finalY + 20);
+            doc.autoTable({
+              startY: doc.autoTable.previous.finalY + 30,
+              head: [["ID", "Código", "Nombre", "Descripción", "Cantidad", "Tipo", "Activo"]],
+              body: datosParaReporte.inventario.map((item) => [
+                item.id,
+                item.codigo,
+                item.nombre,
+                item.descripcion,
+                item.cantidad,
+                item.tipo,
+                item.activo ? "Sí" : "No"
+              ]),
+              theme: "striped",
+              styles: { fontSize: 10, cellPadding: 3, overflow: "linebreak" },
+            });
+          
+            // Guardar el PDF
+            doc.save("reporte_proveedor.pdf");
           })
           .catch((error) => {
             console.error("Error al obtener los datos del inventario:", error);
@@ -83,6 +123,8 @@ const TablaProveedor = ({ lista }) => {
         console.error("Error al obtener los datos del proveedor:", error);
       });
   };
+  
+  
   
 
   const confirmDeleteAlert = (id_proveedor) => {

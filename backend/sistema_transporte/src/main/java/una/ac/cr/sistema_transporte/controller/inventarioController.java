@@ -102,8 +102,30 @@ public class inventarioController {
     @GetMapping("/{id}/inventario")
     public ResponseEntity<List<Inventario>> obtenerInventarioProveedor(@PathVariable int id) {
         // Lógica para obtener datos del inventario del proveedor según el ID
+        System.out.println(id);
         LogicaInventario log = new LogicaInventario();
         List<Inventario> inventario = log.obtenerInventarioPorProveedor(id);
+        
+        for (Inventario item : inventario) {
+            System.out.println("dffffffffffffffd");
+            // Accede a las propiedades de cada objeto Inventario
+            int itemId = item.getId();
+            String codigo = item.getCodigo();
+            String nombre = item.getNombre();
+            String descripcion = item.getDescripcion();
+            int cantidad = item.getCantidad();
+            String tipo = item.getTipo();
+            int activo = item.getActivo();
+            
+            System.out.println(nombre);
+            System.out.println("controller");
+
+            // Realiza operaciones con las propiedades del objeto Inventario
+            // ...
+        }
+        
+        
+        
         System.out.println("entro inventario");
         return ResponseEntity.ok(inventario);
     }
