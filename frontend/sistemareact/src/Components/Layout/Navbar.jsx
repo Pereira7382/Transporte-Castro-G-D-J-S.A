@@ -33,12 +33,14 @@ const Navbar = () => {
               margin: '4px 2px',
               cursor: 'pointer',
               borderRadius: '4px',
+              marginTop: '-20px', /* Mueve el botón hacia arriba */
+              marginRight: '20px', /* Mueve el botón hacia la derecha */
             }}
           >
             Cerrar Sesión
           </button>
 
-          <img src={logo} style={{ width: '150px', marginLeft: '20px' }} alt="" />
+          <img src={logo} style={{ width: '150px', marginRight: '20px',  marginTop: '-40px' }} alt="" />
         </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +48,7 @@ const Navbar = () => {
         </button>
         <div className="nav-item nav-item-move-right" id="navbarNav">
           <ul className="navbar-nav animate__animated animate__fadeInDown">
-            <li>
+            <li className="nav-item nav-item-move-right">
               <NavDropdown title="Gastos" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/admin-gastosC">Combustible</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Cambio de Aceite</NavDropdown.Item>

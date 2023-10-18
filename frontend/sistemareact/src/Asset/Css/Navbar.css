@@ -4,7 +4,7 @@
 .navbar {
   background-color: #0088a9;
   color: black;
-  padding: 0px;
+  padding: 50px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -16,11 +16,14 @@
   border-radius: 5px;
   background-color: transparent;
   transition: 0.3s ease;
+  
 }
 
 /* Estilos para mover los enlaces específicos hacia la derecha */
 .nav-item-move-right {
   margin-left: 10px; /* Ajusta el margen izquierdo según tu preferencia */
+  position: relative;
+  top: -25px;
 }
 
 .navbar-nav .nav-link:hover {
@@ -38,3 +41,4 @@
   font-size: 24px; /* Cambia el tamaño de fuente a tu preferencia */
   font-weight: bold; /* Cambia el grosor de la fuente si es necesario */
 }
+
