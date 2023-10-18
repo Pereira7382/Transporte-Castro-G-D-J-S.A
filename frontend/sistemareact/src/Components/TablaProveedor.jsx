@@ -15,9 +15,6 @@ const TablaProveedor = ({ lista }) => {
   const [proveedorAActualizar, setProveedorAActualizar] = useState(null);
   const [proveedores, setProveedores] = useState(lista);
 
- 
-  
-
   const columns = useMemo(
     () => [
     

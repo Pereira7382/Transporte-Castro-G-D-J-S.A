@@ -39,12 +39,6 @@ public class LoginController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public boolean agregarUsuario(@RequestBody Usuario usuario) {
-        
         return logicaLogin.agregarUsuario(usuario);
     }
-
-    
-    
-    
-    
 }

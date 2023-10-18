@@ -9,10 +9,10 @@ import RecuperarContrasena from './Components/RecuperacionContrasenia';
 import Home from './Pages/Home';
 import AdminInventario from './Components/AdminInventario';
 import AdminProveedor from './Components/AdminProveedor';
-import ModalMovimientoInventario from './Components/ModalMovimientoInventario';
 import CambioContrasenia from './Components/CambioContrasenia';
 import Notificaciones from './Components/Notificaciones'; // Importa el componente de Notificaciones
 
+import GastoCombustible from './Components/GastoCombustible';
 
 export const AuthContext = React.createContext();
 
@@ -89,6 +89,10 @@ function App() {
             element={<Seguridad element={<RecuperarContrasena />} />}
           />
           <Route path="/admin-CambioContrasenia" element={<CambioContrasenia />} />
+          <Route
+            path="/admin-gastosC"
+            element={<Seguridad element={<GastoCombustible />} />}
+          />
         </Routes>
       </div>
     </AuthContext.Provider>
