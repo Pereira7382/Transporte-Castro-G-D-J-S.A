@@ -4,8 +4,10 @@
  */
 package una.ac.cr.sistema_transporte.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import una.ac.cr.sistema_transporte.Logica.LogicaProveedor;
 import una.ac.cr.sistema_transporte.domain.Proveedor;
 
 import una.ac.cr.sistema_transporte.service.proveedorService;
@@ -41,7 +45,7 @@ public class proveedorController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Proveedor guardarProveedor(@RequestBody Proveedor proveedor) {
-        System.out.println("llego a la controllerrrrrrrrrrrrrr");
+     
         proveedorRepository.insertarProveedor(proveedor);
         return proveedor;
     }
@@ -55,8 +59,10 @@ public class proveedorController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Optional<Proveedor> obtenerCamionPorId(@PathVariable int id) {
+    public Optional<Proveedor> obtenerProvedorPorId(@PathVariable int id) {
+      
         Optional<Proveedor> optionalProveedor = proveedorRepository.obtenerProveedorPorId(id);
+        System.out.println(optionalProveedor.get().getNombre());
         return optionalProveedor;
 
     }
@@ -93,4 +99,18 @@ public class proveedorController {
         }
     }
     
+    @GetMapping("/nombres")
+    @ResponseBody
+     public List<Proveedor> mostrarNombresProveedor() {
+         System.out.println("entrooo");
+        List<Proveedor> proveedor = proveedorRepository.listarProveedor();
+        return proveedor;
+    }
+     
+     
+     
+     
 }
+
+
+

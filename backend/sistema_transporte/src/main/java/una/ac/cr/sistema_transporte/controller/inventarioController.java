@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import una.ac.cr.sistema_transporte.Logica.LogicaInventario;
+import una.ac.cr.sistema_transporte.Logica.LogicaProveedor;
 import una.ac.cr.sistema_transporte.data.DataInventario;
 import una.ac.cr.sistema_transporte.domain.Inventario;
+import una.ac.cr.sistema_transporte.domain.Proveedor;
 import una.ac.cr.sistema_transporte.service.inventarioService;
 
 @Controller
@@ -41,6 +44,13 @@ public class inventarioController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Inventario guardarCamion(@RequestBody Inventario inventario) {
+        LogicaProveedor logic = new LogicaProveedor();
+        String nombreProveedor = inventario.getProvedor(); // Asegúrate de tener el método getNombre() en tu clase Proveedor
+        System.out.println(nombreProveedor);
+        int id_proveedor =  logic.obtenerIdProveedor(nombreProveedor);
+        System.out.println("entroooooo");
+        System.out.println(id_proveedor);
+        inventario.setId_proveedor(id_proveedor);
         inventarioRepository.insertarInventario(inventario);
         return inventario;
     }
@@ -87,6 +97,37 @@ public class inventarioController {
         pieza = data.obtenerPieza(id);
         pieza.setActivo(0);
         data.eliminar(pieza);
+    }
+    
+    @GetMapping("/{id}/inventario")
+    public ResponseEntity<List<Inventario>> obtenerInventarioProveedor(@PathVariable int id) {
+        // Lógica para obtener datos del inventario del proveedor según el ID
+        System.out.println(id);
+        LogicaInventario log = new LogicaInventario();
+        List<Inventario> inventario = log.obtenerInventarioPorProveedor(id);
+        
+        for (Inventario item : inventario) {
+            System.out.println("dffffffffffffffd");
+            // Accede a las propiedades de cada objeto Inventario
+            int itemId = item.getId();
+            String codigo = item.getCodigo();
+            String nombre = item.getNombre();
+            String descripcion = item.getDescripcion();
+            int cantidad = item.getCantidad();
+            String tipo = item.getTipo();
+            int activo = item.getActivo();
+            
+            System.out.println(nombre);
+            System.out.println("controller");
+
+            // Realiza operaciones con las propiedades del objeto Inventario
+            // ...
+        }
+        
+        
+        
+        System.out.println("entro inventario");
+        return ResponseEntity.ok(inventario);
     }
     
 }
