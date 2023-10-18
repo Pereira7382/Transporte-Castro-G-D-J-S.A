@@ -17,6 +17,7 @@ public class DataMovimiento extends DataBase {
     public final static String TIPO = "tipo_movimiento";
     public final static String CANTIDAD = "cantidad";
     public final static String FECHA = "fecha_movimiento";
+    public final static String ESTADO = "estado";
 
     public boolean registrarMovimiento(MovimientoInventario movimiento) {
         try {
@@ -85,6 +86,47 @@ public class DataMovimiento extends DataBase {
             System.out.println("Ocurrio un error al conectarse con la base de datos");
         }
         return movimientos;
+    }
+    
+    public LinkedList<MovimientoInventario> obtenerMovimientos(){
+        LinkedList<MovimientoInventario> lista = new LinkedList<>();
+        Connection cn = getConexion();
+        String query = "SELECT * FROM " + TABLAMOVIMIENTOS + " WHERE " + ESTADO + " = 1";
+        try {
+            PreparedStatement prepare = cn.prepareCall(query);
+            ResultSet result = prepare.executeQuery();
+            while(result.next()){
+                MovimientoInventario movimiento = new MovimientoInventario();
+                movimiento.setId(result.getInt(ID));
+                movimiento.setCantidad(result.getInt(CANTIDAD));
+                movimiento.setDescripcion(result.getString(DESCRIPCION));
+                movimiento.setTipo_movimiento(result.getString(TIPO));
+                movimiento.setId_pieza(result.getInt(ID_PIEZA));
+                movimiento.setFecha_movimiento(result.getDate(FECHA));
+                movimiento.setEstado(result.getBoolean(ESTADO));
+                lista.add(movimiento);
+            }
+        } catch (SQLException e) {
+             System.out.println("Ocurrio un error al conectarse con la base de datos");
+        }
+        return lista;
+    }
+    
+    public boolean eliminarMovimiento(int id){
+        boolean elimino = false;
+        Connection cn = getConexion();
+        String query = "UPDATE " + TABLAMOVIMIENTOS + " SET estado = ? WHERE id = ?";
+        try {
+            PreparedStatement prepare = cn.prepareStatement(query);
+            prepare.setInt(1, 0);
+            prepare.setInt(2, id);
+            prepare.executeUpdate();
+            prepare.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }

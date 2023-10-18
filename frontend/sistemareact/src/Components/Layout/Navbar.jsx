@@ -62,6 +62,9 @@ const Navbar = () => {
             <li className="nav-item nav-item-move-right">
               <a className="nav-link" href="/admin-camiones">Administrar Camiones</a>
             </li>
+            <li className="nav-item nav-item-move-right">
+              <a className="nav-link" href="/admin-movimiento">Administrar Movimiento</a>
+            </li>
           </ul>
         </div>
       </div>

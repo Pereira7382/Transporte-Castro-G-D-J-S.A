@@ -9,6 +9,7 @@ import RecuperarContrasena from './Components/RecuperacionContrasenia';
 import Home from './Pages/Home';
 import AdminInventario from './Components/AdminInventario';
 import AdminProveedor from './Components/AdminProveedor';
+import AdminMovimiento from './Components/AdminMovimiento';
 import CambioContrasenia from './Components/CambioContrasenia';
 import Notificaciones from './Components/Notificaciones'; // Importa el componente de Notificaciones
 
@@ -70,6 +71,10 @@ function App() {
           <Route
             path="/admin-proveedor"
             element={<Seguridad element={<AdminProveedor mostrarNotificacion={mostrarNotificacion} />} />}
+          />
+           <Route
+            path="/admin-movimiento"
+            element={<Seguridad element={<AdminMovimiento mostrarNotificacion={mostrarNotificacion} />} />}
           />
           <Route
             path="/admi-Notificaciones"

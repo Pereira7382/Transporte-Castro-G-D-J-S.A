@@ -10,6 +10,7 @@ public class MovimientoInventario {
     private int cantidad;
     private int id_pieza;
     private Date fecha_movimiento;
+    private boolean estado;
 
     public int getId() {
         return id;
@@ -57,6 +58,14 @@ public class MovimientoInventario {
 
     public void setFecha_movimiento(Date fecha_movimiento) {
         this.fecha_movimiento = fecha_movimiento;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public MovimientoInventario(int id, String descripcion, String tipo_movimiento, int cantidad, int id_pieza, Date fecha_movimiento) {
