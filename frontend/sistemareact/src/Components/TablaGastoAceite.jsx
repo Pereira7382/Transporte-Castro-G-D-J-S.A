@@ -6,8 +6,6 @@ import "jspdf-autotable";
 import { FaPlus } from "react-icons/fa";
 import ModalInsertarGastoA from "./ModalInsertarGastoA";
 
-
-// Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
 const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
 
@@ -31,12 +29,20 @@ const TablaGastoAceite = ({ lista }) => {
                 accessorKey: "matricula",
             },
             {
-                header: "Km anterior",
-                accessorKey: "kilometrajeAnterior",
+                header: "Proveedor",
+                accessorKey: "proveedor",
             },
             {
-                header: "Km actual",
+                header: "Marca",
+                accessorKey: "marca",
+            },
+            {
+                header: "Kilometraje al momento",
                 accessorKey: "kilometrajeActual",
+            },
+            {
+                header: "Duracion Aceite",
+                accessorKey: "duracion",
             },
             {
                 header: "Fecha",
@@ -93,9 +99,9 @@ const TablaGastoAceite = ({ lista }) => {
                             <IconButton
                                 size="small"
                                 color="success"
-                                id="btnModalInsertarGasto"
+                                id="btnModalInsertarGastoA"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalInsertarGasto"
+                                data-bs-target="#modalInsertarGastoA"
                             >
                                 <FaPlus />
                             </IconButton>
@@ -103,7 +109,7 @@ const TablaGastoAceite = ({ lista }) => {
                     </Box>
                 )}
             />
-            <ModalInsertarGastoC />
+            <ModalInsertarGastoA />
         </>
     );
 };

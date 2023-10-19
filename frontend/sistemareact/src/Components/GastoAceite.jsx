@@ -1,4 +1,4 @@
-import TablaGastoCombustible from './TablaGastoCombustible';
+import TablaGastoAceite from './TablaGastoAceite';
 import React, { Component } from 'react';
 import Layout from './Layout/Layout';
 
@@ -25,7 +25,7 @@ class GastoAceite extends Component {
       return (
         <Layout>
           <div className="container mt-4">
-            <TablaGastoCombustible lista={this.state.gastosCombustible}/>
+            <TablaGastoAceite lista={this.state.gastosAceite}/>
           </div>
         </Layout>
       );
