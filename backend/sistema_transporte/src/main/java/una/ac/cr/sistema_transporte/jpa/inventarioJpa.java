@@ -50,4 +50,5 @@ public class inventarioJpa implements inventarioService{
     public void eliminarInventario(int id) {
         inventarioRepository.deleteById(id);
     }
+    
 }

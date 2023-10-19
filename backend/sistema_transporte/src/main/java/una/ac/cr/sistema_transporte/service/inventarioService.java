@@ -18,4 +18,5 @@ public interface inventarioService {
     
      public void eliminarInventario(int id);
     
+    
 }

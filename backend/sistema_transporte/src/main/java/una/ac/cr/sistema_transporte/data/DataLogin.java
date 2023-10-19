@@ -19,7 +19,6 @@ public class DataLogin extends DataBase {
     public final static String TOKEN = "token_recuperacion";
     public final static String ESTADO = "estado";
     public final static String ESTADO_TOKEN = "estado_token";
-    
 
     public LinkedList<Usuario> obtenerUsuarios() {
         boolean acceso = false;
@@ -51,18 +50,21 @@ public class DataLogin extends DataBase {
 
         return null;
     }
-    
+
     public boolean agregarUsuario(Usuario usuario) {
         try {
             Connection cn = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/db_sistema_transporte", "root", "");
-            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA +", "+
-                    TOKEN+ ", " + ESTADO + ") VALUES (?, ?, ?, ?)");
-            
+            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement("INSERT INTO " + TB_USUARIOS + " (" + USUARIO + ", " + CONTRASENIA + ", "
+                    + TOKEN + ", " + ESTADO+ ", " + ESTADO_TOKEN + ") VALUES (?, ?, ?, ?, ?)");
+
             sentencia.setString(1, usuario.getUsuario());
             sentencia.setString(2, usuario.getClave());
             sentencia.setString(3, usuario.getToken_recuperacion());
             sentencia.setInt(4, usuario.getEstado());
+            sentencia.setInt(5, 0);
             sentencia.execute();
+            System.out.println("\n llego a la data a registrar nuevo usuario ");
+
             return true;
         } catch (Exception e) {
             System.out.println("\n error: " + e.toString());
@@ -96,7 +98,7 @@ public class DataLogin extends DataBase {
         Connection con = getConexion();
         String query = "UPDATE " + TB_USUARIOS + " SET " + TOKEN + " = ?, " + ESTADO_TOKEN + " = ? WHERE " + USUARIO + " = ?";
 
-        try ( PreparedStatement prepared = con.prepareStatement(query)) {
+        try (PreparedStatement prepared = con.prepareStatement(query)) {
             prepared.setString(1, token);
             prepared.setInt(2, estadoToken);
             prepared.setString(3, email);
@@ -114,7 +116,7 @@ public class DataLogin extends DataBase {
         Connection con = getConexion();
         String query = "UPDATE " + TB_USUARIOS + " SET " + CONTRASENIA + " = ?, " + TOKEN + " = '', " + ESTADO_TOKEN + " = 0 WHERE " + TOKEN + " = ?";
 
-        try ( PreparedStatement prepared = con.prepareStatement(query)) {
+        try (PreparedStatement prepared = con.prepareStatement(query)) {
             prepared.setString(1, nuevaContrasenia);
             prepared.setString(2, token);
             int rowsUpdated = prepared.executeUpdate();
@@ -130,7 +132,7 @@ public class DataLogin extends DataBase {
         String query = "SELECT " + ESTADO_TOKEN + " FROM " + TB_USUARIOS + " WHERE " + USUARIO + " = ?";
         Connection con = getConexion();
 
-        try ( PreparedStatement prepared = con.prepareStatement(query)) {
+        try (PreparedStatement prepared = con.prepareStatement(query)) {
             prepared.setString(1, usuario);
             ResultSet result = prepared.executeQuery();
 
@@ -150,20 +152,15 @@ public class DataLogin extends DataBase {
         Connection con = getConexion();
         String query = "UPDATE " + TB_USUARIOS + " SET " + ESTADO_TOKEN + " = 0 WHERE " + USUARIO + " = ?";
         System.out.println("entroooo");
-        try ( PreparedStatement prepared = con.prepareStatement(query)) {
+        try (PreparedStatement prepared = con.prepareStatement(query)) {
             prepared.setString(1, correo);
             int rowsUpdated = prepared.executeUpdate();
 
             return rowsUpdated > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
-           
+
             return false;
         }
     }
 }
-
-
-
-
-
