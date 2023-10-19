@@ -98,6 +98,10 @@ function App() {
             path="/admin-gastosC"
             element={<Seguridad element={<GastoCombustible />} />}
           />
+          <Route
+            path="/admin-gastosA"
+            element={<Seguridad element={<GastoCombustible />} />}
+          />
         </Routes>
       </div>
     </AuthContext.Provider>

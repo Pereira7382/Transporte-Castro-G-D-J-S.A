@@ -51,7 +51,7 @@ const Navbar = () => {
             <li className="nav-item nav-item-move-right">
               <NavDropdown title="Gastos" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/admin-gastosC">Combustible</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Cambio de Aceite</NavDropdown.Item>
+                <NavDropdown.Item href="/admin-gastosA">Cambio de Aceite</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Rodaje de Llantas</NavDropdown.Item>
               </NavDropdown>
             </li>
