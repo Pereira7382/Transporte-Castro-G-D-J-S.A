@@ -12,7 +12,7 @@ import AdminProveedor from './Components/AdminProveedor';
 import AdminMovimiento from './Components/AdminMovimiento';
 import CambioContrasenia from './Components/CambioContrasenia';
 import Notificaciones from './Components/Notificaciones'; // Importa el componente de Notificaciones
-
+import GastoAceite from './Components/GastoAceite';
 import GastoCombustible from './Components/GastoCombustible';
 
 export const AuthContext = React.createContext();
@@ -97,6 +97,10 @@ function App() {
           <Route
             path="/admin-gastosC"
             element={<Seguridad element={<GastoCombustible />} />}
+          />
+          <Route
+            path="/admin-gastosA"
+            element={<Seguridad element={<GastoAceite />} />}
           />
         </Routes>
       </div>
