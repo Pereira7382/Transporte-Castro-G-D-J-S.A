@@ -9,8 +9,14 @@ const PaginaPrincipal = () => {
         {/* Contenido del Navbar */}
       </div>
       <div className="carousel-container">
+      <div className="carousel-text">
+          <p>SU ALIADO CORPORATIVO 
+                EN CARRETERA</p>
+        </div>
+
        <img src={camion1} className="d-block w-100 carousel-image" alt="Camión de carga número 1" />
     
+      
       </div>
     </div>
   );
