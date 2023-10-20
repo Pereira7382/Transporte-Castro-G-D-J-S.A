@@ -16,32 +16,11 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
+
       <div className="container-fluid">
-
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button
-            onClick={handleLogout}
-            style={{
-              backgroundColor: '#f44336',
-              border: 'none',
-              color: 'white',
-              padding: '10px 20px',
-              textAlign: 'center',
-              textDecoration: 'none',
-              display: 'inline-block',
-              fontSize: '16px',
-              margin: '4px 2px',
-              cursor: 'pointer',
-              borderRadius: '4px',
-              marginTop: '-20px', /* Mueve el botón hacia arriba */
-              marginRight: '20px', /* Mueve el botón hacia la derecha */
-            }}
-          >
-            Cerrar Sesión
-          </button>
-
-          <img src={logo} style={{ width: '150px', marginRight: '20px',  marginTop: '-40px' }} alt="" />
-        </div>
+       <div class="logo-img">
+      <img src={logo}  style={{ width: '150px', marginLeft: '-20px',  marginTop: '-20px' }} alt=""  />
+      </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
@@ -68,6 +47,31 @@ const Navbar = () => {
               <a className="nav-link" href="/admin-movimiento">Administrar Movimiento</a>
             </li>
           </ul>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button
+            onClick={handleLogout}
+            style={{
+              backgroundColor: 'blue',
+              border: 'none',
+              color: 'white',
+              padding: '10px 20px',
+              textAlign: 'center',
+              textDecoration: 'none',
+              display: 'inline-block',
+              fontSize: '16px',
+              margin: '4px 2px',
+              cursor: 'pointer',
+              borderRadius: '4px',
+              marginTop: '-30px', /* Mueve el botón hacia arriba */
+              marginRight: '-10px', /* Mueve el botón hacia la derecha */
+            }}
+          >
+            Cerrar Sesión
+          </button>
+
+          
         </div>
       </div>
     </nav>

@@ -1,11 +1,14 @@
 /* Navbar.css */
 
 /* Estilos para el navbar */
+
 .navbar {
-  background-color: #0088a9;
+ 
   color: black;
-  padding: 50px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  position: relative; /* Asegura que el Navbar tenga una posición relativa */
+  z-index: 1;
+  background-color: blue;
 }
 
 /* Estilos para los enlaces del navbar */
@@ -21,14 +24,14 @@
 
 /* Estilos para mover los enlaces específicos hacia la derecha */
 .nav-item-move-right {
-  margin-left: 10px; /* Ajusta el margen izquierdo según tu preferencia */
+  margin-left: 30px; /* Ajusta el margen izquierdo según tu preferencia */
   position: relative;
-  top: -25px;
+  top: -5px;
 }
 
 .navbar-nav .nav-link:hover {
   color: white;
-  background-color: #3b4e53;
+  background-color: blue;
 }
 
 /* Navbar.css */

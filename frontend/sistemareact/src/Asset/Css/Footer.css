@@ -5,7 +5,12 @@
     color: #fff;
     padding: 15px 0;
     font-family: 'Georgia', serif;
+    position: absolute;
+    bottom: 30; /* Puedes ajustar esto para cambiar la posición vertical */
+    left: 0; /* Puedes ajustar esto para cambiar la posición horizontal */
+    width: 100%;
 }
+
   
 .footer-content {
     display: flex;
