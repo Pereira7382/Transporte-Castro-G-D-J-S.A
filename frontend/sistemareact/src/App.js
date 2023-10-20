@@ -14,6 +14,7 @@ import CambioContrasenia from './Components/CambioContrasenia';
 import Notificaciones from './Components/Notificaciones'; // Importa el componente de Notificaciones
 import GastoAceite from './Components/GastoAceite';
 import GastoCombustible from './Components/GastoCombustible';
+import GastoLlanta from './Components/GastoLlanta';
 
 export const AuthContext = React.createContext();
 
@@ -101,6 +102,10 @@ function App() {
           <Route
             path="/admin-gastosA"
             element={<Seguridad element={<GastoAceite />} />}
+          />
+          <Route
+            path="/admin-gastosL"
+            element={<Seguridad element={<GastoLlanta />} />}
           />
         </Routes>
       </div>
