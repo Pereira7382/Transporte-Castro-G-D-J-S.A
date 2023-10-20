@@ -8,7 +8,7 @@
   padding: 5px;
   position: relative; /* Asegura que el Navbar tenga una posición relativa */
   z-index: 1;
-  background-color: blue;
+ 
 }
 
 /* Estilos para los enlaces del navbar */
