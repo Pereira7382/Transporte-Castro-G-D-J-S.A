@@ -14,7 +14,12 @@ public class GastoLlanta {
     private int id_camion;
     private int id_llanta;
     private String numero_factura;
-
+    private String matriculaCamion;
+    private String nombreProveedor;
+    private String marcaLlanta;
+    private int kmCamion;
+    private int duracion;
+    
     public int getId() {
         return id;
     }
@@ -71,6 +76,46 @@ public class GastoLlanta {
         this.numero_factura = numero_factura;
     }
 
+    public String getMatriculaCamion() {
+        return matriculaCamion;
+    }
+
+    public void setMatriculaCamion(String matriculaCamion) {
+        this.matriculaCamion = matriculaCamion;
+    }
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
+
+    public String getMarcaLlanta() {
+        return marcaLlanta;
+    }
+
+    public void setMarcaLlanta(String marcaLlanta) {
+        this.marcaLlanta = marcaLlanta;
+    }
+
+    public int getKmCamion() {
+        return kmCamion;
+    }
+
+    public void setKmCamion(int kmCamion) {
+        this.kmCamion = kmCamion;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+    
     public GastoLlanta(int id, Date fecha, double monto, int estado, int id_camion, int id_llanta, String numero_factura) {
         this.id = id;
         this.fecha = fecha;

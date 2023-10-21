@@ -9,12 +9,12 @@
   
   .carousel-text {
     position: absolute;
-    top: 5%;
+    top: 4%;
     left: 0;
     right: 0;
     transform: translateY(-50%);
     text-align: center;
-    background: rgba(20, 5, 224, 0.61); /* Opcional: Agrega un fondo semitransparente detrás del texto para mayor legibilidad. */
+    background: rgba(0, 0, 255, 0.582); /* Opcional: Agrega un fondo semitransparente detrás del texto para mayor legibilidad. */
     color: #fff; /* Opcional: Color del texto */
     font-size: 24px;
     font-family: 'Arial', sans-serif;

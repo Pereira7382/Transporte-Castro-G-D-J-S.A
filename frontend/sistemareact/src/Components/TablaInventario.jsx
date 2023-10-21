@@ -139,6 +139,7 @@ const TablaInventario = ({ lista }) => {
 
   return (
     <>
+     <div style={{ position: "relative", zIndex: 0 }}>
       <MaterialReactTable
         enableFullScreenToggle={true}
         enableDensityToggle={true}
@@ -220,6 +221,7 @@ const TablaInventario = ({ lista }) => {
           setInventario(updatedInventario);
         }}
       />
+      </div>
       <ModalInsertarFechaReporte reporte={modalReporteFecha} />
       <Campana notificaciones={notificaciones} />
       <Notificaciones notificaciones={notificaciones} />

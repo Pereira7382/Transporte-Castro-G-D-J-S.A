@@ -94,6 +94,7 @@ const TablaMovimiento = ({ lista }) => {
 
   return (
     <>
+    <div style={{ position: "relative", zIndex: 0 }}>
       <MaterialReactTable
         enableFullScreenToggle={true}
         enableDensityToggle={true}
@@ -145,6 +146,7 @@ const TablaMovimiento = ({ lista }) => {
           </Box>
         )}
       />
+      </div>
      <ModalInsertarFechaReporte reporte={modalReporteFecha} />
  
     </>
