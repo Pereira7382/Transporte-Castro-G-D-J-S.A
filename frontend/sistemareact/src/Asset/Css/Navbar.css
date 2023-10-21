@@ -26,7 +26,7 @@
 
 /* Estilos para mover los enlaces específicos hacia la derecha */
 .nav-item-move-right {
-  margin-left: 580px; /* Ajusta el margen izquierdo según tu preferencia */
+  margin-left: 750px; /* Ajusta el margen izquierdo según tu preferencia */
   position: relative;
   top: 2px;
   font-size: 17px;

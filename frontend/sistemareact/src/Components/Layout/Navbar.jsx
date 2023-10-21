@@ -31,7 +31,7 @@ const Navbar = () => {
         <div className="nav-item nav-item-move-right" id="navbarNav">
           <ul className="navbar-nav animate__animated animate__fadeInDown">
             <li className="navbar-nav .nav-link">
-              <NavDropdown title="Control de Inventario" id="basic-nav-dropdown" className="nav-dropdown">
+              <NavDropdown title="Mantenimiento" id="basic-nav-dropdown" className="nav-dropdown">
                 <NavDropdown.Item href="/admin-gastosC"> Administar Combustible</NavDropdown.Item>
                 <NavDropdown.Item href="/admin-gastosA"> Administar Cambio de Aceite</NavDropdown.Item>
                 <NavDropdown.Item href="/admin-gastosL">Administar Rodaje de Llantas</NavDropdown.Item>
@@ -41,7 +41,7 @@ const Navbar = () => {
             </li>
 
             <li className="navbar-nav .nav-link">
-              <NavDropdown title="Movimientos Generales" id="basic-nav-dropdown" className="nav-dropdown">
+              <NavDropdown title="Inventario" id="basic-nav-dropdown" className="nav-dropdown">
                 
                 <NavDropdown.Item href="/admin-camiones">Administrar Camiones</NavDropdown.Item>
                 <NavDropdown.Item href="/admin-movimiento">Administrar Movimiento</NavDropdown.Item>
