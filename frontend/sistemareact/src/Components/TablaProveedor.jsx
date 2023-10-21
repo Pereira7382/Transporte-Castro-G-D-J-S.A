@@ -188,15 +188,13 @@ const TablaProveedor = ({ lista }) => {
             >
               Actualizar
             </button>
-            <button variant="contained" color="default">
-              Mantenimiento
-            </button>
+           
             <button
               variant="contained"
               color="default"
               onClick={() => handleReporteProveedor(row.original.id_proveedor)}
             >
-              Generar Reporte
+              GenerarReporte
             </button>
           </Box>
         )}

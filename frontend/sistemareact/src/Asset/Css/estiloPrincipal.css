@@ -1,6 +1,23 @@
 /* styles.css */
 .carousel-image {
-    height: 530px; /* Ajusta la altura deseada */
+    height: 590px; /* Ajusta la altura deseada */
     /* Puedes ajustar otros estilos aquí si es necesario */
+  }
+  .carousel-container {
+    position: relative;
+  }
+  
+  .carousel-text {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    background: rgba(20, 5, 224, 0.61); /* Opcional: Agrega un fondo semitransparente detrás del texto para mayor legibilidad. */
+    color: #fff; /* Opcional: Color del texto */
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    /* Otros estilos de texto, como fuente, tamaño de fuente, etc. */
   }
   
