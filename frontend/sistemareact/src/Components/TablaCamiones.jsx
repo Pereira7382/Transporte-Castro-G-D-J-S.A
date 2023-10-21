@@ -98,6 +98,7 @@ const TablaCamiones = ({ lista }) => {
 
   return (
     <>
+    <div style={{ position: "relative", zIndex: 0 }}>
       <MaterialReactTable
         enableFullScreenToggle={true}
         enableDensityToggle={true}
@@ -161,6 +162,7 @@ const TablaCamiones = ({ lista }) => {
           </Box>
         )}
       />
+      </div>
       <ModalInsertar />
       <ModalActualizarCamion
         camion={camionAActualizar}

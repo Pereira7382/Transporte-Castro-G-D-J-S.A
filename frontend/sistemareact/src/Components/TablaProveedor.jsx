@@ -158,6 +158,7 @@ const TablaProveedor = ({ lista }) => {
 
   return (
     <>
+     <div style={{ position: "relative", zIndex: 0 }}>
       <MaterialReactTable
         enableFullScreenToggle={true}
         enableDensityToggle={true}
@@ -226,6 +227,7 @@ const TablaProveedor = ({ lista }) => {
           </Box>
         )}
       />
+      </div>
       <ModalInsertarProveedor />
       <ModalActualizarProveedor
         proveedor={proveedorAActualizar}

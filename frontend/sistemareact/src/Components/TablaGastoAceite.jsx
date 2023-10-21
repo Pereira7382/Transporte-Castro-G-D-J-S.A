@@ -59,6 +59,7 @@ const TablaGastoAceite = ({ lista }) => {
 
     return (
         <>
+        <div style={{ position: "relative", zIndex: 0 }}>
             <MaterialReactTable
                 enableFullScreenToggle={true}
                 enableDensityToggle={true}
@@ -109,6 +110,7 @@ const TablaGastoAceite = ({ lista }) => {
                     </Box>
                 )}
             />
+            </div>
             <ModalInsertarGastoA />
         </>
     );

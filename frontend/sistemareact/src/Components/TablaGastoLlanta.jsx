@@ -81,55 +81,58 @@ const TablaGastoLlanta = ({ lista }) => {
 
     return (
         <>
-            <MaterialReactTable
-                enableFullScreenToggle={true}
-                enableDensityToggle={true}
-                columns={columns}
-                data={gastos}
-                localization={MRT_Localization_ES}
-                enableRowActions
-                positionActionsColumn="last"
-                options={{
-                    exportButton: true,
-                }}
-                renderRowActions={({ row }) => (
-                    <Box sx={{ display: "flex", gap: "1rem" }}>
-                    <button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => confirmDeleteAlert(row.original.id)}
-                    >
-                      Eliminar
-                    </button>
-                   
-                  </Box>
-                )}
-                renderTopToolbarCustomActions={({ table }) => (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            gap: "1rem",
-                            p: "0.5rem",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <Tooltip arrow placement="right" title="Registrar Gasto">
-                            <IconButton
-                                size="small"
-                                color="success"
-                                id="btnModalInsertarGastoL"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalInsertarGastoL"
+            <div style={{ position: "relative", zIndex: 0 }}>
+                <MaterialReactTable
+                    enableFullScreenToggle={true}
+                    enableDensityToggle={true}
+                    columns={columns}
+                    data={gastos}
+                    localization={MRT_Localization_ES}
+                    enableRowActions
+                    positionActionsColumn="last"
+                    options={{
+                        exportButton: true,
+                    }}
+                    renderRowActions={({ row }) => (
+                        <Box sx={{ display: "flex", gap: "1rem" }}>
+                            <button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => confirmDeleteAlert(row.original.id)}
                             >
-                                <FaPlus />
-                            </IconButton>
-                        </Tooltip>
-                    </Box>
-                )}
-            />
+                                Eliminar
+                            </button>
+                        </Box>
+                    )}
+                    renderTopToolbarCustomActions={({ table }) => (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                gap: "1rem",
+                                p: "0.5rem",
+                                flexWrap: "wrap",
+                            }}
+                        >
+                            <Tooltip arrow placement="right" title="Registrar Gasto">
+                                <IconButton
+                                    size="small"
+                                    color="success"
+                                    id="btnModalInsertarGastoL"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalInsertarGastoL"
+                                >
+                                    <FaPlus />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+                    )}
+                />
+            </div>
             <ModalInsertarGastoL />
         </>
     );
+    
+    
 };
 
 export default TablaGastoLlanta;
