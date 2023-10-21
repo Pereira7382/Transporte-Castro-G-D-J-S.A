@@ -14,15 +14,18 @@ import java.util.LinkedList;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Component;
 import java.util.LinkedList;
+import java.util.Random;
 import una.ac.cr.sistema_transporte.data.DataLogin;
 import una.ac.cr.sistema_transporte.domain.Usuario;
 import una.ac.cr.sistema_transporte.security.Encriptacion;
+import una.ac.cr.sistema_transporte.service.ServiceEmail;
 
 @Component
 public class LogicaLogin {
 
     Encriptacion encriptacion = new Encriptacion();
     DataLogin dataLogin = new DataLogin();
+    
 
     public boolean validarAcceso(Usuario usuario) {
         //recuperar lista de usuarios registrados en la base de datos.
@@ -43,19 +46,40 @@ public class LogicaLogin {
         return false;
     }
 
-    public boolean agregarUsuario(Usuario usuario) {
+    public int agregarUsuario(Usuario usuario) {
         System.out.println("\n llego a la logica a registrar nuevo usuario ");
-
+        int estado=0;
         boolean agregado = false;
+        
+        boolean activo=false;
+      
         //encriptar la contraseña
         String contraseniaEncriptada = "";
         contraseniaEncriptada = encriptacion.encriptarContrasena(usuario.getClave());
         usuario.setClave(contraseniaEncriptada);
-
+        activo = dataLogin.verificarUsuarioActivo(usuario.getUsuario());
+        
+        
+        if(activo == true){
+            estado=1;
+            System.out.println("Se encuentra en estado:"+ estado);
+        return estado;
+        }else if(activo==false){
+            System.out.println("Se encuentra en estado:"+ estado);
         agregado = dataLogin.agregarUsuario(usuario);
+        
+        if(agregado==false){
+            estado=2;
+            System.out.println("Se encuentra en estado:"+ estado);
+        return estado;
+        }
+        System.out.println("Se encuentra en estado:"+ estado);
+        estado=3;
+        return 3;
         //enviarsela a la capa de acceso a datos para que esta haga la comparacion.
-
-        return agregado;
+        }
+        
+        return estado;
 
     }
 
@@ -85,6 +109,39 @@ public class LogicaLogin {
         String passwordPattern = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&/])[A-Za-z\\d@$!%*?&/]{8,}$";
         return contrasenia.matches(passwordPattern);
     }
+    
+    
+    public boolean activarCuenta(String correo, String codigo) {
+    String code = dataLogin.obtenerCodigoPorUsuario(correo);
+    //System.out.println("Verifica codigo:" + code);
+
+    // Verifica si el código obtenido es null
+    if (code == null ? codigo != null : !code.equals(codigo)) {
+        // Maneja el caso donde el código es null (por ejemplo, registrando un log)
+        System.out.println("El código para el usuario " + correo + " es null.");
+        return false;
+    }
+
+    // Convierte ambos códigos a minúsculas antes de compararlos
+    code = code.toLowerCase();
+    codigo = codigo.toLowerCase();
+
+    // Verifica si los códigos son iguales (considerando minúsculas)
+    if (code.equals(codigo)) {
+        // Actualiza el activo
+        dataLogin.actualizarActivo(correo, codigo);
+        return true;
+    }
+
+    return false;
+}
+    
+    
+    public boolean verificarActivo(String usuario){
+    
+    return dataLogin.verificarActivoPorUsuario(usuario);
+    }
+
     
 
 }
