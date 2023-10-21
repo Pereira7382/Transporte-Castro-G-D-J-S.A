@@ -12,10 +12,7 @@ const TablaGastoLlanta = ({ lista }) => {
     const columns = useMemo(
         () => [
 
-            {
-                header: "Id Registro",
-                accessorKey: "id",
-            },
+          
             {
                 header: "Factura # ",
                 accessorKey: "numero_factura",
@@ -26,19 +23,19 @@ const TablaGastoLlanta = ({ lista }) => {
             },
             {
                 header: "Placa",
-                accessorKey: "matricula",
+                accessorKey: "matriculaCamion",
             },
             {
                 header: "Proveedor",
-                accessorKey: "proveedor",
+                accessorKey: "nombreProveedor",
             },
             {
                 header: "Marca",
-                accessorKey: "marca",
+                accessorKey: "marcaLlanta",
             },
             {
                 header: "Kilometraje al momento",
-                accessorKey: "kilometrajeActual",
+                accessorKey: "kmCamion",
             },
             {
                 header: "Duracion Rodamiento",
@@ -52,6 +49,31 @@ const TablaGastoLlanta = ({ lista }) => {
         ],
         []
     );
+
+    const confirmDeleteAlert = (id) => {
+        const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
+        if (result) {
+          handleEliminar(id);
+        }
+      };
+    
+      const handleEliminar = (id) => {
+        fetch(`http://localhost:8080/gastoLlanta/${id}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              const updatedLlantas = gastos.filter((gasto) => gasto.id !== id);
+              setGastos(updatedLlantas);
+            } else {
+              console.error("Error al eliminar el registro");
+            }
+          })
+          .catch((error) => {
+            console.error("Error de red:", error);
+          });
+      };
+    
 
     useEffect(() => {
         setGastos(lista);
@@ -72,19 +94,15 @@ const TablaGastoLlanta = ({ lista }) => {
                 }}
                 renderRowActions={({ row }) => (
                     <Box sx={{ display: "flex", gap: "1rem" }}>
-                        <button
-                            variant="contained"
-                            color="secondary"
-                        >
-                            Eliminar
-                        </button>
-                        <button
-                            variant="contained"
-                            color="primary"
-                        >
-                            Actualizar
-                        </button>
-                    </Box>
+                    <button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => confirmDeleteAlert(row.original.id)}
+                    >
+                      Eliminar
+                    </button>
+                   
+                  </Box>
                 )}
                 renderTopToolbarCustomActions={({ table }) => (
                     <Box

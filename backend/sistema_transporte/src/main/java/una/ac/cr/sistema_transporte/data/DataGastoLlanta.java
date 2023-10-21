@@ -3,7 +3,9 @@ package una.ac.cr.sistema_transporte.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import una.ac.cr.sistema_transporte.domain.GastoLlanta;
 
 public class DataGastoLlanta extends DataBase{
@@ -31,6 +33,50 @@ public class DataGastoLlanta extends DataBase{
             return true;
         } catch (SQLException e) {
             System.out.println("\n  error encontrado : " + e.toString());
+            return false;
+        }
+    }
+    
+    public LinkedList<GastoLlanta> obtenerGastoLlanta(){
+        LinkedList<GastoLlanta> lista = new LinkedList<>();
+        try {
+            Connection cn = getConexion();
+            String query = "SELECT g.id, g.estado, g.numero_factura, g.monto, C.matricula, P.nombre, ll.marca, C.kilometraje, ll.duracion, g.fecha FROM gasto_rodaje_llantas as g INNER JOIN tb_camion C ON C.id = g.id_camion INNER JOIN llanta ll ON ll.id = g.id_llanta INNER JOIN proveedor P ON P.id_proveedor = ll.id_proveedor WHERE g.estado = 1";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                GastoLlanta gasto = new GastoLlanta();
+                gasto.setId(rs.getInt(ID));
+                gasto.setNumero_factura(rs.getString(FACTURA));
+                gasto.setMonto(rs.getDouble(MONTO));
+                gasto.setEstado(rs.getInt(ESTADO));
+                gasto.setMatriculaCamion(rs.getString("matricula"));
+                gasto.setNombreProveedor(rs.getString("nombre"));
+                gasto.setMarcaLlanta(rs.getString("marca"));
+                gasto.setKmCamion(rs.getInt("kilometraje"));
+                gasto.setDuracion(rs.getInt("duracion"));
+                gasto.setFecha(rs.getDate("fecha"));
+                lista.add(gasto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrio un error al establecer la conexion con la base de datos");
+        }
+        return lista;
+    }
+    
+    
+        public boolean eliminarLlantas(int id){
+        Connection cn = getConexion();
+        String query = "UPDATE " + TABLAGASTOSLLANTA + " SET estado = ? WHERE id = ?";
+        try {
+            PreparedStatement prepare = cn.prepareStatement(query);
+            prepare.setInt(1, 0);
+            prepare.setInt(2, id);
+            prepare.executeUpdate();
+            prepare.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

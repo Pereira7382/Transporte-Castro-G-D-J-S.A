@@ -1,5 +1,6 @@
 import TablaGastoLlanta from './TablaGastoLlanta';
 import React, { Component } from 'react';
+import axios from 'axios';
 import Layout from './Layout/Layout';
 
 class GastoLlanta extends Component {
@@ -11,15 +12,15 @@ class GastoLlanta extends Component {
     }
     
     componentDidMount() {
-        //obtener todos los datos de consumos de llantas para pintarlos en la tabla aca.
-     /* axios.get("http://localhost:8080/proveedor")
+      axios.get("http://localhost:8080/gastoLlanta")
         .then((response) => {
-          this.setState({ proveedor: response.data });
+          this.setState({ gastosLlanta: response.data });
         })
         .catch((error) => {
           console.error('Error al obtener datos de inventario:', error);
-        });*/
+        });
     }
+  
   
     render() {
       return (
