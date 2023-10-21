@@ -22,8 +22,10 @@ import java.util.Map;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import una.ac.cr.sistema_transporte.Logica.LogicaLogin;
 import una.ac.cr.sistema_transporte.Logica.LogicaLoginRep;
 
@@ -64,13 +66,15 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
     }
 }
 
+    
+
 
 @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
         String newPassword = request.get("newPassword");
         String correoElectronico = "";
         Map<String, Object> response = new HashMap<>();
-
+        System.out.println(token);
         String claveSecreta = "a1b2C3d4E5f6G7h8I9j0KlMnOpQrStUvWxYzAqBpCrDsEtFuGvHwIxJyKzLmNoPjQkRlSmTnUoVpWqXrYsZtUvWxYzA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5ZaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
 
         byte[] claveBytes = claveSecreta.getBytes(StandardCharsets.UTF_8);
@@ -116,4 +120,54 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+     
+    
+    @PostMapping("/verificarToken")
+    public ResponseEntity<?> resetPassword2(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
+        System.out.println("entroooooooooooooo");
+        String newPassword = request.get("newPassword");
+        String correoElectronico = "";
+        Map<String, Object> response = new HashMap<>();
+
+        String claveSecreta = "tuClaveSecreta"; // Reemplaza esto con tu clave secreta
+
+        byte[] claveBytes = claveSecreta.getBytes(StandardCharsets.UTF_8);
+        Key jwtSecret = new SecretKeySpec(claveBytes, SignatureAlgorithm.HS256.getJcaName());
+
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(jwtSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            correoElectronico = claims.getSubject();
+            Date expirationDate = claims.getExpiration();
+            Date currentDate = new Date();
+
+            if (expirationDate.before(currentDate)) {
+                // Token expirado, maneja la lógica aquí si es necesario
+                response.put("type", "error");
+                response.put("message", "El enlace ha expirado");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            } else {
+                
+                System.out.println("entroo");
+
+                response.put("type", "success");
+                response.put("message", "Contraseña cambiada exitosamente");
+                return ResponseEntity.ok(response);
+            }
+        } catch (ExpiredJwtException ex) {
+            // Token expirado, maneja la lógica aquí si es necesario
+            response.put("type", "error");
+            response.put("message", "El enlace ha expirado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        } catch (Exception e) {
+            // Error al procesar el token, maneja la lógica aquí si es necesario
+            response.put("type", "error");
+            response.put("message", "Error al procesar el token");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+}
+    
 }
