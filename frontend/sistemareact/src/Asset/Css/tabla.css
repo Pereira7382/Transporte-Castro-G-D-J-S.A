@@ -1,0 +1,26 @@
+/* Estilos de celda para la columna "Nombre" */
+.nombre-cell {
+    color: blue;
+    background-color: lightblue;
+  }
+  
+  /* Estilos de encabezado de columna para la columna "Nombre" */
+  .nombre-header {
+    color: white;
+    background-color: darkblue;
+  }
+  
+  /* Estilos de celda para la columna "Correo Electrónico" */
+  .correo-cell {
+    color: green;
+    background-color: lightyellow;
+  }
+  
+  /* Estilos de encabezado de columna para la columna "Correo Electrónico" */
+  .correo-header {
+    color: white;
+    background-color: darkgreen;
+  }
+  
+  /* Repite para otras columnas */
+  

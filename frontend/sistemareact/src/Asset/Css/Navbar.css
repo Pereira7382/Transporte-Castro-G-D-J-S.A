@@ -1,11 +1,14 @@
 /* Navbar.css */
 
 /* Estilos para el navbar */
+
 .navbar {
-  background-color: #0088a9;
+ 
   color: black;
-  padding: 50px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  position: relative; /* Asegura que el Navbar tenga una posición relativa */
+  z-index: 1;
+ 
 }
 
 /* Estilos para los enlaces del navbar */
@@ -21,14 +24,16 @@
 
 /* Estilos para mover los enlaces específicos hacia la derecha */
 .nav-item-move-right {
-  margin-left: 10px; /* Ajusta el margen izquierdo según tu preferencia */
+  margin-left: 30px; /* Ajusta el margen izquierdo según tu preferencia */
   position: relative;
-  top: -25px;
+  top: -5px;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .navbar-nav .nav-link:hover {
   color: white;
-  background-color: #3b4e53;
+  background-color: blue;
 }
 
 /* Navbar.css */
@@ -38,7 +43,7 @@
   margin-left: -215px; /* Ejemplo de margen derecho para mover la posición */
   /* Agrega más estilos según tus necesidades */
   font-family: 'Tu Fuente Personalizada', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* Cambia 'Tu Fuente Personalizada' a la fuente que desees */
-  font-size: 24px; /* Cambia el tamaño de fuente a tu preferencia */
+  font-size: 30px; /* Cambia el tamaño de fuente a tu preferencia */
   font-weight: bold; /* Cambia el grosor de la fuente si es necesario */
 }
 
