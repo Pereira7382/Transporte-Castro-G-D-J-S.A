@@ -15,6 +15,7 @@ import Notificaciones from './Components/Notificaciones'; // Importa el componen
 import GastoAceite from './Components/GastoAceite';
 import GastoCombustible from './Components/GastoCombustible';
 import GastoLlanta from './Components/GastoLlanta';
+import ValidarAcceso from './Components/ValidarAcceso';
 
 export const AuthContext = React.createContext();
 
@@ -99,6 +100,7 @@ function App() {
             path="/admin-gastosC"
             element={<Seguridad element={<GastoCombustible />} />}
           />
+          <Route path="/admin-validarAcceso" element={<ValidarAcceso />} />
           <Route
             path="/admin-gastosA"
             element={<Seguridad element={<GastoAceite />} />}

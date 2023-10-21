@@ -20,14 +20,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 import javax.crypto.spec.SecretKeySpec;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import una.ac.cr.sistema_transporte.Logica.LogicaLogin;
 import una.ac.cr.sistema_transporte.Logica.LogicaLoginRep;
+import una.ac.cr.sistema_transporte.domain.Usuario;
 
 @Controller
 @RequestMapping("/loginRep")
@@ -169,5 +172,94 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 }
+    /*
+ @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
+@ResponseStatus(HttpStatus.CREATED)
+@ResponseBody
+public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario usuario) {
+    // Validar la contraseña
+    if (!log.validarContrasenia(usuario.getClave())) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", false);
+        response.put("message", "La contraseña no cumple con los requisitos mínimos.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    int registroExitoso = log.agregarUsuario(usuario);
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("success", registroExitoso);
+
+    if (registroExitoso == 1) {
+        response.put("message", "Esta cuenta se encuentra a la espera de ser activada. Revise su correo para el mensaje de activación.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else if (registroExitoso == 3) {
+        response.put("message", "Usuario registrado correctamente.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else {
+        response.put("message", "Error al registrar el usuario.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+}
+*/
+    
+    
+ @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
+@ResponseStatus(HttpStatus.CREATED)
+@ResponseBody
+public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario usuario) {
+    // Validar la contraseña
+    if (!log.validarContrasenia(usuario.getClave())) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", false);
+        response.put("message", "La contraseña no cumple con los requisitos mínimos.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    int registroExitoso = log.agregarUsuario(usuario);
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("success", registroExitoso);
+
+    if (registroExitoso == 1) {
+        response.put("message", "Esta cuenta se encuentra a la espera de ser activada. Revise su correo para el mensaje de activación.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else if (registroExitoso == 3) {
+        logicaLogin.activarCuenta(usuario.getUsuario());
+        response.put("message", "Usuario registrado correctamente, se ha enviado un codigo de activacion a su cuenta.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else {
+        response.put("message", "Error al registrar el usuario.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+}
+
+    /*
+    @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario usuario) {
+        
+        
+        // Validar la contraseña
+        if (!log.validarContrasenia(usuario.getClave())) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "La contraseña no cumple con los requisitos mínimos.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        boolean registroExitoso = logicaLogin.agregarUsuario(usuario);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", registroExitoso);
+        if (registroExitoso) {
+            response.put("message", "Usuario registrado correctamente.");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } else {
+            response.put("message", "Error al registrar el usuario.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+*/
     
 }
