@@ -24,85 +24,98 @@ function Login({ setAuthenticated }) {
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const handleSignUp = async (e) => {
     e.preventDefault();
-  
-    // Expresión regular para validar la contraseña
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  
-    if (!formData.usuario || !formData.clave || !formData.repitaclave) {
-      toast.error("Por favor, complete todos los campos requeridos.");
-      return;
-    }
-  
-    // Expresión regular para validar un correo electrónico
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
     if (!emailPattern.test(formData.usuario)) {
-      toast.error("El usuario ingresado debe ser un correo electrónico válido.");
-      return;
-    }
-  
-    if (!passwordPattern.test(formData.clave)) {
-      toast.error("La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.");
-      return;
-    }
-  
-    if (formData.clave !== formData.repitaclave) {
-      toast.error("Las contraseñas no coinciden.");
-      return;
-    }
-  
-    try {
-      // Validar si el correo electrónico ya está registrado
-      const responseCorreo = await axios.get(`http://localhost:8080/login/validarCorreo?usuario=${formData.usuario}`);
-      if (responseCorreo.data.includes("registrado")) {
-        toast.error("El correo electrónico ya está registrado en nuestro sistema.");
+        toast.error("El usuario ingresado debe ser un correo electrónico válido.");
         return;
-      }
-  
-      const registro = {
-        usuario: formData.usuario,
-        clave: formData.clave,
-      };
-  
-      const response = await axios.post("http://localhost:8080/login/agregar", registro);
-  
-      if (response.data && response.data.success) {
-        toast.success("Se ha registrado correctamente.");
-        await wait(3000); // Espera 3 segundos antes de recargar la página
-        window.location.reload(); // Recarga la página después de esperar 3 segundos
-      } else {
-        toast.error("Error al registrar el usuario.");
-      }
-    } catch (error) {
-      console.error("Error al registrarse:", error);
-      toast.error("Error al registrar el usuario.");
     }
-  };
-  
+
+    if (!passwordPattern.test(formData.clave)) {
+        toast.error("La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.");
+        return;
+    }
+
+    if (formData.clave !== formData.repitaclave) {
+        toast.error("Las contraseñas no coinciden.");
+        return;
+    }
+
+    try {
+        // Verificar si el correo electrónico ya está registrado
+        const emailCheckResponse = await axios.get(`http://localhost:8080/login/validarCorreo?usuario=${formData.usuario}`);
+
+        if (emailCheckResponse.data.includes("registrado")) {
+            toast.error("El correo electrónico ya está registrado en nuestro sistema.");
+            return;
+        }
+
+        // Continuar con el proceso de registro
+        const registro = {
+            usuario: formData.usuario,
+            clave: formData.clave,
+        };
+
+        const registerResponse = await axios.post("http://localhost:8080/loginRep/agregar", registro);
+
+        if (registerResponse.data && registerResponse.data.success) {
+            if (registerResponse.data.message.includes("espera de ser activada")) {
+                toast.info(registerResponse.data.message);
+            } else {
+                toast.success(registerResponse.data.message || "Se ha enviado un mensaje a su correo para activar su cuenta.");
+                await wait(3000); // Espera 3 segundos antes de recargar la página
+                window.location.reload(); // Recarga la página después de esperar 3 segundos
+            }
+        } else {
+            toast.error(registerResponse.data.message || "Error al registrar el usuario.");
+        }
+    } catch (error) {
+        console.error("Error al registrarse:", error);
+        toast.error("Error al registrar el usuario.");
+    }
+};
+
   
   // Conexión con Spring Boot para iniciar sesión
   const handleSignIn = async (e) => {
+    e.preventDefault();
+
     try {
-      e.preventDefault();
-      if (!formData.usuario || !formData.clave) {
-        console.error("Por favor, complete todos los campos requeridos.");
-        return;
-      }
+        if (!formData.usuario || !formData.clave) {
+            toast.error("Por favor, complete todos los campos requeridos.");
+            return;
+        }
 
-      const acceso = {
-        usuario: formData.usuario,
-        clave: formData.clave,
-      };
+        const acceso = {
+            usuario: formData.usuario,
+            clave: formData.clave,
+        };
 
-      const response = await axios.post("http://localhost:8080/login/validar", acceso); 
+        const response = await axios.post("http://localhost:8080/login/validar", acceso);
 
-      console.log("Inicio de sesión exitoso:", response.data);
-      setAuthenticated(true); // Establecer el estado de autenticación en verdadero.
-      navigate("/Home"); 
+        if (response.data.accesoAutorizado) {
+            if (response.data.codigo === 401) {
+                // Cuenta no activa, requiere activación por correo
+                toast.warning(response.data.mensaje);
+            } else {
+                // Acceso permitido sin necesidad de activación
+                toast.success(response.data.mensaje);
+                setAuthenticated(true);
+                navigate("/Home");
+            }
+        } else {
+            // Acceso no autorizado
+            toast.error(response.data.mensaje);
+        }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+        console.error("Error al iniciar sesión:", error);
+        toast.error("Error al iniciar sesión. Por favor, inténtelo de nuevo.");
     }
-  };
+};
+
+
   
   return (
     <div className="centered-container">
