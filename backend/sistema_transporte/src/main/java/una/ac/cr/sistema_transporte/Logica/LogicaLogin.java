@@ -73,5 +73,18 @@ public class LogicaLogin {
 
         return jwt;
     }
+    
+    public boolean validadCorreoExistente(String usuario){
+    
+        return dataLogin.buscarEmail(usuario);
+    
+    }
+    
+    public boolean validarContrasenia(String contrasenia) {
+        // Expresión regular para validar la contraseña
+        String passwordPattern = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&/])[A-Za-z\\d@$!%*?&/]{8,}$";
+        return contrasenia.matches(passwordPattern);
+    }
+    
 
 }

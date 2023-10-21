@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 const CambioContrasenia = () => {
   const [nuevaContrasenia, setNuevaContrasenia] = useState("");
   const [confirmarContrasenia, setConfirmarContrasenia] = useState("");
@@ -33,6 +33,14 @@ const CambioContrasenia = () => {
 
     if (nuevaContrasenia !== confirmarContrasenia) {
       setError("Las contraseñas no coinciden");
+      return;
+    }
+  
+    // Expresión regular para validar contraseña
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+    if (!passwordPattern.test(nuevaContrasenia)) {
+      toast.error("La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.");
       return;
     }
 
