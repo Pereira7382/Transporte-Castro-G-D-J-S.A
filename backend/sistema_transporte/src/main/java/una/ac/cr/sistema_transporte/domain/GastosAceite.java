@@ -34,6 +34,11 @@ public class GastosAceite {
         this.fecha = fecha;
     }
 
+    public GastosAceite() {
+    }
+
+    
+    
     public int getId() {
         return id;
     }

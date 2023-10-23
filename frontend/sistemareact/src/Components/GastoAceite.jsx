@@ -13,7 +13,7 @@ class GastoAceite extends Component {
     
     componentDidMount() {
         //obtener todos los datos de consumos de aceite para pintarlos en la tabla aca.
-      axios.get("http://localhost:8080/gastosAceite")
+      axios.get("http://localhost:8080/gastoAceite")
         .then((response) => {
           this.setState({ gastoAceite: response.data });
         })
