@@ -101,7 +101,7 @@ function Login({ setAuthenticated }) {
                 toast.warning(response.data.mensaje);
             } else {
                 // Acceso permitido sin necesidad de activación
-                toast.success(response.data.mensaje);
+            
                 setAuthenticated(true);
                 navigate("/Home");
             }

@@ -15,6 +15,8 @@ public class DataAceite extends DataBase{
     public final static String DESCRIPCION = "descripcion";
     public final static String DURACION = "duracion";
     public final static String PROVEEDOR = "id_proveedor";
+   
+    
     
     public LinkedList<Aceite> listar() {
         try {
@@ -44,5 +46,10 @@ public class DataAceite extends DataBase{
             System.out.println("\n  error encontrado : " + e.toString());
             return null;
         }
+        
+        
+        
+        
+        
     }
 }
