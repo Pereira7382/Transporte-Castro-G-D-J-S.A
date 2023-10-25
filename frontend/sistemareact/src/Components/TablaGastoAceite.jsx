@@ -8,6 +8,38 @@ import ModalInsertarGastoA from "./ModalInsertarGastoA";
 
 const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
+    const [gastoAActualizar, setGastoAActualizar] = useState(null);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+    const confirmDeleteAlert = (id) => {
+        const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
+        if (result) {
+            handleEliminar(id);
+        }
+    };
+
+    const handleEliminar = (id) => {
+        fetch(`http://localhost:8080/gastoAceite/${id}`, {
+            method: "DELETE",
+        })
+            .then((response) => {
+                if (response.ok) {
+                    const updatedGastos = gastos.filter((gasto) => gasto.id !== id);
+                    setGastos(updatedGastos);
+                } else {
+                    console.error("Error al eliminar el registro");
+                }
+            })
+            .catch((error) => {
+                console.error("Error de red:", error);
+            });
+    };
+
+    const handleActualizar = (gasto) => {
+        console.log("Datos del gasto a actualizar:", gasto);
+        setGastoAActualizar({ ...gasto });
+        setShowUpdateModal(true);
+    };
 
     const columns = useMemo(
         () => [
@@ -74,17 +106,20 @@ const TablaGastoAceite = ({ lista }) => {
                 renderRowActions={({ row }) => (
                     <Box sx={{ display: "flex", gap: "1rem" }}>
                         <button
-                            variant="contained"
-                            color="secondary"
-                        >
-                            Eliminar
-                        </button>
-                        <button
-                            variant="contained"
-                            color="primary"
-                        >
-                            Actualizar
-                        </button>
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => confirmDeleteAlert(row.original.id)}
+                            >
+                                Eliminar
+                            </button>
+                            {/* Botón Actualizar */}
+                            <button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => handleActualizar(row.original)}
+                            >
+                                Actualizar
+                            </button>
                     </Box>
                 )}
                 renderTopToolbarCustomActions={({ table }) => (
@@ -108,6 +143,8 @@ const TablaGastoAceite = ({ lista }) => {
                             </IconButton>
                         </Tooltip>
                     </Box>
+
+                    
                 )}
             />
             </div>

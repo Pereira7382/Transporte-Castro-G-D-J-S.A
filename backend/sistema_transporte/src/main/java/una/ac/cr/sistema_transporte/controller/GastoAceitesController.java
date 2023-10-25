@@ -10,21 +10,29 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import una.ac.cr.sistema_transporte.Logica.LogicaLlanta;
-import una.ac.cr.sistema_transporte.domain.Llanta;
+import una.ac.cr.sistema_transporte.Logica.LogicaGastoAceite;
+import una.ac.cr.sistema_transporte.domain.GastosAceite;
+
+/**
+ *
+ * @author josep
+ */
 
 @Controller
-@RequestMapping("/llanta")
+@RequestMapping("/gastosAceite")
 @CrossOrigin(origins = "*")
-public class LlantaController {
+public class GastoAceitesController {
     
-    LogicaLlanta logica = new LogicaLlanta();
+    LogicaGastoAceite logica = new LogicaGastoAceite();
+    
     
     @GetMapping
     @ResponseBody
-    public List<Llanta> listar() {
-        System.out.println("\n aceites registrados: " + logica.listar().toString());
-        return logica.listar();
+    public List<GastosAceite> listarGastosAceite() {
+        System.out.println("LLEGÓ");
+          
+        return logica.obtenerGastoAceite();
     }
-
+    
+    
 }

@@ -23,7 +23,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,6 +73,7 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
 
 @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
+        System.out.println("valida");
         String newPassword = request.get("newPassword");
         String correoElectronico = "";
         Map<String, Object> response = new HashMap<>();
@@ -125,14 +125,14 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
     }
      
     
-    @PostMapping("/verificarToken")
-    public ResponseEntity<?> resetPassword2(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
-        System.out.println("entroooooooooooooo");
+    @PostMapping("/control-token")
+    public ResponseEntity<?> controlToken(@RequestParam("token") String token, @RequestBody Map<String, String> request) {
+        System.out.println("controlToken");
         String newPassword = request.get("newPassword");
         String correoElectronico = "";
         Map<String, Object> response = new HashMap<>();
-
-        String claveSecreta = "tuClaveSecreta"; // Reemplaza esto con tu clave secreta
+        System.out.println(token);
+        String claveSecreta = "a1b2C3d4E5f6G7h8I9j0KlMnOpQrStUvWxYzAqBpCrDsEtFuGvHwIxJyKzLmNoPjQkRlSmTnUoVpWqXrYsZtUvWxYzA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5ZaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
 
         byte[] claveBytes = claveSecreta.getBytes(StandardCharsets.UTF_8);
         Key jwtSecret = new SecretKeySpec(claveBytes, SignatureAlgorithm.HS256.getJcaName());
@@ -148,60 +148,28 @@ public ResponseEntity<Map<String, String>> iniciarRecuperacionContrasena(@Reques
             Date currentDate = new Date();
 
             if (expirationDate.before(currentDate)) {
-                // Token expirado, maneja la lógica aquí si es necesario
+                logicaLogin.actualizarEstadoToken(correoElectronico);
                 response.put("type", "error");
                 response.put("message", "El enlace ha expirado");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             } else {
-                
-                System.out.println("entroo");
-
-                response.put("type", "success");
-                response.put("message", "Contraseña cambiada exitosamente");
-                return ResponseEntity.ok(response);
+             
+                    response.put("type", "success");
+                    response.put("message", "validp");
+                    return ResponseEntity.ok(response);    
             }
         } catch (ExpiredJwtException ex) {
-            // Token expirado, maneja la lógica aquí si es necesario
+            correoElectronico = ex.getClaims().getSubject();
+            logicaLogin.actualizarEstadoToken(correoElectronico);
             response.put("type", "error");
             response.put("message", "El enlace ha expirado");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         } catch (Exception e) {
-            // Error al procesar el token, maneja la lógica aquí si es necesario
             response.put("type", "error");
             response.put("message", "Error al procesar el token");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-}
-    /*
- @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
-@ResponseStatus(HttpStatus.CREATED)
-@ResponseBody
-public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario usuario) {
-    // Validar la contraseña
-    if (!log.validarContrasenia(usuario.getClave())) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", false);
-        response.put("message", "La contraseña no cumple con los requisitos mínimos.");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-
-    int registroExitoso = log.agregarUsuario(usuario);
-
-    Map<String, Object> response = new HashMap<>();
-    response.put("success", registroExitoso);
-
-    if (registroExitoso == 1) {
-        response.put("message", "Esta cuenta se encuentra a la espera de ser activada. Revise su correo para el mensaje de activación.");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    } else if (registroExitoso == 3) {
-        response.put("message", "Usuario registrado correctamente.");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    } else {
-        response.put("message", "Error al registrar el usuario.");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-}
-*/
     
     
  @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
@@ -234,32 +202,5 @@ public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario u
     }
 }
 
-    /*
-    @PostMapping(value = "/agregar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> agregarUsuario(@RequestBody Usuario usuario) {
-        
-        
-        // Validar la contraseña
-        if (!log.validarContrasenia(usuario.getClave())) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("message", "La contraseña no cumple con los requisitos mínimos.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        boolean registroExitoso = logicaLogin.agregarUsuario(usuario);
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", registroExitoso);
-        if (registroExitoso) {
-            response.put("message", "Usuario registrado correctamente.");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            response.put("message", "Error al registrar el usuario.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-    }
-*/
     
 }

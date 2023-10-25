@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled, { keyframes } from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -69,7 +70,7 @@ const Message = styled.div`
 function ValidarAcceso() {
   const [correo, setCorreo] = useState("");
   const [codigo, setCodigo] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  const [responseType, setResponseType] = useState("");
   const location = useLocation();
 
   useEffect(() => {
@@ -88,14 +89,15 @@ function ValidarAcceso() {
       });
 
       if (response.data.success) {
+        setResponseType("success");
         toast.success("¡Cuenta activada correctamente!");
       } else {
-
+        setResponseType("error");
         toast.error("Código incorrecto. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
+      setResponseType("error");
       toast.error("Error al activar la cuenta:");
-      //console.error("Error al activar la cuenta:", error);
     }
   };
 
@@ -111,7 +113,16 @@ function ValidarAcceso() {
           onChange={(e) => setCodigo(e.target.value)}
         />
         <SubmitButton onClick={handleActivar}>Activar</SubmitButton>
-        {mensaje && <Message success={mensaje.includes("correctamente")}>{mensaje}</Message>}
+        {responseType === "success" && (
+          <p>
+            ¡Cuenta activada correctamente! Haz clic <Link to="/">aquí</Link> para ir al inicio.
+          </p>
+        )}
+        {responseType === "error" && (
+          <p>
+            Hubo un error al activar la cuenta. Por favor, inténtalo de nuevo o contacta al soporte.
+          </p>
+        )}
       </Container>
     </CenteredContainer>
   );
