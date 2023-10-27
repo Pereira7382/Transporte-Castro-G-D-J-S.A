@@ -23,7 +23,7 @@ const ModalInsertarGastoL = () => {
     }, []);
 
     const obtenerLlantas = () => {
-        axios.get("http://localhost:8080/llanta")
+        axios.get("http://localhost:8080/llanta/listar")
             .then((response) => {
                 setLlantas(response.data);
                 if (response.data.length > 0) {

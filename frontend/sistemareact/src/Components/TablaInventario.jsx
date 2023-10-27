@@ -34,10 +34,7 @@ const TablaInventario = ({ lista }) => {
 
   const columns = useMemo(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-      },
+     
       {
         header: "Código",
         accessorKey: "codigo",
@@ -211,6 +208,7 @@ const TablaInventario = ({ lista }) => {
           </Box>
         )}
       />
+      </div>
       <ModalInventario />
       <ModalActualizarInventario
         inventarioSeleccionado={inventarioAActualizar}
@@ -221,7 +219,7 @@ const TablaInventario = ({ lista }) => {
           setInventario(updatedInventario);
         }}
       />
-      </div>
+      
       <ModalInsertarFechaReporte reporte={modalReporteFecha} />
       <Campana notificaciones={notificaciones} />
       <Notificaciones notificaciones={notificaciones} />

@@ -47,6 +47,8 @@ const Navbar = () => {
                 <NavDropdown.Item href="/admin-movimiento">Administrar Movimiento</NavDropdown.Item>
                 <NavDropdown.Item href="/admin-inventario">Administrar Inventario</NavDropdown.Item>
                 <NavDropdown.Item href="/admin-proveedor">Administrar Proveedor</NavDropdown.Item>
+                <NavDropdown.Item href="/admin-llanta">Administrar Llanta</NavDropdown.Item>
+
 
               </NavDropdown>
             </li>

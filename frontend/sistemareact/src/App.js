@@ -16,6 +16,7 @@ import GastoAceite from './Components/GastoAceite';
 import GastoCombustible from './Components/GastoCombustible';
 import GastoLlanta from './Components/GastoLlanta';
 import ValidarAcceso from './Components/ValidarAcceso';
+import AdminLlanta from './Components/AdminLlanta';
 
 export const AuthContext = React.createContext();
 
@@ -109,6 +110,11 @@ function App() {
             path="/admin-gastosL"
             element={<Seguridad element={<GastoLlanta />} />}
           />
+           <Route
+            path="/admin-llanta"
+            element={<Seguridad element={<AdminLlanta />} />}
+          />
+          
         </Routes>
       </div>
     </AuthContext.Provider>

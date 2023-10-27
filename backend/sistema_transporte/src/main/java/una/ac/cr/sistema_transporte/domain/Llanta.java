@@ -69,13 +69,12 @@ public class Llanta {
         this.estado = estado;
     }
 
-    public Llanta(int id, String marca, String descripcion, int duracion, int proveedor, String contactoProveedor, int estado) {
+    public Llanta(int id, String marca, String descripcion, int duracion, int proveedor, int estado) {
         this.id = id;
         this.marca = marca;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.proveedor = proveedor;
-        this.contactoProveedor = contactoProveedor;
         this.estado = estado;
     }
 

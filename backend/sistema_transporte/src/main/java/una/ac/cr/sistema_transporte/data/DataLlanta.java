@@ -8,11 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import una.ac.cr.sistema_transporte.domain.Llanta;
 
 public class DataLlanta extends DataBase{
-    public final static String TABLALLANTA = "aceite";
+    public final static String TABLALLANTA = "llanta";
     public final static String ID = "id";
     public final static String MARCA = "marca";
     public final static String ESTADO = "estado";
@@ -49,4 +51,100 @@ public class DataLlanta extends DataBase{
             return null;
         }
     }
+    
+    
+        public LinkedList<Llanta> obtenerLlanta(){
+        LinkedList<Llanta> lista = new LinkedList<>();
+        try {
+            Connection cn = getConexion();
+            String query = "SELECT g.id, g.marca, g.descripcion,g.duracion,P.contacto 'nombre', g.estado FROM llanta as g INNER JOIN proveedor P ON g.id_proveedor = P.id_proveedor WHERE g.estado = 1";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Llanta llanta = new Llanta();
+                llanta.setId(rs.getInt(ID));
+                llanta.setMarca(rs.getString(MARCA));
+                llanta.setDescripcion(rs.getString(DESCRIPCION));
+                llanta.setDuracion(rs.getInt(DURACION));
+                llanta.setEstado(rs.getInt(ESTADO));
+                llanta.setContactoProveedor(rs.getString("nombre"));
+                lista.add(llanta);
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrio un error al establecer la conexion con la base de datos");
+        }
+        return lista;
+    }
+    
+        public boolean eliminarLlantas(int id){
+        Connection cn = getConexion();
+        String query = "UPDATE " + TABLALLANTA + " SET estado = ? WHERE id = ?";
+        try {
+            PreparedStatement prepare = cn.prepareStatement(query);
+            prepare.setInt(1, 0);
+            prepare.setInt(2, id);
+            prepare.executeUpdate();
+            prepare.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+        
+        
+         public boolean agregarLlanta(Llanta llanta) {
+        try {
+            Connection cn = getConexion();
+            String query = "INSERT INTO " + TABLALLANTA + " (" + MARCA + ", " + DESCRIPCION + ", " + DURACION + ", " + PROVEEDOR + ", " + ESTADO + ") VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, llanta.getMarca());
+            preparedStatement.setString(2, llanta.getDescripcion());
+            preparedStatement.setInt(3, llanta.getDuracion());
+            preparedStatement.setInt(4, llanta.getProveedor());
+            preparedStatement.setInt(5,llanta.getEstado());
+            preparedStatement.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("\n  error encontrado : " + e.toString());
+            return false;
+        }
+    }   
+        
+        
+    public List<Llanta> obtenerInventarioPorIdProveedor(int idProveedor) {
+    List<Llanta> LlantaList = new ArrayList<>();
+    Connection con = getConexion();
+
+    String query = "SELECT * FROM " + TABLALLANTA + " WHERE " + PROVEEDOR + " = ?";
+    
+    try {
+        PreparedStatement prepare = con.prepareStatement(query);
+        prepare.setInt(1, idProveedor);
+        ResultSet result = prepare.executeQuery();
+
+        while (result.next()) {
+            Llanta llanta = new Llanta();
+            llanta.setId(result.getInt(ID));
+            llanta.setMarca(result.getString(MARCA));
+            llanta.setDescripcion(result.getString(DESCRIPCION));
+            llanta.setDuracion(result.getInt(DURACION));
+            llanta.setEstado(result.getInt(ESTADO));
+           
+            
+            LlantaList.add(llanta);
+            
+        }
+        
+        prepare.close();
+        result.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Cerrar la conexión aquí si es necesario
+    }
+
+    return LlantaList;
+}
+    
 }
