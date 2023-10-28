@@ -8,12 +8,21 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ModalInsertar from "./ModalInsertar";
 import ModalActualizarCamion from "./ModalActualizarCamion";
 import { FaPlus } from "react-icons/fa";
+import { Button } from '@mui/material';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/EditOutlined';
 
 
 // Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
 const TablaCamiones = ({ lista }) => {
   const [camionAActualizar, setCamionAActualizar] = useState(null);
   const [camiones, setCamiones] = useState(lista);
+
+  const conectarConApp = (id) => {
+    console.log("Conectando con la app para el camión con ID:", id);
+    window.location.href = `/info-camion/${id}`;
+  };
 
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -28,10 +37,7 @@ const TablaCamiones = ({ lista }) => {
 
   const columns = useMemo(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-      },
+
       {
         header: "Matrícula",
         accessorKey: "matricula",
@@ -98,70 +104,81 @@ const TablaCamiones = ({ lista }) => {
 
   return (
     <>
-    <div style={{ position: "relative", zIndex: 0 }}>
-      <MaterialReactTable
-        enableFullScreenToggle={true}
-        enableDensityToggle={true}
-        columns={columns}
-        data={camiones}
-        localization={MRT_Localization_ES}
-        enableRowActions
-        positionActionsColumn="last"
-        options={{
-          exportButton: true,
-        }}
-        renderRowActions={({ row }) => (
-          <Box sx={{ display: "flex", gap: "1rem" }}>
-            <button
-              variant="contained"
-              color="secondary"
-              onClick={() => confirmDeleteAlert(row.original.id)}
-            >
-              Eliminar
-            </button>
-            <button
-              variant="contained"
-              color="primary"
-              id="btnModalActualizar"
-              data-bs-toggle="modal"
-              data-bs-target="#modalActualizarCamion"
-              onClick={() => handleActualizar(row.original)}
-            >
-              Actualizar
-            </button>
-            <button variant="contained" color="default">
-              Mantenimiento
-            </button>
-          </Box>
-        )}
-        renderTopToolbarCustomActions={({ table }) => (
-          <Box
-            sx={{
-              display: "flex",
-              gap: "1rem",
-              p: "0.5rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <Tooltip arrow placement="right" title="Exportar tabla">
-              <IconButton onClick={() => exportPDF()}>
-                <FileDownloadIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip arrow placement="right" title="Registro Camión">
-              <IconButton
-                size="small"
-                color="success"
-                id="btnModalInsertar"
-                data-bs-toggle="modal"
-                data-bs-target="#modalInsertar"
+      <div style={{ position: "relative", zIndex: 0 }}>
+        <MaterialReactTable
+          enableFullScreenToggle={true}
+          enableDensityToggle={true}
+          columns={columns}
+          data={camiones}
+          localization={MRT_Localization_ES}
+          enableRowActions
+          positionActionsColumn="last"
+          options={{
+            exportButton: true,
+          }}
+
+          renderRow={({ row }) => (
+            <div>
+              <Button
+                onClick={() => conectarConApp(row.original.id)}
+                startIcon={<DirectionsBusIcon />}
               >
-                <FaPlus />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )}
-      />
+              </Button>
+            </div>
+          )}
+
+          renderRowActions={({ row }) => (
+            <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Button
+                onClick={() => conectarConApp(row.original.id)}
+                startIcon={<DirectionsBusIcon />}
+                color="success"
+              >
+              </Button>
+              <Button
+                onClick={() => confirmDeleteAlert(row.original.id)}
+                startIcon={<DeleteIcon />}
+                color="error"
+              >
+              </Button>
+              <Button
+                id="btnModalActualizar"
+                data-bs-toggle="modal"
+                data-bs-target="#modalActualizarCamion"
+                onClick={() => handleActualizar(row.original)}
+                startIcon={<EditIcon />}
+              >
+              </Button>
+            </Box>
+          )}
+          renderTopToolbarCustomActions={({ table }) => (
+            <Box
+              sx={{
+                display: "flex",
+                gap: "1rem",
+                p: "0.5rem",
+                flexWrap: "wrap",
+              }}
+            >
+              <Tooltip arrow placement="right" title="Exportar tabla">
+                <IconButton onClick={() => exportPDF()}>
+                  <FileDownloadIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip arrow placement="right" title="Registro Camión">
+                <IconButton
+                  size="small"
+                  color="success"
+                  id="btnModalInsertar"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalInsertar"
+                >
+                  <FaPlus />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )}
+        />
       </div>
       <ModalInsertar />
       <ModalActualizarCamion

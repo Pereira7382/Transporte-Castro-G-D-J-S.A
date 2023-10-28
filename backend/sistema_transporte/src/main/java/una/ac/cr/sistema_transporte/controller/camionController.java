@@ -47,6 +47,7 @@ public class camionController {
     @GetMapping("/{id}")
     @ResponseBody
     public Optional<Camion> obtenerCamionPorId(@PathVariable int id) {
+        System.out.println("id recibido : "+ id);
         Optional<Camion> optionalCamion = camionRepository.obtenerCamionPorId(id);
         return optionalCamion;
 
