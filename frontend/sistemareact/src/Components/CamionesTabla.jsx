@@ -24,6 +24,7 @@ class CamionesTabla extends Component {
 
   render() {
     return (
+      
       <Layout>
         <div className="container mt-4">
           <TablaCamiones lista={this.state.camiones}/>

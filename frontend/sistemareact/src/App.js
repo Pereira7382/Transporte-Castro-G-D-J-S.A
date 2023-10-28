@@ -16,6 +16,7 @@ import GastoAceite from './Components/GastoAceite';
 import GastoCombustible from './Components/GastoCombustible';
 import GastoLlanta from './Components/GastoLlanta';
 import ValidarAcceso from './Components/ValidarAcceso';
+import InfoCamion from './Components/InfoCamion';
 
 export const AuthContext = React.createContext();
 
@@ -74,7 +75,7 @@ function App() {
             path="/admin-proveedor"
             element={<Seguridad element={<AdminProveedor mostrarNotificacion={mostrarNotificacion} />} />}
           />
-           <Route
+          <Route
             path="/admin-movimiento"
             element={<Seguridad element={<AdminMovimiento mostrarNotificacion={mostrarNotificacion} />} />}
           />
@@ -109,6 +110,11 @@ function App() {
             path="/admin-gastosL"
             element={<Seguridad element={<GastoLlanta />} />}
           />
+          <Route
+            path="/info-camion/:id"
+            element={<Seguridad element={<InfoCamion />} />}
+          />
+
         </Routes>
       </div>
     </AuthContext.Provider>
