@@ -45,44 +45,6 @@ public class DataGastoAceite extends DataBase {
     }
     
     
-    /*
-     public LinkedList<GastosAceite> obtenerGastosAceite() {
-        LinkedList<GastosAceite> listaGastosAceite = new LinkedList<>();
-        Connection connection = getConexion();
-        
-         String query = "SELECT g.id, g.numero_factura, g.fecha, g.monto, c.matricula, p.contacto, a.marca, c.kilometraje, a.duracion " +
-                           "FROM " + TABLAGASTOSACEITE + " g " +
-                           "INNER JOIN tb_camion c ON g.id_camion = c.id " +
-                           "INNER JOIN aceite a ON g.id_aceite = a.id " +
-                           "INNER JOIN proveedor p ON a.id_proveedor = p.id_proveedor";
-         
-        try{  
-          
-           
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                GastosAceite gasto = new GastosAceite();
-                gasto.setId(resultSet.getInt(ID));
-                gasto.setNumero_factura(resultSet.getString(NUMEROFACTURA));
-                gasto.setFecha(resultSet.getDate(FECHA));
-                gasto.setMonto(resultSet.getDouble(MONTO));
-                gasto.setMatricula(resultSet.getString(PLACA));
-                gasto.setProveedor(resultSet.getString(PROVEEDOR));
-                gasto.setMarca(resultSet.getString(MARCA));
-                gasto.setKilometrajeActual(resultSet.getFloat(KILOMETRAJE));
-                gasto.setDuracion(resultSet.getInt(DURACION));
-             //   GastosAceite gasto = new GastosAceite(id, numeroFactura, monto, placa, proveedor, marca, kilometraje, duracion, fecha);
-                listaGastosAceite.add(gasto);
-            }
-        } catch (SQLException e) {
-         System.out.println("Ocurrio un error al conectarse con la base de datos");
-        }
-
-        return listaGastosAceite;
-    }*/
-    
     public LinkedList<GastosAceite> obtenerGastosAceite() {
     LinkedList<GastosAceite> listaGastosAceite = new LinkedList<>();
     Connection connection = getConexion();

@@ -19,6 +19,7 @@ public class GastoCombustible {
     private Double litros;
     private int estado;
     private int id_camion;
+    private String nombre;
 
     public int getId() {
         return id;
@@ -100,6 +101,16 @@ public class GastoCombustible {
         this.estado = estado;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
+
     public GastoCombustible() {
     }
 
@@ -125,6 +136,19 @@ public class GastoCombustible {
         this.id_camion = id_camion;
     }
 
+    public GastoCombustible(int id,String numero_factura, double monto, String matricula, int kilometrajeAnterior, int kilometrajeActual, String nombre, Date fecha, Double litros) {
+        this.id = id;
+        this.numero_factura = numero_factura;
+        this.monto = monto;
+        this.matricula = matricula;
+        this.kilometrajeAnterior = kilometrajeAnterior;
+        this.kilometrajeActual = kilometrajeActual;
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.litros = litros;
+    }
+    
+    
     public String imprimir() {
         return "\n GastoCombustible{"
                 + "id=" + id

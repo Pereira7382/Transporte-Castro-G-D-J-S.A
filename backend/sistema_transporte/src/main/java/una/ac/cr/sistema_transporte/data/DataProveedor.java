@@ -115,7 +115,7 @@ public class DataProveedor extends DataBase{
     
     
     public int obtenerIdProveedorPorNombre(String nombre) {
-    String query = "SELECT " + ID_PROVEEDOR + " FROM " + PROVEEDOR + " WHERE nombre = ?;";
+    String query = "SELECT " + ID_PROVEEDOR + " FROM " + PROVEEDOR + " WHERE contacto = ?;";
     Connection con = getConexion();
 
     try {

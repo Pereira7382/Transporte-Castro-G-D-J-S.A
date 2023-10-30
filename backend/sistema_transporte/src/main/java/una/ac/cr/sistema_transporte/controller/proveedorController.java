@@ -62,7 +62,7 @@ public class proveedorController {
     public Optional<Proveedor> obtenerProvedorPorId(@PathVariable int id) {
       
         Optional<Proveedor> optionalProveedor = proveedorRepository.obtenerProveedorPorId(id);
-        System.out.println(optionalProveedor.get().getNombre());
+     //   System.out.println(optionalProveedor.get().getNombre());
         return optionalProveedor;
 
     }

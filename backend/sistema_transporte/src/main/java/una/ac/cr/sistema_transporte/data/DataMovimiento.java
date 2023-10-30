@@ -19,26 +19,29 @@ public class DataMovimiento extends DataBase {
     public final static String FECHA = "fecha_movimiento";
     public final static String ESTADO = "estado";
 
-    public boolean registrarMovimiento(MovimientoInventario movimiento) {
-        try {
-            Connection cn = getConexion();
-            String query = "INSERT INTO " + TABLAMOVIMIENTOS + " (" + ID_PIEZA + ", " + DESCRIPCION
-                    + ", " + TIPO + ", " + CANTIDAD  + ", " + FECHA + ")"
-                    + " VALUES (?, ?, ? , ?, ?)";
-            PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement(query);
+  public boolean registrarMovimiento(MovimientoInventario movimiento) {
+    try {
+        Connection cn = getConexion();
+        String query = "INSERT INTO " + TABLAMOVIMIENTOS + " (" + ID_PIEZA + ", " + DESCRIPCION
+                + ", " + TIPO + ", " + CANTIDAD  + ", " + FECHA + ", " + ESTADO + ")"  // Asegúrate de incluir ESTADO en la consulta
+                + " VALUES (?, ?, ? , ?, ?, ?)";
+        PreparedStatement sentencia = (PreparedStatement) cn.prepareStatement(query);
 
-            sentencia.setString(1, String.valueOf(movimiento.getId_pieza()));
-            sentencia.setString(2, movimiento.getDescripcion());
-            sentencia.setString(3, movimiento.getTipo_movimiento());
-            sentencia.setString(4, String.valueOf(movimiento.getCantidad()));
-            sentencia.setDate(5, new java.sql.Date(movimiento.getFecha_movimiento().getTime())); // Convierte Date a java.sql.Date            sentencia.execute();
-            sentencia.execute();
-            return true;
-        } catch (Exception e) {
-            System.out.println("\n  error encontrado : " + e.toString());
-            return false;
-        }
+        sentencia.setString(1, String.valueOf(movimiento.getId_pieza()));
+        sentencia.setString(2, movimiento.getDescripcion());
+        sentencia.setString(3, movimiento.getTipo_movimiento());
+        sentencia.setString(4, String.valueOf(movimiento.getCantidad()));
+        sentencia.setDate(5, new java.sql.Date(movimiento.getFecha_movimiento().getTime())); 
+        sentencia.setInt(6, 1); // Establece el valor de 'estado' como 1
+
+        sentencia.execute();
+        return true;
+    } catch (Exception e) {
+        System.out.println("\n  error encontrado : " + e.toString());
+        return false;
     }
+}
+
 
     public LinkedList<MovimientoInventario> movimientosPieza(int id) {
         LinkedList<MovimientoInventario> movimientos = new LinkedList<>();

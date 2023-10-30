@@ -19,10 +19,6 @@ const TablaProveedor = ({ lista }) => {
     () => [
     
       {
-        header: "Nombre",
-        accessorKey: "nombre",
-      },
-      {
         header: "Correo Electronico",
         accessorKey: "correo_electronico",
       },
@@ -79,7 +75,7 @@ const TablaProveedor = ({ lista }) => {
               startY: 30,
               head: [["Campo", "Valor"]],
               body: [
-                ["Nombre", datosParaReporte.proveedor && datosParaReporte.proveedor.nombre ? datosParaReporte.proveedor.nombre : ""],
+                
                 ["ID Proveedor", datosParaReporte.proveedor && datosParaReporte.proveedor.id_proveedor ? datosParaReporte.proveedor.id_proveedor : ""],
                 ["Correo Electrónico", datosParaReporte.proveedor && datosParaReporte.proveedor.correo_electronico ? datosParaReporte.proveedor.correo_electronico : ""],
                 ["Teléfono", datosParaReporte.proveedor && datosParaReporte.proveedor.telefono ? datosParaReporte.proveedor.telefono : ""],
@@ -139,6 +135,7 @@ const TablaProveedor = ({ lista }) => {
         if (response.ok) {
           const updatedProveedores = proveedores.filter((proveedor) => proveedor.id_proveedor !== id_proveedor);
           setProveedores(updatedProveedores);
+          
         } else {
           console.error("Error al eliminar el registro");
         }

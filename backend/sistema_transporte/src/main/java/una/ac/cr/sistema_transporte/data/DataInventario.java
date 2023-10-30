@@ -128,4 +128,90 @@ public class DataInventario extends DataBase {
 }
 
 
+    
+ public List<Inventario> obtenerTodosInventarios() {
+    List<Inventario> inventarioList = new ArrayList<>();
+    String query = "SELECT i.*, p.contacto " +
+                   "FROM inventario i " +
+                   "JOIN proveedor p ON i.id_proveedor = p.id_proveedor " +
+                   "WHERE i." + ESTADO + " = 1";
+    Connection con = getConexion();
+
+    try {
+        PreparedStatement prepare = con.prepareStatement(query);
+        ResultSet result = prepare.executeQuery();
+
+        while (result.next()) {
+            Inventario inventario = new Inventario();
+            inventario.setId(result.getInt("id"));
+            inventario.setCodigo(result.getString("codigo"));
+            inventario.setNombre(result.getString("nombre"));
+            inventario.setDescripcion(result.getString("descripcion"));
+            inventario.setId_proveedor(result.getInt("id_proveedor"));
+            inventario.setCantidad(result.getInt("cantidad"));
+            inventario.setTipo(result.getString("tipo"));
+            inventario.setActivo(result.getInt("activo"));
+            inventario.setProvedor(result.getString("contacto")); // Obtener el valor de la columna 'contacto' de proveedor
+            inventarioList.add(inventario);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Maneja la excepción según los requerimientos de tu aplicación
+    }
+
+    return inventarioList;
+}
+
+ public boolean actualizarInventarioPorId(int id, Inventario inventario) {
+    Connection con = getConexion();
+    String query = "UPDATE " + TABLAINVENTARIO + " SET codigo = ?, nombre = ?, descripcion = ?, cantidad = ?, tipo = ?, activo = ? WHERE id = ?";
+
+    try {
+        PreparedStatement prepare = con.prepareStatement(query);
+        prepare.setString(1, inventario.getCodigo());
+        prepare.setString(2, inventario.getNombre());
+        prepare.setString(3, inventario.getDescripcion());
+        prepare.setInt(4, inventario.getCantidad());
+        prepare.setString(5, inventario.getTipo());
+        prepare.setInt(6, inventario.getActivo());
+        prepare.setInt(7, id); // ID del inventario que deseas actualizar
+
+        int filasActualizadas = prepare.executeUpdate();
+
+        prepare.close();
+
+        // Si filasActualizadas es mayor que 0, la actualización fue exitosa
+        return filasActualizadas > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+ 
+ 
+     public boolean insertarInventario(Inventario inventario) {
+        Connection con = getConexion();
+        String query = "INSERT INTO " + TABLAINVENTARIO + " (" + CODIGO + ", " + NOMBRE + ", " + DESCRIPCION + ", "
+                + ID_PROVEEDOR + ", " + CANTIDAD + ", " + TIPO + ", " + ESTADO + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement prepare = con.prepareStatement(query);
+            prepare.setString(1, inventario.getCodigo());
+            prepare.setString(2, inventario.getNombre());
+            prepare.setString(3, inventario.getDescripcion());
+            prepare.setInt(4, inventario.getId_proveedor());
+            prepare.setInt(5, inventario.getCantidad());
+            prepare.setString(6, inventario.getTipo());
+            prepare.setInt(7, inventario.getActivo());
+
+            prepare.executeUpdate();
+            prepare.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } 
+    }
+
+    
 }

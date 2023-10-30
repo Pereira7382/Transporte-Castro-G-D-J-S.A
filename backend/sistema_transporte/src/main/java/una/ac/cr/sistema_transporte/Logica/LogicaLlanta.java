@@ -24,13 +24,17 @@ public class LogicaLlanta {
     public boolean eliminarLlantas(int id) {
         return data.eliminarLlantas(id);
     }
-    
-        public boolean agregar(Llanta llanta){
+
+    public boolean agregar(Llanta llanta) {
         return data.agregarLlanta(llanta);
     }
-        
-        public List<Llanta> obtenerInventarioPorProveedor(int idProveedor) {
+
+    public List<Llanta> obtenerInventarioPorProveedor(int idProveedor) {
         DataLlanta acceso = new DataLlanta();
         return acceso.obtenerInventarioPorIdProveedor(idProveedor);
+    }
+    
+    public boolean actualizarLlanta(Llanta llanta){
+        return data.actualizarLlanta(llanta);
     }
 }

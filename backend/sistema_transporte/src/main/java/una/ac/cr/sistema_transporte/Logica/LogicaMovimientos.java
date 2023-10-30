@@ -17,6 +17,7 @@ public class LogicaMovimientos {
         if (data.registrarMovimiento(movimiento)) {
             return actualizarInventario(movimiento);
         }else{
+            System.out.println("no entro!");
             return false;
         }
         

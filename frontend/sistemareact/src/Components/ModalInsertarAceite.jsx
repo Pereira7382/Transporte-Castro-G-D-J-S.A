@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-const ModalInsertarLlanta = () => {
+const ModalInsertarAceite = () => {
    
     const [formData, setFormData] = useState({
         marca: '',
@@ -60,7 +60,7 @@ const ModalInsertarLlanta = () => {
         try {
             // Aquí debes realizar la conexión con el servidor en NetBeans
             // y enviar los datos del formulario para guardar el registro
-            const response = await fetch('http://localhost:8080/llanta', {
+            const response = await fetch('http://localhost:8080/aceite', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const ModalInsertarLlanta = () => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 {/* Título del modal */}
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar Llanta</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Registrar Aceite</h1>
                                 {/* Botón para cerrar el modal */}
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                             </div>
@@ -162,4 +162,5 @@ const ModalInsertarLlanta = () => {
     );
 }
 
-export default ModalInsertarLlanta;
+export default ModalInsertarAceite;
+ 

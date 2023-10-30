@@ -35,26 +35,32 @@ public class inventarioController {
     @GetMapping
     @ResponseBody
     public List<Inventario> listarInventario() {
+        /*
         List<Inventario> inventario = inventarioRepository.listarInventario();
+        */
+        LogicaInventario log = new LogicaInventario();
+         List<Inventario> inventario = log.obtenerInventarioConContacto();
         return inventario;
     }
-    
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Inventario guardarCamion(@RequestBody Inventario inventario) {
+        
         LogicaProveedor logic = new LogicaProveedor();
+        LogicaInventario log = new LogicaInventario();
         String nombreProveedor = inventario.getProvedor(); // Asegúrate de tener el método getNombre() en tu clase Proveedor
-        System.out.println(nombreProveedor);
+        System.out.println("este es el nombre" + nombreProveedor);
         int id_proveedor =  logic.obtenerIdProveedor(nombreProveedor);
-        System.out.println("entroooooo");
-        System.out.println(id_proveedor);
+        
+        System.out.println("Este es el id " + id_proveedor);
         inventario.setId_proveedor(id_proveedor);
-        inventarioRepository.insertarInventario(inventario);
+        
+        log.insertarInventario(inventario);
+ //       inventarioRepository.insertarInventario(inventario);
         return inventario;
     }
-    
     @GetMapping("/{id}")
     @ResponseBody
     public Optional<Inventario> obtenerInventarioPorId(@PathVariable int id) {
@@ -67,23 +73,14 @@ public class inventarioController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> actualizarInventario(@PathVariable int id, @RequestBody Inventario inventarioActualizado) {
-        Optional<Inventario> optionalInventario = inventarioRepository.obtenerInventarioPorId(id);
+      
+      //  Optional<Inventario> optionalInventario = inventarioRepository.obtenerInventarioPorId(id);
 
-        if (optionalInventario.isPresent()) {
-            Inventario inventarioExistente = optionalInventario.get();
-
-            // Actualizar los campos del camionExistente con los datos de camionActualizado
-            
-            inventarioExistente.setCodigo(inventarioActualizado.getCodigo());
-            inventarioExistente.setNombre(inventarioActualizado.getNombre());
-            inventarioExistente.setDescripcion(inventarioActualizado.getDescripcion());
-            inventarioExistente.setCantidad(inventarioActualizado.getCantidad());
-            inventarioExistente.setTipo(inventarioActualizado.getTipo());
-            inventarioExistente.setActivo(inventarioActualizado.getActivo());
-            
-   
-            inventarioRepository.actualizarInventario(inventarioExistente);
-
+      LogicaInventario log = new LogicaInventario ();
+        
+        
+        if (log.actualizarInventario(id, inventarioActualizado)) {
+         
             return ResponseEntity.ok("Camión actualizado correctamente");
         } else {
             return ResponseEntity.notFound().build();
