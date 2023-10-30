@@ -15,6 +15,7 @@ import una.ac.cr.sistema_transporte.domain.GastoCombustible;
 
 import java.util.Calendar;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +23,8 @@ import una.ac.cr.sistema_transporte.domain.DatosConsumoComb;
 
 @Controller
 @RequestMapping("/gastoCombustible")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
-
+//@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(origins = "*")
 public class GastoCombController {
 
     LogicaGastoComb logica = new LogicaGastoComb();
@@ -97,4 +98,20 @@ public class GastoCombController {
         return datos;
 
     }
+    
+    @GetMapping
+    @ResponseBody
+    public List<GastoCombustible> listarGastosCombustible() {
+          
+        return logica.obtenerGastosCamionConProveedor();
+    }
+    
+      @DeleteMapping("/{id}/{matricula}")
+    @ResponseBody
+    public boolean eliminarGastoCombustible(@PathVariable int id, @PathVariable String matricula) {
+        return logica.eliminarGastosCombustible(id, matricula);
+    }
+
+    
+    
 }

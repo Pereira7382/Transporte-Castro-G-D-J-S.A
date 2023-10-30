@@ -47,10 +47,6 @@ const TablaCamiones = ({ lista }) => {
         accessorKey: "modelo",
       },
       {
-        header: "Estado",
-        accessorKey: "estado",
-      },
-      {
         header: "Año",
         accessorKey: "anio",
       },

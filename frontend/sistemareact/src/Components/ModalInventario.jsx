@@ -127,8 +127,8 @@ const ModalInventario = ({ actualizarTablaInventario }) => {
                   <select className="form-select" id="provedor" name="provedor" value={formData.proveedorNombre} onChange={handleChange}>
                     <option value="">Selecciona un proveedor</option>
                     {proveedores.map((proveedor) => (
-                      <option key={proveedor.nombre} value={proveedor.nombre}>
-                        {proveedor.nombre}
+                      <option key={proveedor.contacto} value={proveedor.contacto}>
+                        {proveedor.contacto}
                       </option>
                     ))}
                   </select>

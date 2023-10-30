@@ -41,7 +41,7 @@ public class DataGastoLlanta extends DataBase{
         LinkedList<GastoLlanta> lista = new LinkedList<>();
         try {
             Connection cn = getConexion();
-            String query = "SELECT g.id, g.estado, g.numero_factura, g.monto, C.matricula, P.nombre, ll.marca, C.kilometraje, ll.duracion, g.fecha FROM gasto_rodaje_llantas as g INNER JOIN tb_camion C ON C.id = g.id_camion INNER JOIN llanta ll ON ll.id = g.id_llanta INNER JOIN proveedor P ON P.id_proveedor = ll.id_proveedor WHERE g.estado = 1";
+            String query = "SELECT g.id, g.estado, g.numero_factura, g.monto, C.matricula, P.contacto, ll.marca, C.kilometraje, ll.duracion, g.fecha FROM gasto_rodaje_llantas as g INNER JOIN tb_camion C ON C.id = g.id_camion INNER JOIN llanta ll ON ll.id = g.id_llanta INNER JOIN proveedor P ON P.id_proveedor = ll.id_proveedor WHERE g.estado = 1";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -51,7 +51,7 @@ public class DataGastoLlanta extends DataBase{
                 gasto.setMonto(rs.getDouble(MONTO));
                 gasto.setEstado(rs.getInt(ESTADO));
                 gasto.setMatriculaCamion(rs.getString("matricula"));
-                gasto.setNombreProveedor(rs.getString("nombre"));
+                gasto.setNombreProveedor(rs.getString("contacto"));
                 gasto.setMarcaLlanta(rs.getString("marca"));
                 gasto.setKmCamion(rs.getInt("kilometraje"));
                 gasto.setDuracion(rs.getInt("duracion"));

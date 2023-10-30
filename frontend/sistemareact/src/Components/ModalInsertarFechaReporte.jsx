@@ -2,23 +2,11 @@ import React, { useState } from 'react';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import axios from 'axios';
-
-const ModalInsertarFechaReporte = () => {
-
-    const [form, setForm] = useState({
-        fechaInicio: '',
-        fechaFinal: '',
-    })
-
-  const [formData, setFormData] = useState({
-    id: '',
-    id_pieza: '',
-    descripcion: '',
-    tipo_movimiento: '',
-    cantidad: '',
-    fecha_movimiento: '',
+const ModalInsertarFechaReporte = ({ onExportar }) => {
+  const [form, setForm] = useState({
+    fechaInicio: '',
+    fechaFinal: '',
   });
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,27 +15,23 @@ const ModalInsertarFechaReporte = () => {
 
   const exportPDF = () => {
     const { fechaInicio, fechaFinal } = form;
-  
-    axios.post(`http://localhost:8080/movimientoinventario/reporte-fecha/${fechaInicio}/${fechaFinal}`)
+
+    axios
+      .post(`http://localhost:8080/movimientoinventario/reporte-fecha/${fechaInicio}/${fechaFinal}`)
       .then((response) => {
         console.log('Datos obtenidos:', response.data);
-        generatePDF(response.data);
-        setFormData(response.data);
-        
+        onExportar(response.data); // Llama a la función para cargar los datos en TablaMovimiento
+     //   generatePDF(response.data);
       })
       .catch((error) => {
         console.error('Error al obtener datos:', error);
       });
   };
-  
-  
-
-
 
   const generatePDF = (movimientos) => {
     if (!movimientos || movimientos.length === 0) {
-        console.error('No hay datos para generar el PDF.');
-        return;
+      console.error('No hay datos para generar el PDF.');
+      return;
     }
 
     const doc = new jsPDF();
@@ -57,37 +41,36 @@ const ModalInsertarFechaReporte = () => {
     let pageNumber = 1;
 
     for (let i = 0; i < movimientos.length; i++) {
-        const movimiento = movimientos[i];
+      const movimiento = movimientos[i];
 
-        // Enumera cada movimiento
-        let movementNumber = i + 1;
-        let pdfContent = `Movimiento ${movementNumber}:\n`;
+      // Enumera cada movimiento
+      let movementNumber = i + 1;
+      let pdfContent = `Movimiento ${movementNumber}:\n`;
 
-        pdfContent += `Descripción: ${movimiento.descripcion}\n`;
-        pdfContent += `Tipo de Movimiento: ${movimiento.tipo_movimiento}\n`;
-        pdfContent += `Cantidad: ${movimiento.cantidad}\n`;
-        pdfContent += `Fecha: ${movimiento.fecha_movimiento}\n\n`;
+      pdfContent += `Descripción: ${movimiento.descripcion}\n`;
+      pdfContent += `Tipo de Movimiento: ${movimiento.tipo_movimiento}\n`;
+      pdfContent += `Cantidad: ${movimiento.cantidad}\n`;
+      pdfContent += `Fecha: ${movimiento.fecha_movimiento}\n\n`;
 
-        // Agrega el contenido a la página actual
-        doc.text(pdfContent, 10, yOffset);
+      // Agrega el contenido a la página actual
+      doc.text(pdfContent, 10, yOffset);
 
-        yOffset += 40; // Ajusta la posición vertical para el próximo elemento
+      yOffset += 40; // Ajusta la posición vertical para el próximo elemento
 
-        // Si hemos llegado al séptimo movimiento o al límite de elementos por página, añade una nueva página
-        if ((i + 1) % elementsPerPage === 0) {
-            doc.addPage();
-            yOffset = 10; // Reinicia la posición vertical en la nueva página
-            pageNumber++;
-        }
+      // Si hemos llegado al séptimo movimiento o al límite de elementos por página, añade una nueva página
+      if ((i + 1) % elementsPerPage === 0) {
+        doc.addPage();
+        yOffset = 10; // Reinicia la posición vertical en la nueva página
+        pageNumber++;
+      }
     }
 
     // Guarda el PDF como un Blob
     const pdfBlob = doc.output('blob');
 
     // Descarga el Blob como un archivo PDF
-    saveAs(pdfBlob, `piezamov_${formData.id_pieza}.pdf`);
-};
-
+    saveAs(pdfBlob, `movimientos.pdf`);
+  };
   return (
     <div>
       <div className="modal fade" id="modalInsertar" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">

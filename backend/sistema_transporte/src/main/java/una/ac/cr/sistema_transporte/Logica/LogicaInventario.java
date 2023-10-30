@@ -14,11 +14,26 @@ import una.ac.cr.sistema_transporte.domain.Inventario;
  */
 public class LogicaInventario {
     
-    
+    DataInventario acceso = new DataInventario();
     public List<Inventario> obtenerInventarioPorProveedor(int idProveedor) {
-        DataInventario acceso = new DataInventario();
         return acceso.obtenerInventarioPorIdProveedor(idProveedor);
     }
+    
+    public List<Inventario> obtenerInventarioConContacto() {
+        return acceso.obtenerTodosInventarios();
+    }
+    
+    public boolean actualizarInventario(int id, Inventario inventario){
+    
+        return acceso.actualizarInventarioPorId(id ,inventario);
+    }
+    
+    public boolean insertarInventario(Inventario inventario){
+    
+        return acceso.insertarInventario(inventario);
+    
+    }
+   
     
     
 }

@@ -55,13 +55,7 @@ const TablaInventario = ({ lista }) => {
         header: "Tipo",
         accessorKey: "tipo",
       },
-      {
-        header: "Estado",
-        accessorKey: "activo",
-        cellRenderer: (rowData) => {
-          return rowData.activo === 1 ? "Activo" : "Inactivo";
-        },
-      },
+ 
     ],
     []
   );

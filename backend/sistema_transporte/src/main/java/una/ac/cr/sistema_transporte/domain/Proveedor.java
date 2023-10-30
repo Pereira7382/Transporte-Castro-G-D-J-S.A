@@ -21,16 +21,15 @@ public class Proveedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id_proveedor;
-    String nombre;
     String correo_electronico;
     String telefono;
     String contacto;
     String direccion;
     Boolean estado;
 
-    public Proveedor(int id_proveedor, String nombre, String correo_electronico, String telefono, String contacto, String direccion, Boolean estado) {
+    public Proveedor(int id_proveedor,/* String nombre,*/ String correo_electronico, String telefono, String contacto, String direccion, Boolean estado) {
         this.id_proveedor = id_proveedor;
-        this.nombre = nombre;
+    //    this.nombre = nombre;
         this.correo_electronico = correo_electronico;
         this.telefono = telefono;
         this.contacto = contacto;
@@ -91,7 +90,7 @@ public class Proveedor {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-
+/*
     public String getNombre() {
         return nombre;
     }
@@ -99,7 +98,7 @@ public class Proveedor {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+*/
     
     
     

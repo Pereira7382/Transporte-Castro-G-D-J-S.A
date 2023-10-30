@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 
 
-const ModalActualizarLlanta = ({ llanta }) => {
+const ModalActualizarAceite = ({ aceite }) => {
   const [formData, setFormData] = useState({
     marca: '',
     descripcion: '',
@@ -14,10 +14,10 @@ const ModalActualizarLlanta = ({ llanta }) => {
 });
   
   useEffect(() => {
-    if (llanta) {
-      setFormData({ ...llanta });
+    if (aceite) {
+      setFormData({ ...aceite });
     }
-  }, [llanta]);
+  }, [aceite]);
 
   const [proveedores, setProveedores] = useState([]);
 
@@ -60,7 +60,7 @@ const ModalActualizarLlanta = ({ llanta }) => {
   };
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/llanta/${llanta.id}`, {
+      const response = await fetch(`http://localhost:8080/aceite/${aceite.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const ModalActualizarLlanta = ({ llanta }) => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Actualizar Llanta</h1>
+                <h1 className="modal-title fs-5" id="exampleModalLabel">Actualizar Aceite</h1>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
               </div>
               <div className="modal-body">
@@ -159,4 +159,4 @@ const ModalActualizarLlanta = ({ llanta }) => {
   );
 }
 
-export default ModalActualizarLlanta;
+export default ModalActualizarAceite;

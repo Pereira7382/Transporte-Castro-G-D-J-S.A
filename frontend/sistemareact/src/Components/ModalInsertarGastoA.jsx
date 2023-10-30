@@ -23,7 +23,7 @@ const ModalInsertarGastoA = () => {
     }, []);
 
     const obtenerAceites = () => {
-        axios.get("http://localhost:8080/aceite")
+        axios.get("http://localhost:8080/aceite/listar")
             .then((response) => {
                 setAceites(response.data);
                 if (response.data.length > 0) {

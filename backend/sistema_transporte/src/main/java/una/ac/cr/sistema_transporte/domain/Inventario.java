@@ -36,8 +36,6 @@ public class Inventario {
         this.provedor = provedor;
     }
 
-   
-   
 
     public String getCodigo() {
         return codigo;
@@ -95,7 +93,7 @@ public class Inventario {
         this.id_proveedor = id_proveedor;
     }
 
-    public Inventario(int id, String codigo, String nombre, String descripcion, int id_proveedor, String provedor, int cantidad, String tipo, int activo) {
+    public Inventario(int id, String codigo, String nombre, String descripcion, int id_proveedor, String provedor,int cantidad, String tipo, int activo) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;

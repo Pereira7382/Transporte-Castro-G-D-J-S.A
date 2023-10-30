@@ -17,6 +17,7 @@ import GastoCombustible from './Components/GastoCombustible';
 import GastoLlanta from './Components/GastoLlanta';
 import ValidarAcceso from './Components/ValidarAcceso';
 import AdminLlanta from './Components/AdminLlanta';
+import AdminAceite from './Components/AdminAceite';
 import InfoCamion from './Components/InfoCamion';
 
 export const AuthContext = React.createContext();
@@ -114,6 +115,10 @@ function App() {
            <Route
             path="/admin-llanta"
             element={<Seguridad element={<AdminLlanta />} />}
+          />
+            <Route
+            path="/admin-aceite"
+            element={<Seguridad element={<AdminAceite />} />}
           />
           
           <Route
