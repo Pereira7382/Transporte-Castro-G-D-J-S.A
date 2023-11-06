@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 const CambioContrasenia = () => {
   const [nuevaContrasenia, setNuevaContrasenia] = useState("");
   const [confirmarContrasenia, setConfirmarContrasenia] = useState("");
@@ -9,17 +10,57 @@ const CambioContrasenia = () => {
   const [responseType, setResponseType] = useState("");
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const [mostrarNuevaContrasenia, setMostrarNuevaContrasenia] = useState(false);
+  const [mostrarConfirmarContrasenia, setMostrarConfirmarContrasenia] = useState(false);
+
+
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromURL = urlParams.get("token");
-
     if (tokenFromURL) {
-      setToken(tokenFromURL);
+      // Realizar la solicitud al backend para verificar el token
+      async function verificarToken() {
+        try {
+          const response = await fetch(`http://localhost:8080/loginRep/control-token?token=${tokenFromURL}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ newPassword: nuevaContrasenia }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.type === "success") {
+              
+              setToken(tokenFromURL);
+            } else {
+             
+              setError("El enlace ha expirado");
+
+              navigate("/");
+              
+            }
+          } else {
+           
+            navigate("/"); 
+            toast.error("El enlace ha expirado");
+          }
+        } catch (error) {
+        
+          setError("Error de red al verificar el token");
+          navigate("/");
+          toast.error("Error de red al verificar el token");
+        }
+      }
+
+      verificarToken();
     } else {
       setError("Token inválido");
+      toast.error("Token inválido");
     }
-  }, []);
+  }, [nuevaContrasenia]);
 
   useEffect(() => {
     if (responseType === "success") {
@@ -36,7 +77,7 @@ const CambioContrasenia = () => {
       return;
     }
   
-    // Expresión regular para validar contraseña
+  
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   
     if (!passwordPattern.test(nuevaContrasenia)) {
@@ -110,28 +151,46 @@ const CambioContrasenia = () => {
     color: "red",
     marginTop: "10px",
   };
-
   return (
     <div style={containerStyle}>
       <h2>Cambio de Contraseña</h2>
       {token ? (
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           <label>Nueva Contraseña</label>
-          <input
-            type="password"
-            value={nuevaContrasenia}
-            onChange={(e) => setNuevaContrasenia(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          <div style={{ position: 'relative', marginBottom: '15px' }}>
+            <input
+              type={mostrarNuevaContrasenia ? 'text' : 'password'}
+              value={nuevaContrasenia}
+              onChange={(e) => setNuevaContrasenia(e.target.value)}
+              style={inputStyle}
+              required
+            />
+      
+            <span
+              style={{ position: 'absolute', right: '10px', top: '85%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+              onClick={() => setMostrarNuevaContrasenia(!mostrarNuevaContrasenia)}
+            >
+              {mostrarNuevaContrasenia ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+  
           <label>Confirmar Nueva Contraseña</label>
-          <input
-            type="password"
-            value={confirmarContrasenia}
-            onChange={(e) => setConfirmarContrasenia(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          <div style={{ position: 'relative', marginBottom: '15px' }}>
+            <input
+              type={mostrarConfirmarContrasenia ? 'text' : 'password'}
+              value={confirmarContrasenia}
+              onChange={(e) => setConfirmarContrasenia(e.target.value)}
+              style={inputStyle}
+              required
+            />
+        
+            <span
+              style={{ position: 'absolute', right: '10px', top: '85%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+              onClick={() => setMostrarConfirmarContrasenia(!mostrarConfirmarContrasenia)}
+            >
+              {mostrarConfirmarContrasenia ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
           <button type="submit" style={buttonStyle}>
             Cambiar Contraseña
           </button>
@@ -141,7 +200,7 @@ const CambioContrasenia = () => {
       ) : (
         <p style={errorMessageStyle}>{error}</p>
       )}
-
+  
       {responseType === "success" && (
         <p>
           Contraseña cambiada con éxito. Haz clic <Link to="/">aquí</Link> para ir al inicio.
@@ -149,6 +208,7 @@ const CambioContrasenia = () => {
       )}
     </div>
   );
+  
 };
 
 export default CambioContrasenia;
