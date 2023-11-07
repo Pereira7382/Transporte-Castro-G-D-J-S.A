@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import * as Components from '../Asset/Js/Components';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 function Login({ setAuthenticated }) {
   const [signIn, setSignIn] = useState(true);
+  const [mostrarContraseniaRegistro, setMostrarContraseniaRegistro] = useState(false);
+  const [mostrarContraseniaInicioSesion, setMostrarContraseniaInicioSesion] = useState(false);
+
+
   const [formData, setFormData] = useState({
     usuario: "",
     clave: "",
@@ -44,7 +48,7 @@ function Login({ setAuthenticated }) {
     }
 
     try {
-        // Verificar si el correo electrónico ya está registrado
+       
         const emailCheckResponse = await axios.get(`http://localhost:8080/login/validarCorreo?usuario=${formData.usuario}`);
 
         if (emailCheckResponse.data.includes("registrado")) {
@@ -78,7 +82,7 @@ function Login({ setAuthenticated }) {
 };
 
   
-  // Conexión con Spring Boot para iniciar sesión
+ 
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -97,16 +101,16 @@ function Login({ setAuthenticated }) {
 
         if (response.data.accesoAutorizado) {
             if (response.data.codigo === 401) {
-                // Cuenta no activa, requiere activación por correo
+            
                 toast.warning(response.data.mensaje);
             } else {
-                // Acceso permitido sin necesidad de activación
+              
             
                 setAuthenticated(true);
                 navigate("/Home");
             }
         } else {
-            // Acceso no autorizado
+       
             toast.error(response.data.mensaje);
         }
     } catch (error) {
@@ -117,82 +121,117 @@ function Login({ setAuthenticated }) {
 
 
   
-  return (
-    <div className="centered-container">
-      <Components.Container>
-        <Components.SignUpContainer signIn={signIn}>
-          <Components.Form>
-            <Components.Title>Registrarse</Components.Title>
+return (
+  <div className="centered-container">
+    <Components.Container>
+      <Components.SignUpContainer signIn={signIn}>
+        <Components.Form>
+          <Components.Title>Registrarse</Components.Title>
+          <Components.Input
+            type="text"
+            name="usuario"
+            placeholder="Usuario"
+            onChange={handleChange}
+          />
       
+          <div style={{ position: 'relative', marginBottom: '15px' }}>
             <Components.Input
-              type="text"
-              name="usuario"
-              placeholder="Usuario"
-              onChange={handleChange}
-            />
-            <Components.Input
-              type="password"
+              type={mostrarContraseniaRegistro ? 'text' : 'password'}
               name="clave"
               placeholder="Clave"
               onChange={handleChange}
+              style={{ paddingRight: '40px' }} 
             />
+         
+            <span
+              style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+              onClick={() => setMostrarContraseniaRegistro(!mostrarContraseniaRegistro)}
+            >
+              {mostrarContraseniaRegistro ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+      
+          <div style={{ position: 'relative', marginBottom: '15px' }}>
             <Components.Input
-              type="password"
+              type={mostrarContraseniaInicioSesion ? 'text' : 'password'}
               name="repitaclave"
-              placeholder="Ingrese la clave nuevamente"
+              placeholder="Repita la clave"
               onChange={handleChange}
+              style={{ paddingRight: '40px' }} 
             />
-            <Components.Button onClick={handleSignUp}>Registrarse</Components.Button>
-          </Components.Form>
-        </Components.SignUpContainer>
+          
+            <span
+              style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+              onClick={() => setMostrarContraseniaInicioSesion(!mostrarContraseniaInicioSesion)}
+            >
+              {mostrarContraseniaInicioSesion ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+          
+          <Components.Button onClick={handleSignUp}>Registrarse</Components.Button>
+        </Components.Form>
+      </Components.SignUpContainer>
 
-        <Components.SignInContainer signIn={signIn}>
-          <Components.Form>
-            <Components.Title>Acceder</Components.Title>
+      <Components.SignInContainer signIn={signIn}>
+        <Components.Form>
+          <Components.Title>Acceder</Components.Title>
+          <Components.Input
+            type="text"
+            name="usuario"
+            placeholder="Usuario"
+            onChange={handleChange}
+          />
+       
+          <div style={{ position: 'relative', marginBottom: '15px' }}>
             <Components.Input
-              type="text"
-              name="usuario"
-              placeholder="Usuario"
-              onChange={handleChange}
-            />
-            <Components.Input
-              type="password"
+              type={mostrarContraseniaInicioSesion ? 'text' : 'password'}
               name="clave"
               placeholder="Clave"
               onChange={handleChange}
+              style={{ paddingRight: '40px' }} 
             />
-            <Components.Anchor href="/admin-RecuperarContrasena">¿Olvidaste tu contraseña?</Components.Anchor>
-            <Components.Button onClick={handleSignIn}>Acceder</Components.Button>
-          </Components.Form>
-        </Components.SignInContainer>
+           
+            <span
+              style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+              onClick={() => setMostrarContraseniaInicioSesion(!mostrarContraseniaInicioSesion)}
+            >
+              {mostrarContraseniaInicioSesion ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+          <Components.Anchor href="/admin-RecuperarContrasena">¿Olvidaste tu contraseña?</Components.Anchor>
+          <Components.Button onClick={handleSignIn}>Acceder</Components.Button>
+        </Components.Form>
+      </Components.SignInContainer>
 
-        <Components.OverlayContainer signIn={signIn}>
-          <Components.Overlay signIn={signIn}>
-            <Components.LeftOverlayPanel signIn={signIn}>
-              <Components.Title>!Bienvenido!</Components.Title>
-              <Components.Paragraph>
-                Para mantenerse conectado con nosotros, inicie sesión con su información personal
-              </Components.Paragraph>
-              <Components.GhostButton onClick={() => setSignIn(true)}>
-                Acceder
-              </Components.GhostButton>
-            </Components.LeftOverlayPanel>
+      <Components.OverlayContainer signIn={signIn}>
+        <Components.Overlay signIn={signIn}>
+          <Components.LeftOverlayPanel signIn={signIn}>
+            <Components.Title>¡Bienvenido!</Components.Title>
+            <Components.Paragraph>
+              Para mantenerse conectado con nosotros, inicie sesión con su información personal
+            </Components.Paragraph>
+            <Components.GhostButton onClick={() => setSignIn(true)}>
+              Acceder
+            </Components.GhostButton>
+          </Components.LeftOverlayPanel>
 
-            <Components.RightOverlayPanel signIn={signIn}>
-              <Components.Title>¡Hola!</Components.Title>
-              <Components.Paragraph>
-                Introduce tus datos personales para crear una cuenta con nosotros.
-              </Components.Paragraph>
-              <Components.GhostButton onClick={() => setSignIn(false)}>
-                Registrarse
-              </Components.GhostButton>
-            </Components.RightOverlayPanel>
-          </Components.Overlay>
-        </Components.OverlayContainer>
-      </Components.Container>
-      <ToastContainer />
-    </div>
-  );
+          <Components.RightOverlayPanel signIn={signIn}>
+            <Components.Title>¡Hola!</Components.Title>
+            <Components.Paragraph>
+              Introduce tus datos personales para crear una cuenta con nosotros.
+            </Components.Paragraph>
+            <Components.GhostButton onClick={() => setSignIn(false)}>
+              Registrarse
+            </Components.GhostButton>
+          </Components.RightOverlayPanel>
+        </Components.Overlay>
+      </Components.OverlayContainer>
+    </Components.Container>
+    <ToastContainer />
+  </div>
+);
+
 }
 
 export default Login;
