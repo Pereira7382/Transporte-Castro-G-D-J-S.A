@@ -8,10 +8,12 @@ import ModalInsertarGastoA from "./ModalInsertarGastoA";
 import jsPDF from "jspdf";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Button } from '@mui/material';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import EditIcon from '@mui/icons-material/EditOutlined';
+import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import ModalRellenoAceite from "./ModalRellenoAceite";
-import Swal from 'sweetalert2';
 
 const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
