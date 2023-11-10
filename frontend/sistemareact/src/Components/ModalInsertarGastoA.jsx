@@ -7,7 +7,8 @@ const ModalInsertarGastoA = () => {
         numero_factura: '',
         monto: '',
         matricula: '',
-        kilometrajeAnterior: '',
+        capacidad_aceite: '',
+        km_momento: '',
         proveedor: '',
         id_camion: '',
         aceite: '', // Asegurarse de inicializar este valor
@@ -48,11 +49,12 @@ const ModalInsertarGastoA = () => {
                 setCamiones(response.data);
                 if (response.data.length > 0) {
                     const camionSeleccionado = response.data[0];
-                    const kmAnterior = camionSeleccionado.kilometraje;
+                    
                     setFormData(prevData => ({
                         ...prevData,
                         matricula: camionSeleccionado.matricula,
-                        kilometrajeAnterior: kmAnterior,
+                        capacidad_aceite: camionSeleccionado.capacidad_aceite,
+                        km_momento: camionSeleccionado.kilometraje,
                         id_camion: camionSeleccionado.id,
                     }));
                 }
@@ -73,12 +75,14 @@ const ModalInsertarGastoA = () => {
         if (name === 'matricula') {
             const camionSeleccionado = camiones.find((camion) => camion.matricula === value);
             const kmAnterior = camionSeleccionado ? camionSeleccionado.kilometraje : '';
+            const capacidad = camionSeleccionado?camionSeleccionado.capacidad_aceite:'';
 
             setFormData(prevData => ({
                 ...prevData,
                 [name]: value,
-                kilometrajeAnterior: kmAnterior,
+                km_momento: kmAnterior,
                 id_camion: camionSeleccionado ? camionSeleccionado.id : '',
+                capacidad_aceite: capacidad,
             }));
         } else if (name === 'aceite') {
             const aceiteSeleccionado = aceites.find(aceite => aceite.id === parseInt(value)); // Asegúrate de que el valor sea un número para la comparación
@@ -107,10 +111,11 @@ const ModalInsertarGastoA = () => {
             return;
         }
 
-        const { id_camion, id_aceite, monto, numero_factura } = formData;
+        const { id_camion, id_aceite,km_momento, monto, numero_factura } = formData;
         const dataToSend = {
             id_camion,
             id_aceite,
+            km_momento,
             monto,
             numero_factura
         };
@@ -129,7 +134,8 @@ const ModalInsertarGastoA = () => {
                     numero_factura: '',
                     monto: '',
                     matricula: '',
-                    kilometrajeAnterior: '', // esto funciona como el kilometraje del momento que se realiza el gasto
+                    km_momento: '', // esto funciona como el kilometraje del momento que se realiza el gasto
+                    capacidad_aceite: '',
                     id_aceite: '',
                     duracion: '',
                     proveedor: '',
@@ -184,8 +190,12 @@ const ModalInsertarGastoA = () => {
                                         </select>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="kilometrajeAnterior" className="form-label">Kilometros Recorridos Actualmente</label>
-                                        <input type="text" className="form-control" id="kilometrajeAnterior" name="kilometrajeAnterior" value={formData.kilometrajeAnterior} onChange={handleChange} disabled />
+                                        <label htmlFor="capacidad_aceite" className="form-label">Capacidad</label>
+                                        <input type="text" className="form-control" id="capacidad_aceite" name="capacidad_aceite" value={formData.capacidad_aceite} onChange={handleChange} disabled />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="km_momento" className="form-label">Kilometros Recorridos Actualmente</label>
+                                        <input type="text" className="form-control" id="km_momento" name="km_momento" value={formData.km_momento} onChange={handleChange} disabled />
                                     </div>
 
                                     <div className="mb-3">
