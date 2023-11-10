@@ -77,7 +77,7 @@ const ModalInventario = ({ actualizarTablaInventario }) => {
         // Recargar la página después de un breve retraso
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 800);
       } else {
         console.error('Error al guardar el registro');
       }

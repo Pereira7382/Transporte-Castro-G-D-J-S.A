@@ -16,10 +16,21 @@ const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
 
     const confirmDeleteAlert = (id) => {
-        const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
-        if (result) {
-            handleEliminar(id);
-        }
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handleEliminar(id);
+              Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
+            
+            }
+          });
     };
 
     const [idMantenimiento, setIdMantenimiento] = useState(null);
@@ -59,7 +70,6 @@ const TablaGastoAceite = ({ lista }) => {
 
     const columns = useMemo(
         () => [
-
 
             {
                 header: "Factura # ",

@@ -149,7 +149,7 @@ const ModalInsertarGastoA = () => {
                 toast.success('Datos ingresados correctamente');
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 800);
             } else {
                 console.error('Error al guardar el registro');
             }
