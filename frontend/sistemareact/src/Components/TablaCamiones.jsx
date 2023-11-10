@@ -59,6 +59,18 @@ const TablaCamiones = ({ lista }) => {
         accessorKey: "kilometraje",
       },
       {
+        header: "Capacidad Aceite",
+        accessorKey: "capacidad_aceite",
+      },
+      {
+        header: "Cons Comb x km",
+        accessorKey: "promedio_consumo_gasolina",
+      },
+      {
+        header: "Cons Ac x 1000km",
+        accessorKey: "promedio_consumo_aceite",
+      },
+      {
         header: "Tipo de Camión",
         accessorKey: "tipo_camion",
       },

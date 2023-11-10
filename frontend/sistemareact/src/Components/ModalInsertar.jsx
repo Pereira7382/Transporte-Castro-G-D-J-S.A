@@ -10,6 +10,9 @@ const ModalInsertar = () => {
     anio: '',
     numero_bin: '',
     kilometraje: '',
+    capacidad_aceite:'',
+    promedio_consumo_gasolina:'',
+    promedio_consumo_aceite:'',
     tipo_camion: 'pesado',
   });
 
@@ -18,7 +21,11 @@ const ModalInsertar = () => {
     const { name, value } = e.target;
   
     // Validaciones para campos "Año" y "Kilometraje" (aceptar solo números)
-    if ((name === 'anio' || name === 'kilometraje') && !/^\d+$/.test(value)) {
+    if ((name === 'anio'
+     || name === 'kilometraje' 
+     || name === 'promedio_consumo_gasolina'
+     || name === 'promedio_consumo_aceite')
+     && !/^\d+$/.test(value)) {
       setFormData({ ...formData, [name]: value });
       return; // No actualizar el estado si no es un número
     }
@@ -60,6 +67,9 @@ const ModalInsertar = () => {
           anio: '',
           numero_bin: '',
           kilometraje: '',
+          promedio_consumo_gasolina:'',
+          promedio_consumo_aceite:'',
+          capacidad_aceite:'',
           tipo_camion: 'pesado',
         });
 
@@ -118,6 +128,18 @@ const ModalInsertar = () => {
                   <div className="mb-3">
                     <label htmlFor="kilometraje" className="form-label">Kilometraje</label>
                     <input type="text" className="form-control" id="kilometraje" name="kilometraje" value={formData.kilometraje} onChange={handleChange} />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="promedio_consumo_gasolina" className="form-label">Combustible (litros) x km recorrido</label>
+                    <input type="text" className="form-control" id="promedio_consumo_gasolina" name="promedio_consumo_gasolina" value={formData.promedio_consumo_gasolina} onChange={handleChange} />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="promedio_consumo_aceite" className="form-label">Aceite (litros) x 1000 km recorridos</label>
+                    <input type="text" className="form-control" id="promedio_consumo_aceite" name="promedio_consumo_aceite" value={formData.promedio_consumo_aceite} onChange={handleChange} />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="capacidad_aceite" className="form-label">Capacidad Aceite</label>
+                    <input type="text" className="form-control" id="capacidad_aceite" name="capacidad_aceite" value={formData.capacidad_aceite} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="tipo_camion" className="form-label">Tipo de Camión</label>

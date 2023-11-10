@@ -17,22 +17,36 @@ public class Camion {
     private int anio;
     private String numero_bin;
     private int kilometraje;
+    private int promedio_consumo_aceite;
+    private int promedio_consumo_gasolina;
+    private int capacidad_aceite;
     private String tipo_camion;
     
     public Camion() {
     }
 
-    public Camion(int id, String matricula, int anio, String modelo, int estado, String tipo_camion, String numero_bin, int kilometraje) {
+    public Camion(int id, String matricula, String modelo, int estado, int anio, String numero_bin, int kilometraje, int promedio_consumo_aceite, int promedio_consumo_gasolina, int capacidad_aceite, String tipo_camion) {
         this.id = id;
         this.matricula = matricula;
-        this.anio = anio;
         this.modelo = modelo;
         this.estado = estado;
-        this.tipo_camion = tipo_camion;
+        this.anio = anio;
         this.numero_bin = numero_bin;
         this.kilometraje = kilometraje;
+        this.promedio_consumo_aceite = promedio_consumo_aceite;
+        this.promedio_consumo_gasolina = promedio_consumo_gasolina;
+        this.capacidad_aceite = capacidad_aceite;
+        this.tipo_camion = tipo_camion;
     }
-    
+
+    public int getCapacidad_aceite() {
+        return capacidad_aceite;
+    }
+
+    public void setCapacidad_aceite(int capacidad_aceite) {
+        this.capacidad_aceite = capacidad_aceite;
+    }
+
     public int getId() {
         return id;
     }
@@ -96,4 +110,22 @@ public class Camion {
     public void setKilometraje(int kilometraje) {
         this.kilometraje = kilometraje;
     }
+
+    public int getPromedio_consumo_aceite() {
+        return promedio_consumo_aceite;
+    }
+
+    public void setPromedio_consumo_aceite(int promedio_consumo_aceite) {
+        this.promedio_consumo_aceite = promedio_consumo_aceite;
+    }
+
+    public int getPromedio_consumo_gasolina() {
+        return promedio_consumo_gasolina;
+    }
+
+    public void setPromedio_consumo_gasolina(int promedio_consumo_gasolina) {
+        this.promedio_consumo_gasolina = promedio_consumo_gasolina;
+    }
+    
+    
 }

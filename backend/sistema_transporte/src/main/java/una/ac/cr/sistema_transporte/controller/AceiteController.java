@@ -32,6 +32,7 @@ public class AceiteController {
         System.out.println(aceite.getProveedor());
         return logica.agregar(aceite);
     }
+    
 
     @GetMapping("/listar")
     @ResponseBody
