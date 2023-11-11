@@ -96,6 +96,39 @@ public class DataGastoCom extends DataBase {
         return listaGastos;
     }
     
+    public List<GastoCombustible> obtenerGastosCamionEnIntervalo(String id, Date fechaInicio, Date fechaFin) {
+    List<GastoCombustible> listaGastos = new ArrayList<>();
+    try {
+        Connection cn = getConexion();
+        String query = "SELECT * FROM " + TABLAGASTOSC + " WHERE " + MATRICULA + " = ? AND " +
+                       FECHA + " BETWEEN ? AND ?";
+        PreparedStatement sentencia = cn.prepareStatement(query);
+        sentencia.setString(1, id);
+        sentencia.setDate(2, fechaInicio);
+        sentencia.setDate(3, fechaFin);
+        ResultSet resultados = sentencia.executeQuery();
+
+        while (resultados.next()) {
+            GastoCombustible gasto = new GastoCombustible();
+            gasto.setId(resultados.getInt(ID));
+            gasto.setNumero_factura(resultados.getString(FACTURA));
+            gasto.setMonto(resultados.getDouble(MONTO));
+            gasto.setMatricula(resultados.getString(MATRICULA));
+            gasto.setProveedor(resultados.getInt(PROVEEDOR));
+            gasto.setKilometrajeAnterior(resultados.getInt(KILOMETRAJEANTERIOR));
+            gasto.setKilometrajeActual(resultados.getInt(KILOMETRAJEACTUAL));
+            gasto.setFecha(resultados.getDate(FECHA));
+            gasto.setLitros(resultados.getDouble(LITROS));
+            gasto.setEstado(resultados.getInt(ESTADO));
+            listaGastos.add(gasto);
+        }
+    } catch (Exception e) {
+        System.out.println("\n error encontrado : " + e.toString());
+    }
+    return listaGastos;
+}
+
+    
     public List<GastoCombustible> obtenerGastosConProveedor() {
         List<GastoCombustible> listaGastos = new ArrayList<>();
         Connection cn = getConexion();
