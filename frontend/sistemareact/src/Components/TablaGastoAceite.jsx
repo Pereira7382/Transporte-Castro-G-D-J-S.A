@@ -8,6 +8,9 @@ import ModalInsertarGastoA from "./ModalInsertarGastoA";
 import jsPDF from "jspdf";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Button } from '@mui/material';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import EditIcon from '@mui/icons-material/EditOutlined';
+import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import ModalRellenoAceite from "./ModalRellenoAceite";
@@ -16,10 +19,30 @@ const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
 
     const confirmDeleteAlert = (id) => {
-        const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
-        if (result) {
-            handleEliminar(id);
-        }
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handleEliminar(id);
+              Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
+            
+            }
+          });
+    };
+
+    const [idMantenimiento, setIdMantenimiento] = useState(null);
+    const [numeroFactura, setNumeroFactura] = useState(null);
+
+    const handleOpenModal = (id_mantenimiento, numero_factura) => {
+        console.log("Abriendo modal con id_mantenimiento:", id_mantenimiento, "y numero_factura:", numero_factura);
+        setIdMantenimiento(id_mantenimiento);
+        setNumeroFactura(numero_factura);
     };
 
     const [idMantenimiento, setIdMantenimiento] = useState(null);

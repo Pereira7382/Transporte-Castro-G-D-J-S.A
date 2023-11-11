@@ -12,6 +12,7 @@ import { Button } from '@mui/material';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/EditOutlined';
+import Swal from 'sweetalert2';
 
 
 // Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
@@ -79,11 +80,23 @@ const TablaCamiones = ({ lista }) => {
   );
 
   const confirmDeleteAlert = (id) => {
-    const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
-    if (result) {
-      handleEliminar(id);
-    }
-  };
+    Swal.fire({
+        title: '¿Estás seguro de eliminar este registro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleEliminar(id);
+          Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
+        
+        }
+      });
+};
+
 
   const handleEliminar = (id) => {
     fetch(`http://localhost:8080/camion/${id}`, {

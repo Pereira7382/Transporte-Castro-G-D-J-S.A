@@ -7,6 +7,10 @@ import "jspdf-autotable";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ModalInsertarLlanta from "./ModalInsertarLlanta";
 import ModalActualizarLlanta from "./ModalActualizarLlanta";
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
+import Swal from 'sweetalert2';
 
 import { FaPlus } from "react-icons/fa";
 
@@ -54,11 +58,22 @@ const TablaLlanta = ({ lista }) => {
   );
 
   const confirmDeleteAlert = (id) => {
-    const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
-    if (result) {
-      handleEliminar(id);
-    }
-  };
+    Swal.fire({
+        title: '¿Estás seguro de eliminar este registro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleEliminar(id);
+          Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
+        
+        }
+      });
+};
 
   const handleEliminar = (id) => {
     fetch(`http://localhost:8080/llanta/${id}`, {
@@ -101,23 +116,20 @@ const TablaLlanta = ({ lista }) => {
         }}
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-            <button
-              variant="contained"
-              color="secondary"
+           <Button
               onClick={() => confirmDeleteAlert(row.original.id)}
-            >
-              Eliminar
-            </button>
-            <button
-              variant="contained"
-              color="primary"
-              id="btnModalActualizar"
-              data-bs-toggle="modal"
-              data-bs-target="#modalActualizarLlanta"
-              onClick={() => handleActualizar(row.original)}
-            >
-              Actualizar
-            </button>
+              startIcon={<DeleteIcon />}
+              color="error"
+           >
+          </Button>
+          <Button
+                id="btnModalActualizar"
+                data-bs-toggle="modal"
+                data-bs-target="#modalActualizarLlanta"
+                onClick={() => handleActualizar(row.original)}
+                startIcon={<EditIcon />}
+              >
+            </Button>
            
           </Box>
         )}
