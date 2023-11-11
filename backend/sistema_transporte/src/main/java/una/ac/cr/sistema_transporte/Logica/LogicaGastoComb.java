@@ -1,7 +1,6 @@
 
 package una.ac.cr.sistema_transporte.Logica;
 
-import java.sql.Date;
 import java.util.List;
 import una.ac.cr.sistema_transporte.data.DataCamion;
 import una.ac.cr.sistema_transporte.data.DataGastoCom;
@@ -20,9 +19,6 @@ public class LogicaGastoComb {
         return data.obtenerGastosCamion(id);
     }
     
-    public List<GastoCombustible> obtenerGastosCamionPorIntervalo(String id, Date fechaInicio, Date fechaFin){
-        return data.obtenerGastosCamionEnIntervalo(id, fechaInicio, fechaFin);
-    }
     
     public List<GastoCombustible>obtenerGastosCamionConProveedor(){
     return data.obtenerGastosConProveedor();

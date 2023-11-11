@@ -4,11 +4,6 @@ import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import "jspdf-autotable";
 import { FaPlus } from "react-icons/fa";
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Swal from 'sweetalert2';
-
-
 import ModalInsertarGastoL from "./ModalInsertarGastoL";
 
 const TablaGastoLlanta = ({ lista }) => {
@@ -56,23 +51,11 @@ const TablaGastoLlanta = ({ lista }) => {
     );
 
     const confirmDeleteAlert = (id) => {
-        Swal.fire({
-            title: '¿Estás seguro de eliminar este registro?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              handleEliminar(id);
-              Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
-            
-            }
-          });
-    };
-
+        const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
+        if (result) {
+          handleEliminar(id);
+        }
+      };
     
       const handleEliminar = (id) => {
         fetch(`http://localhost:8080/gastoLlanta/${id}`, {
@@ -111,15 +94,15 @@ const TablaGastoLlanta = ({ lista }) => {
                         exportButton: true,
                     }}
                     renderRowActions={({ row }) => (
-                    <Box sx={{ display: "flex", gap: "1rem" }}>
-                      <Button
-                        onClick={() => confirmDeleteAlert(row.original.id)}
-                        startIcon={<DeleteIcon />}
-                        color="error"
-                      >
-                      </Button>
-                     
-                    </Box>
+                        <Box sx={{ display: "flex", gap: "1rem" }}>
+                            <button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => confirmDeleteAlert(row.original.id)}
+                            >
+                                Eliminar
+                            </button>
+                        </Box>
                     )}
                     renderTopToolbarCustomActions={({ table }) => (
                         <Box

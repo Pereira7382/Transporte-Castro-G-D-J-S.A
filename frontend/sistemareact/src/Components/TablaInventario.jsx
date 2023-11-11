@@ -13,12 +13,6 @@ import ModalInsertarFechaReporte from "./ModalInsertarFechaReporte";
 import "react-toastify/dist/ReactToastify.css";
 import Campana from './Campana'; 
 import Notificaciones from './Notificaciones'; // Asegúrate de que la ruta al archivo Notificaciones sea correcta
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
-import { BiUserVoice } from 'react-icons/bi';
-import Swal from 'sweetalert2';
-
 
 const TablaInventario = ({ lista }) => {
   const [inventarioAActualizar, setInventarioAActualizar] = useState(null);
@@ -28,8 +22,6 @@ const TablaInventario = ({ lista }) => {
   const [notificaciones, setNotificaciones] = useState([]);;
   const [cargando, setCargando] = useState(true);
   const [modalReporteFecha, setModalReporteFecha] = useState(null);
-
-
 
   const exportPDF = () => {
     const doc = new jsPDF();
@@ -69,22 +61,11 @@ const TablaInventario = ({ lista }) => {
   );
 
   const confirmDeleteAlert = (id) => {
-    Swal.fire({
-        title: '¿Estás seguro de eliminar este registro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleEliminar(id);
-          Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
-        
-        }
-      });
-};
+    const result = window.confirm("¿Estás seguro de eliminar este registro? " + id);
+    if (result) {
+      handleEliminar(id);
+    }
+  };
 
   useEffect(() => {
     if (inventario.length > 0) {
@@ -163,37 +144,33 @@ const TablaInventario = ({ lista }) => {
         }}
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-           <Button
+            <button
+              variant="contained"
+              color="secondary"
               onClick={() => confirmDeleteAlert(row.original.id)}
-              startIcon={<DeleteIcon />}
-              color="error"
-           >
-          </Button>
-          <Button
-                id="btnModalActualizar"
-                data-bs-toggle="modal"
-                data-bs-target="#modalActualizarInventario"
-                onClick={() => handleActualizar(row.original)}
-                startIcon={<EditIcon />}
-              >
-            </Button>
-
- 
-         <button
-           variant="contained"
-           color="primary"
-           id="btnModalMovimientoInventario"
-           data-bs-toggle="modal"
-           data-bs-target="#modalMovimientoInventario"
-           onClick={() => handleOpenModal(row.original.id, row.original.cantidad)}
-           style={{ background: 'transparent', border: 'none' }} // Establece el fondo y el borde a transparente y sin borde
-      >
-     <BiUserVoice
-      style={{ color: 'blue', fontSize: '24px' }}
-      title="Movimiento" // Agrega el título (mensaje) que se mostrará cuando se posicione el cursor
-   />
-         
-         </button>
+            >
+              Eliminar
+            </button>
+            <button
+              variant="contained"
+              color="primary"
+              id="btnModalActualizar"
+              data-bs-toggle="modal"
+              data-bs-target="#modalActualizarInventario"
+              onClick={() => handleActualizar(row.original)}
+            >
+              Actualizar
+            </button>
+            <button
+              variant="contained"
+              color="primary"
+              id="btnModalMovimientoInventario"
+              data-bs-toggle="modal"
+              data-bs-target="#modalMovimientoInventario"
+              onClick={() => handleOpenModal(row.original.id, row.original.cantidad)} // Pasa el ID de la pieza al abrir el modal
+            >
+              Movimiento
+            </button>
 
           </Box>
         )}

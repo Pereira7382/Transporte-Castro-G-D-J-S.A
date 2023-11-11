@@ -1,8 +1,6 @@
 package una.ac.cr.sistema_transporte.controller;
 
-import java.sql.Date;
 import java.text.DecimalFormat;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -17,12 +15,9 @@ import una.ac.cr.sistema_transporte.domain.GastoCombustible;
 
 import java.util.Calendar;
 import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import una.ac.cr.sistema_transporte.domain.DatosConsumoComb;
 
 @Controller
@@ -101,8 +96,6 @@ public class GastoCombController {
         return datos;
 
     }
-    
-    
     
     @GetMapping
     @ResponseBody

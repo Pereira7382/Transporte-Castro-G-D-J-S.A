@@ -16,8 +16,6 @@ const ModalInsertarGastoC = () => {
 
   const [camiones, setCamiones] = useState([]);
   const [proveedores, setProveedores] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  
 
   useEffect(() => {
     obtenerCamiones();
@@ -121,7 +119,7 @@ const ModalInsertarGastoC = () => {
         toast.success('Datos ingresados correctamente');
         setTimeout(() => {
           window.location.reload();
-        }, 800);
+        }, 1000);
       } else {
         console.error('Error al guardar el registro');
       }
@@ -132,9 +130,6 @@ const ModalInsertarGastoC = () => {
 
   return (
     <>
-
-    
-
       <div>
         <div className="modal fade" id="modalInsertarGasto" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
@@ -154,36 +149,13 @@ const ModalInsertarGastoC = () => {
                     <input type="text" className="form-control" id="monto" name="monto" value={formData.monto} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="matricula" className="form-label">Buscar Matrícula:</label>
-                    <div className="input-group">
-                      <span className="input-group-text" id="basic-addon1">
-                        <i className="bi bi-search"></i>
-                      </span>
-                      <input
-                        type="text"
-                        className="form-control filtro-input"
-                        placeholder="Buscar matrícula"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-                    </div>
-                    <label htmlFor="matricula" className="form-label mt-2">Seleccionar Matrícula</label>
-                    <select
-                      className="form-control mt-2 filtro-select"
-                      id="matricula"
-                      name="matricula"
-                      value={formData.matricula}
-                      onChange={handleChange}
-                    >
-                      {camiones
-                        .filter((camion) =>
-                          camion.matricula.toLowerCase().includes(searchTerm.toLowerCase())
-                        )
-                        .map((camion) => (
-                          <option key={camion.id} value={camion.matricula}>
-                            {camion.matricula}
-                          </option>
-                        ))}
+                    <label htmlFor="matricula" className="form-label">Placa</label>
+                    <select className="form-control" id="matricula" name="matricula" value={formData.matricula} onChange={handleChange}>
+                      {camiones.map((camion) => (
+                        <option key={camion.id} value={camion.matricula}>
+                          {camion.matricula}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="mb-3">

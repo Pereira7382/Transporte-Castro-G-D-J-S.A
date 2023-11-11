@@ -8,11 +8,7 @@ import "jspdf-autotable";
 import ModalInsertarProveedor from "./ModalInsertarProveedor";
 import ModalActualizarProveedor from "./ModalActualizarProveedor";
 import { FaPlus } from "react-icons/fa";
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import Swal from 'sweetalert2';
+
 
 // Definición del componente TablaCamiones que recibe una lista de datos como prop (lista)
 const TablaProveedor = ({ lista }) => {
@@ -125,22 +121,11 @@ const TablaProveedor = ({ lista }) => {
   
 
   const confirmDeleteAlert = (id_proveedor) => {
-    Swal.fire({
-        title: '¿Estás seguro de eliminar este registro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleEliminar(id_proveedor);
-          Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
-        
-        }
-      });
-};
+    const result = window.confirm("¿Estás seguro de eliminar este registro? " + id_proveedor);
+    if (result) {
+      handleEliminar(id_proveedor);
+    }
+  };
 
   const handleEliminar = (id_proveedor) => {
     fetch(`http://localhost:8080/proveedor/${id_proveedor}`, {
@@ -184,30 +169,31 @@ const TablaProveedor = ({ lista }) => {
         }}
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-          <Button
+            <button
+              variant="contained"
+              color="secondary"
               onClick={() => confirmDeleteAlert(row.original.id_proveedor)}
-              startIcon={<DeleteIcon />}
-              color="error"
-           >
-          </Button>
-     
-            <Button
-                id="btnModalActualizar"
-                data-bs-toggle="modal"
-                data-bs-target="#modalActualizarProveedor"
-                onClick={() => handleActualizar(row.original)}
-                startIcon={<EditIcon />}
-              >
-            </Button>
+            >
+              Eliminar
+            </button>
+            <button
+              variant="contained"
+              color="primary"
+              id="btnModalActualizar"
+              data-bs-toggle="modal"
+              data-bs-target="#modalActualizarProveedor"
+              onClick={() => handleActualizar(row.original)}
+            >
+              Actualizar
+            </button>
            
             <button
-            variant="contained"
-            color="default"
-            onClick={() => handleReporteProveedor(row.original.id_proveedor)}
-            style={{ background: 'transparent', border: 'none' }} // Establece el fondo y el borde a transparente y sin borde
+              variant="contained"
+              color="default"
+              onClick={() => handleReporteProveedor(row.original.id_proveedor)}
             >
-           <PictureAsPdfIcon style={{ color: 'purple' }} /> {/* Establece el color del ícono como amarillo */}
-         </button>
+              GenerarReporte
+            </button>
           </Box>
         )}
         renderTopToolbarCustomActions={({ table }) => (

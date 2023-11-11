@@ -91,7 +91,7 @@ const ModalInsertarLlanta = () => {
                 // Recargar la página después de un breve retraso
                 setTimeout(() => {
                     window.location.reload();
-                }, 800);
+                }, 1000);
             } else {
                 console.error('Error al guardar el registro');
             }
