@@ -305,8 +305,8 @@ const PaginaPrincipalCamion = () => {
               
             
             </div>
-            <br></br>
-              <br></br>
+           
+             
               <br></br>
               <br></br>
               <br></br>
