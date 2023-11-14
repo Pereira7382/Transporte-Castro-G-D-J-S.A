@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import una.ac.cr.sistema_transporte.Logica.LogicaGastoLlanta;
+import una.ac.cr.sistema_transporte.domain.DatosConsumoLLantas;
 import una.ac.cr.sistema_transporte.domain.GastoLlanta;
 
 
@@ -44,6 +45,7 @@ public class GastoLlantaController {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
         // Establecer la fecha actual en el objeto GastoCombustible
+        System.out.println("kilometraje anterior: " +  gasto.getKilometrajeAnterior());
         gasto.setFecha(sqlDate);
        // System.out.println(gasto.imprimir());
       //  return gasto;
@@ -65,5 +67,27 @@ public class GastoLlantaController {
     public boolean eliminarLlantas(@PathVariable int id) {
         return logica.eliminarLlantas(id);
     }
+    
+    
+     @GetMapping("/{matricula}")
+    @ResponseBody
+    public DatosConsumoLLantas obtenerGastosLPorId(@PathVariable String matricula) {
+
+         System.out.println("entrooooo");
+         double totalGastosParaCamion = logica.calcularTotalGastosPorCamion(matricula);
+         double promedioGastoPorKilometro = logica.calcularPromedioGastosPorKilometro(matricula);
+         int duracionLLantasParaCamion = logica.calcularDuracionPromedioLlantas(matricula);
+         double vidaUtilRestante = logica.vidaUtilRestanteLLantas(matricula);
+         int cantidadRemplazo = logica.contarLlantasReemplazadas(matricula);
+
+        
+        DatosConsumoLLantas datosLlantas = new DatosConsumoLLantas(totalGastosParaCamion,promedioGastoPorKilometro,duracionLLantasParaCamion,cantidadRemplazo,vidaUtilRestante);
+
+        datosLlantas.toString();
+
+        return datosLlantas;
+
+    }
+    
     
 }
