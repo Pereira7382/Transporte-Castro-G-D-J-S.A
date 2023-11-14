@@ -1,9 +1,26 @@
-body {
-    background-color: beige; /* Fondo gris */
-  }
+/* fondo.css */
+
+/* Estilos para el fondo gris (si es necesario) */
+.page-container {
+  text-align: center;
+  margin-top: 0px;
+}
+
+/* Estilos para la imagen de fondo y el contenido principal */
+.page-container img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.page-container > div {
+  z-index: 1;
+  position: relative;
+  padding: 60px; /* Ajusta el relleno según sea necesario */
   
-  .page-container {
-    text-align: center;
-    margin-top: 30px;
-  }
-  
+}
+
+/* Agrega cualquier otro estilo que necesites para tu contenido principal */

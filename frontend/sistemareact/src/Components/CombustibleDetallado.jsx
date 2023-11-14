@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../Asset/Css/fondo.css'; // Archivo de estilos CSS para el fondo gris
-
+import fondo from '../Asset/images/fondo.webp';
 
 const ComboBox = () => {
+
+  
+
   const opciones = ['Primer mes', 'Segundo mes', 'Tercer mes', 'Cuarto mes', 'Quinto mes'];
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
   const [opcionesEspecificas, setOpcionesEspecificas] = useState([]);
@@ -55,9 +58,15 @@ const ComboBox = () => {
   };
 
   return (
-    <div className="page-container">
-      <h1 style={{ color: '#4CAF50', fontFamily: 'Arial, sans-serif', fontSize: '2em', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '20px' }}>Análisis de Consumo de Combustible</h1>
-      <label htmlFor="opciones" style={{ marginRight: '10px', fontSize: '1.2em', fontWeight: 'bold', color: '#4CAF50' }}>Mes que desea filtrar: </label>
+    <div className="page-container" style={{ position: 'relative' }}>
+
+      <img src={fondo} alt="Camión de carga número 1" />
+
+      <div style={{ zIndex: 1 }}>
+       
+        <div>
+      <h1 style={{ color: 'purple', fontFamily: 'Arial, sans-serif', fontSize: '2em', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '20px' }}>Análisis de Consumo de Combustible</h1>
+      <label htmlFor="opciones" style={{ marginRight: '10px', fontSize: '1.2em', fontWeight: 'bold', color: 'purple' }}>Mes que desea filtrar: </label>
       <select
         id="opciones"
         onChange={handleSeleccion}
@@ -71,7 +80,7 @@ const ComboBox = () => {
           </option>
         ))}
       </select>
-      {opcionSeleccionada && <p style={{ color: '#4CAF50', marginTop: '90px', fontSize: '1.2em', fontWeight: 'bold' }}>Análisis de consumo de combustible del {opcionSeleccionada}</p>}
+      {opcionSeleccionada && <p style={{ color: 'purple', marginTop: '90px', fontSize: '1.2em', fontWeight: 'bold' }}>Análisis de consumo de combustible del {opcionSeleccionada}</p>}
 
       {opcionesEspecificas.length > 0 && (
         <div>
@@ -79,7 +88,7 @@ const ComboBox = () => {
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             {opcionesEspecificas.map((opcion, index) => (
               <div key={index} style={{
-                border: '1px solid #ccc',
+                border: '1px solid purple',
                 padding: '3px',
                 margin: '20px',
                 flex: 1,
@@ -89,38 +98,38 @@ const ComboBox = () => {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8em' }}>
                   <tbody>
                     <tr>
-                      <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center', fontSize: '1em', fontWeight: 'bold', color: '#4CAF50' }}>
-                        <i className={opcion.icono} style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.tipo}
+                      <td style={{ borderBottom: '1px solid purple', padding: '4px', textAlign: 'center', fontSize: '1em', fontWeight: 'bold', color: 'white' }}>
+                        <i className={opcion.icono} style={{ marginRight: '5px', color: 'aqua' }}></i> {opcion.tipo}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.valor}
+                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: 'blue' }}></i> {opcion.valor}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-info-circle" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.dato1}
+                        <i className="fas fa-info-circle" style={{ marginRight: '5px', color: 'pink' }}></i> {opcion.dato1}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-road" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.dato2}
+                        <i className="fas fa-road" style={{ marginRight: '5px', color: 'red' }}></i> {opcion.dato2}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-tachometer-alt" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.dato3}
+                        <i className="fas fa-tachometer-alt" style={{ marginRight: '5px', color: 'black' }}></i> {opcion.dato3}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.dato4}
+                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: 'blueviolet' }}></i> {opcion.dato4}
                       </td>
                     </tr>
                     <tr style={{ background: '#f2f2f2' }}>
                       <td style={{ borderBottom: '1px solid #ccc', padding: '4px', textAlign: 'center' }}>
-                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: '#4CAF50' }}></i> {opcion.dato5}
+                        <i className="fas fa-gas-pump" style={{ marginRight: '5px', color: 'coral' }}></i> {opcion.dato5}
                       </td>
                     </tr>
                   </tbody>
@@ -131,21 +140,23 @@ const ComboBox = () => {
         </div>
       )}
     </div>
+      </div>
+  
+    </div>
+
+
+
   );
 };
 
 const getColorForOption = (opcion) => {
   switch (opcion) {
-    case 'Primer mes':
-      return '#00FF00'; // Verde
-    case 'Segundo mes':
-      return '#FFC0CB'; // Rosado
-    case 'Tercer mes':
-      return '#FFFF00'; // Amarillo
-    case 'Cuarto mes':
-      return '#87CEEB'; // Celeste
-    case 'Quinto mes':
-      return '#FFA07A'; // Salmón
+    case 'Litros consumidos':
+      return 'purple'; // Amarillo
+    case 'Kilometros Recorridos':
+      return 'purple'; // Azul
+    case 'Litros por kilometro':
+      return 'purple'; // Verde
     default:
       return '#ccc'; // Color por defecto
   }
