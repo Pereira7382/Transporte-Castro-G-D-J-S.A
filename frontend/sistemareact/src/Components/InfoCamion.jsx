@@ -11,6 +11,8 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SpeedIcon from '@mui/icons-material/Speed';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import axios from 'axios';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import TimelineIcon from '@mui/icons-material/Timeline';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +24,7 @@ const PaginaPrincipalCamion = () => {
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
   const [loading, setLoading] = useState(false);
+  const [datosLlantas, setDatosLLantas] = useState(null);
 
   const navigate = useNavigate();
 
@@ -52,6 +55,16 @@ const PaginaPrincipalCamion = () => {
         })
         .catch(error => {
           console.error('Error al obtener datos de consumo de combustible: ', error);
+        });
+  
+      // Solicitar datos de consumo de llantas al servidor
+      axios.get(`http://localhost:8080/gastoLlanta/${camion.matricula}`)
+        .then(response => {
+          console.log(response.data);
+          setDatosLLantas(response.data);
+        })
+        .catch(error => {
+          console.error('Error al obtener datos de consumo de llantas: ', error);
         });
     }
   }, [camion]);
@@ -248,8 +261,52 @@ const PaginaPrincipalCamion = () => {
             <DriveEtaIcon fontSize="large" sx={{ color: 'purple' }} />
             <div>Rodaje de llantas</div>
 
-            <div className="contenido">
-              Estadisticas
+            
+            <div className="contenido" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {datosLlantas && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Total gasto: {datosLlantas.totalGastosParaCamion}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'green' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                     Gasto x KM: {datosLlantas.promedioGastoPorKilometro}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <AccessTimeIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Promedio Duracion: {datosLlantas.duracionLLantasParaCamion}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <DriveEtaIcon  style={{ fontSize: '20px', marginRight: '5px', color: 'blue' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Llantas Remplazadas: {datosLlantas.cantidadRemplazo}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <TimelineIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Vida Util: {datosLlantas.vidaUtilRestante}
+                    </Typography>
+                  </div>
+                </>
+              )}
+              
+              
+            
+            </div>
+            <br></br>
+              <br></br>
               <br></br>
               <br></br>
               <br></br>
@@ -260,8 +317,11 @@ const PaginaPrincipalCamion = () => {
                <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
                       Ver Detalles
               </Button>
-            </div>
+            
           </div>
+
+          
+          
         </div>
       </div>
     </Layout>
