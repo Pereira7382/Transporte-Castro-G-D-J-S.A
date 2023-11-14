@@ -214,6 +214,15 @@ const PaginaPrincipalCamion = () => {
 
             <div className="contenido">
               Estadisticas
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br><br></br><br></br>
+                {/* Botón de ver detalles */}
+                <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
+                      Ver Detalles
+                  </Button>
             </div>
           </div>
 
@@ -221,16 +230,13 @@ const PaginaPrincipalCamion = () => {
             <DriveEtaIcon fontSize="large" sx={{ color: 'purple' }} />
             <div>Rodaje de llantas</div>
 
-            
-            <div className="contenido" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              {datosLlantas && (
-                <>
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                  <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
-                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
-                      Total gasto: {datosLlantas.totalGastosParaCamion}
-                    </Typography>
-                  </div>
+            <div className="contenido">
+              Estadisticas
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br><br></br><br></br>
 
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'green' }} />
