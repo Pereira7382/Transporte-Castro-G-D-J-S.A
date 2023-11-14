@@ -61,7 +61,6 @@ public class GastoCombController {
     @GetMapping("/{matricula}")
     @ResponseBody
     public DatosConsumoComb obtenerGastosCPorId(@PathVariable String matricula) {
-
         //aqui lo que ocupo retornar no es los gastos en si, sino una estructura que 
         // tenga los datos de consumo del camion calculados es decir suma de kilometros recorridos
         // en el intervalo de tiempo, suma de litros de combustible consumidos en el intervalo de tiempo

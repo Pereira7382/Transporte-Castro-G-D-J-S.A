@@ -11,6 +11,9 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SpeedIcon from '@mui/icons-material/Speed';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+
 
 const PaginaPrincipalCamion = () => {
   const { id } = useParams();
@@ -19,6 +22,8 @@ const PaginaPrincipalCamion = () => {
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const obtenerCamion = () => {
     axios.get(`http://localhost:8080/camion/${id}`)
@@ -84,6 +89,22 @@ const PaginaPrincipalCamion = () => {
     return formattedDate;
   };
   
+  const handleVerDetalles = () => {
+   //para redirijir a ver los datelles del combustible
+    navigate('/info-combustible');
+   
+  };
+  const handleVerDetallesLlnata = () => {
+    //para redirijir a ver los datelles del combustible
+    
+     navigate('/info-llanta');
+   };
+   const handleVerDetallesAceite = () => {
+    //para redirijir a ver los datelles del combustible
+    
+     navigate('/info-aceite');
+   };
+ 
 
   return (
     <Layout>
@@ -154,6 +175,12 @@ const PaginaPrincipalCamion = () => {
                       Lts por km: {datosConsumo.promLitKm}
                     </Typography>
                   </div>
+                  <br></br>
+                  {/* Botón de ver detalles */}
+                  <Button variant="contained" color="primary" onClick={handleVerDetalles}>
+                      Ver Detalles
+                  </Button>
+
                 </>
               )}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '20px' }}>
@@ -201,6 +228,15 @@ const PaginaPrincipalCamion = () => {
 
             <div className="contenido">
               Estadisticas
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br><br></br><br></br>
+                {/* Botón de ver detalles */}
+                <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
+                      Ver Detalles
+                  </Button>
             </div>
           </div>
 
@@ -210,6 +246,16 @@ const PaginaPrincipalCamion = () => {
 
             <div className="contenido">
               Estadisticas
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br><br></br><br></br>
+
+               {/* Botón de ver detalles */}
+               <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
+                      Ver Detalles
+              </Button>
             </div>
           </div>
         </div>
