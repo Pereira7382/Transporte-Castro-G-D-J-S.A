@@ -6,10 +6,6 @@ package una.ac.cr.sistema_transporte.domain;
 
 import java.sql.Date;
 
-/**
- *
- * @author josep
- */
 public class GastosAceite {
     
     private int id;

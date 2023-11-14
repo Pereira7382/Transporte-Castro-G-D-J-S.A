@@ -6,6 +6,7 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
         id_mantenimiento,
         numero_factura,
         cantidad: "",
+        monto: "",
         observaciones: "",
     });
 
@@ -20,7 +21,7 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
 
     const [showModal] = useState(false);
 
-    const handleChange = (e) => {
+    const  handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -36,11 +37,12 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
             formData.observaciones = "ninguna observacion ";
         }
 
-        const { id_mantenimiento, cantidad, observaciones } = formData;
+        const { id_mantenimiento, cantidad, observaciones, monto } = formData;
         const dataToSend = {
             id_mantenimiento,
             cantidad,
-            observaciones
+            observaciones,
+            monto
         };
 
         try {
@@ -58,6 +60,7 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
                     numero_factura: '',
                     cantidad: '',
                     observaciones: '',
+                    monto:'',
                 });
 
                 document.getElementById('modalInsertarRelleno').classList.remove('show');
@@ -82,6 +85,7 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
             //numero_factura: '',
             cantidad: '',
             observaciones: '',
+            monto:'',
         });
     };
 
@@ -105,6 +109,10 @@ const ModalRellenoAceite = ({ onClose, id_mantenimiento, numero_factura }) => {
                             <div className="mb-3">
                                 <label htmlFor="cantidad" className="form-label">Cantidad</label>
                                 <input type="text" className="form-control" id="cantidad" name="cantidad" value={formData.cantidad} onChange={handleChange} />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="monto" className="form-label">Monto</label>
+                                <input type="text" className="form-control" id="monto" name="monto" value={formData.monto} onChange={handleChange} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="observaciones" className="form-label">Observaciones</label>

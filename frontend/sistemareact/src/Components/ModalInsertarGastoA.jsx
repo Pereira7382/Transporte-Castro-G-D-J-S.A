@@ -13,15 +13,26 @@ const ModalInsertarGastoA = () => {
         id_camion: '',
         aceite: '', // Asegurarse de inicializar este valor
         duracion: '', // Asegurarse de inicializar este valor
+        costo_litro:'',
     });
 
     const [aceites, setAceites] = useState([]);
     const [camiones, setCamiones] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [costoPorLitro, setCostoPorLitro] = useState('');
+
     useEffect(() => {
         obtenerCamiones();
         obtenerAceites();
     }, []);
+
+    useEffect(() => {
+        // Calcula el costo por litro cada vez que cambian los valores relevantes
+        if (formData.monto && formData.capacidad_aceite) {
+            const costoLitro = (parseFloat(formData.monto) / parseFloat(formData.capacidad_aceite)).toFixed(2);
+            setCostoPorLitro(costoLitro);
+        }
+    }, [formData.monto, formData.capacidad_aceite]);
 
     const obtenerAceites = () => {
         axios.get("http://localhost:8080/aceite/listar")
@@ -49,7 +60,7 @@ const ModalInsertarGastoA = () => {
                 setCamiones(response.data);
                 if (response.data.length > 0) {
                     const camionSeleccionado = response.data[0];
-                    
+
                     setFormData(prevData => ({
                         ...prevData,
                         matricula: camionSeleccionado.matricula,
@@ -72,10 +83,13 @@ const ModalInsertarGastoA = () => {
             if (!/^\d+$/.test(value)) return;
         }
 
-        if (name === 'matricula') {
+        // Actualiza el estado cuando cambia la cantidad de litros o el monto total
+        if (name === 'monto' || name === 'capacidad_aceite') {
+            setFormData(prevData => ({ ...prevData, [name]: value }));
+        }else if (name === 'matricula') {
             const camionSeleccionado = camiones.find((camion) => camion.matricula === value);
             const kmAnterior = camionSeleccionado ? camionSeleccionado.kilometraje : '';
-            const capacidad = camionSeleccionado?camionSeleccionado.capacidad_aceite:'';
+            const capacidad = camionSeleccionado ? camionSeleccionado.capacidad_aceite : '';
 
             setFormData(prevData => ({
                 ...prevData,
@@ -95,7 +109,7 @@ const ModalInsertarGastoA = () => {
                 proveedor: prov,
                 duracion: durac,
             }));
-        } 
+        }
 
         else {
             setFormData(prevData => ({ ...prevData, [name]: value }));
@@ -111,7 +125,7 @@ const ModalInsertarGastoA = () => {
             return;
         }
 
-        const { id_camion, id_aceite,km_momento, monto, numero_factura } = formData;
+        const { id_camion, id_aceite, km_momento, monto, numero_factura } = formData;
         const dataToSend = {
             id_camion,
             id_aceite,
@@ -176,51 +190,54 @@ const ModalInsertarGastoA = () => {
                                         <input type="text" className="form-control" id="numero_factura" name="numero_factura" value={formData.numero_factura} onChange={handleChange} />
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="monto" className="form-label">Monto</label>
-                                        <input type="text" className="form-control" id="monto" name="monto" value={formData.monto} onChange={handleChange} />
+                                        <label htmlFor="matricula" className="form-label">Buscar Matrícula:</label>
+                                        <div className="input-group">
+                                            <span className="input-group-text" id="basic-addon1">
+                                                <i className="bi bi-search"></i>
+                                            </span>
+                                            <input
+                                                type="text"
+                                                className="form-control filtro-input"
+                                                placeholder="Buscar matrícula"
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                            />
+                                        </div>
+                                        <label htmlFor="matricula" className="form-label mt-2">Seleccionar Matrícula</label>
+                                        <select
+                                            className="form-control mt-2 filtro-select"
+                                            id="matricula"
+                                            name="matricula"
+                                            value={formData.matricula}
+                                            onChange={handleChange}
+                                        >
+                                            {camiones
+                                                .filter((camion) =>
+                                                    camion.matricula.toLowerCase().includes(searchTerm.toLowerCase())
+                                                )
+                                                .map((camion) => (
+                                                    <option key={camion.id} value={camion.matricula}>
+                                                        {camion.matricula}
+                                                    </option>
+                                                ))}
+                                        </select>
                                     </div>
                                     <div className="mb-3">
-                                    <label htmlFor="matricula" className="form-label">Buscar Matrícula:</label>
-                                    <div className="input-group">
-                                    <span className="input-group-text" id="basic-addon1">
-                                        <i className="bi bi-search"></i>
-                                    </span>
-                                    <input
-                                        type="text"
-                                        className="form-control filtro-input"
-                                        placeholder="Buscar matrícula"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                    />
-                                    </div>
-                                    <label htmlFor="matricula" className="form-label mt-2">Seleccionar Matrícula</label>
-                                    <select
-                                    className="form-control mt-2 filtro-select"
-                                    id="matricula"
-                                    name="matricula"
-                                    value={formData.matricula}
-                                    onChange={handleChange}
-                                    >
-                                    {camiones
-                                        .filter((camion) =>
-                                        camion.matricula.toLowerCase().includes(searchTerm.toLowerCase())
-                                        )
-                                        .map((camion) => (
-                                        <option key={camion.id} value={camion.matricula}>
-                                            {camion.matricula}
-                                        </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="capacidad_aceite" className="form-label">Capacidad</label>
+                                        <label htmlFor="capacidad_aceite" className="form-label">Capacidad en litros de aceite</label>
                                         <input type="text" className="form-control" id="capacidad_aceite" name="capacidad_aceite" value={formData.capacidad_aceite} onChange={handleChange} disabled />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="km_momento" className="form-label">Kilometros Recorridos Actualmente</label>
                                         <input type="text" className="form-control" id="km_momento" name="km_momento" value={formData.km_momento} onChange={handleChange} disabled />
                                     </div>
-
+                                    <div className="mb-3">
+                                        <label htmlFor="monto" className="form-label">Monto Total</label>
+                                        <input type="text" className="form-control" id="monto" name="monto" value={formData.monto} onChange={handleChange} />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="costo_litro" className="form-label">Costo por litro</label>
+                                        <input type="text" className="form-control" id="costo_litro" name="costo_litro" value={costoPorLitro} disabled />
+                                    </div>
                                     <div className="mb-3">
                                         <label htmlFor="aceite" className="form-label">Seleccione tipo de aceite</label>
                                         <select className="form-control" id="aceite" name="aceite" value={formData.aceite} onChange={handleChange}> {/* Cambiado de formData.id_aceite a formData.aceite */}

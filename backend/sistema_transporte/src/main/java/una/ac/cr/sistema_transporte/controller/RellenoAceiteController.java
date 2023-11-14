@@ -34,7 +34,14 @@ public class RellenoAceiteController {
 
         // Establecer la fecha actual en el objeto GastoCombustible
         relleno.setFecha(sqlDate);
-
+        
+        //obtener el km del camion al momento del relleno
+        int km = logica.obtenerKilometrajeActualPorMantenimiento(relleno.getId_mantenimiento());
+        if(km!=-1){
+            relleno.setKm_momento(km);
+        }else{
+            System.out.println("\n error ");
+        }
         return logica.agregarRelleno(relleno);
     }
 }

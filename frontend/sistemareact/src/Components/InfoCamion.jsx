@@ -16,6 +16,7 @@ const PaginaPrincipalCamion = () => {
   const { id } = useParams();
   const [camion, setCamion] = useState(null);
   const [datosConsumo, setDatosConsumo] = useState(null);
+  //const [datosAceite, setDatosAceite] = useState(null);
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,17 +38,40 @@ const PaginaPrincipalCamion = () => {
 
   useEffect(() => {
     if (camion?.matricula) {
-      // Solicitar datos de consumo de combustible al servidor
-      axios.get(`http://localhost:8080/gastoCombustible/${camion.matricula}`)
-        .then(response => {
-          console.log(response.data);
-          setDatosConsumo(response.data);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de consumo de combustible: ', error);
-        });
+      obtenerConsComb();
+      obtenerConsAceite();
     }
   }, [camion]);
+
+  useEffect(() => {
+    obtenerCamion();
+    
+  }, [id]);
+
+  const obtenerConsComb = () => {
+    // Solicitar datos de consumo de combustible al servidor
+    axios.get(`http://localhost:8080/gastoCombustible/${camion.matricula}`)
+      .then(response => {
+        console.log(response.data);
+        setDatosConsumo(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de consumo de combustible: ', error);
+      });
+  };
+
+  const obtenerConsAceite = () => {
+    // Solicitar datos de consumo de combustible al servidor
+    //solicitar datos de consumo de aceite al servidor 
+    axios.get(`http://localhost:8080/gastoAceite/${camion.matricula}`)
+      .then(response => {
+        console.log(response.data);
+        setDatosConsumo(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de consumo de aceite: ', error);
+      });
+  };
 
   const handleFechaInicioChange = (e) => {
     setFechaInicio(e.target.value);
@@ -59,12 +83,12 @@ const PaginaPrincipalCamion = () => {
 
   const handleFiltrarClick = () => {
     setLoading(true);
-  
+
     const params = {
       fechaInicio: formatDate(fechaInicio),
       fechaFin: formatDate(fechaFin),
     };
-  
+
     axios.get(`http://localhost:8080/filtro/${camion.matricula}`, { params })
       .then(response => {
         console.log(response.data);
@@ -77,13 +101,13 @@ const PaginaPrincipalCamion = () => {
         setLoading(false);
       });
   };
-  
+
   // Función para formatear la fecha a 'YYYY-MM-DD'
   const formatDate = (date) => {
     const formattedDate = new Date(date).toISOString().split('T')[0];
     return formattedDate;
   };
-  
+
 
   return (
     <Layout>
@@ -157,41 +181,41 @@ const PaginaPrincipalCamion = () => {
                 </>
               )}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '20px' }}>
-              <div style={{ display: 'flex', marginBottom: '10px' }}>
-                <TextField
-                  label="Fecha de inicio"
-                  type="date"
-                  value={fechaInicio}
-                  onChange={handleFechaInicioChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    style: { fontSize: '10px', marginRight: '10px' }, // Ajusta el tamaño de fuente y el margen
-                  }}
-                />
-                <TextField
-                  label="Fecha de fin"
-                  type="date"
-                  value={fechaFin}
-                  onChange={handleFechaFinChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    style: { fontSize: '10px' },
-                  }}
-                />
+                <div style={{ display: 'flex', marginBottom: '10px' }}>
+                  <TextField
+                    label="Fecha de inicio"
+                    type="date"
+                    value={fechaInicio}
+                    onChange={handleFechaInicioChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      style: { fontSize: '10px', marginRight: '10px' }, // Ajusta el tamaño de fuente y el margen
+                    }}
+                  />
+                  <TextField
+                    label="Fecha de fin"
+                    type="date"
+                    value={fechaFin}
+                    onChange={handleFechaFinChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      style: { fontSize: '10px' },
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleFiltrarClick}
+                  disabled={loading}
+                >
+                  Filtrar
+                </Button>
               </div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleFiltrarClick}
-                disabled={loading}
-              >
-                Filtrar
-              </Button>
-            </div>
             </div>
           </div>
 
