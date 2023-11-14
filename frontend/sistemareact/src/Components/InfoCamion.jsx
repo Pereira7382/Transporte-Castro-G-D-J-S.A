@@ -234,7 +234,7 @@ const PaginaPrincipalCamion = () => {
               <br></br>
               <br></br>
               <br></br>
-              <br></br><br></br><br></br>
+              <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
                 {/* Botón de ver detalles */}
                 <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
                       Ver Detalles
@@ -252,7 +252,7 @@ const PaginaPrincipalCamion = () => {
               <br></br>
               <br></br>
               <br></br>
-              <br></br><br></br><br></br>
+              <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
                {/* Botón de ver detalles */}
                <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
