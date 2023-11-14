@@ -11,7 +11,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SpeedIcon from '@mui/icons-material/Speed';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import axios from 'axios';
-import Button from '@mui/material/Button';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -176,10 +176,7 @@ const PaginaPrincipalCamion = () => {
                     </Typography>
                   </div>
                   <br></br>
-                  {/* Botón de ver detalles */}
-                  <Button variant="contained" color="primary" onClick={handleVerDetalles}>
-                      Ver Detalles
-                  </Button>
+                 
 
                 </>
               )}
@@ -218,6 +215,11 @@ const PaginaPrincipalCamion = () => {
               >
                 Filtrar
               </Button>
+              <br></br>
+               {/* Botón de ver detalles */}
+               <Button variant="contained" color="primary" onClick={handleVerDetalles}>
+                      Ver Detalles
+               </Button>
             </div>
             </div>
           </div>
