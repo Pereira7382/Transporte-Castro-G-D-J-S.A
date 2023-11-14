@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../Asset/Css/fondo.css'; // Archivo de estilos CSS para el fondo gris
 
+
 const ComboBox = () => {
   const opciones = ['Primer mes', 'Segundo mes', 'Tercer mes', 'Cuarto mes', 'Quinto mes'];
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');

@@ -108,7 +108,7 @@ const PaginaPrincipalCamion = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="container-principal" style={{ marginBottom: '100px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
           <LocalShippingIcon sx={{ fontSize: 40, marginRight: '10px', color: 'blue' }} />
           <Typography variant="h4" component="h1">
