@@ -135,16 +135,12 @@ const ComboBox = () => {
 
 const getColorForOption = (opcion) => {
   switch (opcion) {
-    case 'Primer mes':
-      return '#00FF00'; // Verde
-    case 'Segundo mes':
-      return '#FFC0CB'; // Rosado
-    case 'Tercer mes':
-      return '#FFFF00'; // Amarillo
-    case 'Cuarto mes':
-      return '#87CEEB'; // Celeste
-    case 'Quinto mes':
-      return '#FFA07A'; // Salmón
+    case 'Litros consumidos':
+      return 'lightgreen'; // Amarillo
+    case 'Kilometros Recorridos':
+      return 'lightgreen'; // Azul
+    case 'Litros por kilometro':
+      return 'lightgreen'; // Verde
     default:
       return '#ccc'; // Color por defecto
   }
