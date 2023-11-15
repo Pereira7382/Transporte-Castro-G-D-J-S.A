@@ -18,6 +18,7 @@ import ModalRellenos from './ModalRellenos';
 import axios from 'axios';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import Tooltip from '@mui/material/Tooltip';
 
@@ -276,7 +277,7 @@ const PaginaPrincipalCamion = () => {
                 <Button
                   variant="text"
                   color="primary"
-                  startIcon={<VisibilityIcon />}
+                  startIcon={<ManageAccountsIcon />}
                   onClick={handleVerDetalles}
                 />
               </Tooltip>
@@ -363,18 +364,14 @@ const PaginaPrincipalCamion = () => {
 
                 </>
               )}
-              Estadisticas
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+             
+             
               {/* Botón de ver detalles */}
               <Tooltip title="Ver más detalles">
                 <Button
                   variant="text"
                   color="primary"
-                  startIcon={<VisibilityIcon />}
+                  startIcon={<ManageAccountsIcon />}
                   onClick={handleVerDetallesAceite}
                 />
               </Tooltip>
@@ -443,7 +440,7 @@ const PaginaPrincipalCamion = () => {
                 <Button
                   variant="text"
                   color="primary"
-                  startIcon={<VisibilityIcon />}
+                  startIcon={<ManageAccountsIcon />}
                   onClick={handleVerDetallesLlnata}
                 />
               </Tooltip>

@@ -91,6 +91,9 @@ public class LogicaGastoLlanta {
 
         int x = kilometrajeActual - kilometrajeAlCambioActual;
         
+        if(kilometrajeAlCambioActual==0){
+            return 0;
+        }
         if(vidaLLantas==0){
         return 0;
         }else if(x==0){
