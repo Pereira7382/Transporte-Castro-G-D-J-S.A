@@ -51,9 +51,12 @@ public class LogicaCalculos {
         double totalLitros = (double) litrosConsumidos(gasto);
         double kmRecorridos = (double) kmRecorridos(gasto);
 
-        System.out.println("\n total de litos : " + totalLitros
-                + " / kmrecorridos : " + kmRecorridos + " total lix 1000km : " + totalLitros / kmRecorridos * 1000);
-        return totalLitros / kmRecorridos * 1000;
+        if (kmRecorridos != 0.0) {
+            System.out.println("\n total de litos : " + totalLitros
+                    + " / kmrecorridos : " + kmRecorridos + " total lix 1000km : " + totalLitros / kmRecorridos * 1000);
+            return totalLitros / kmRecorridos * 1000;
+        }
+        return 0;
     }
 
     public int kmRestantes(GastoAceite gasto) {

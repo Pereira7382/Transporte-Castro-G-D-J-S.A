@@ -44,5 +44,13 @@ public class LogicaGastoAceite {
     public int obtenerKilometrajeActualPorMantenimiento(int mantenimiento){
         return data.obtenerKilometrajeActualPorMantenimiento(mantenimiento);
     }
+    
+    public List<RellenoAceite> listarRellenos(){
+        return data.listarRellenos();
+    }
+    
+    public boolean actualizarRelleno(int id, RellenoAceite relleno){
+        return data.actualizarRelleno(id, relleno);
+    }
 
 }

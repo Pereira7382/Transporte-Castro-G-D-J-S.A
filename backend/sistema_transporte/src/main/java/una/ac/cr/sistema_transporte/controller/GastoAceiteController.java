@@ -1,5 +1,6 @@
 package una.ac.cr.sistema_transporte.controller;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,9 @@ public class GastoAceiteController {
         //creo los datos qe voy a regresar al cliente
         DatosMantAceite datos = new DatosMantAceite();
 
+        //envio la lista de rellenos dentro de los datos
+        datos.setListaRellenos(ultimoGasto.getRellenos());
+        
         //obtenemos la fecha de ultimo mantenimiento
         datos.setFecha(ultimoGasto.getFecha());
 
@@ -92,22 +96,34 @@ public class GastoAceiteController {
 
         //gasto total del mantenimiento tomando encuenta todos los rellenos realizados
         datos.setGastoTotal(logicaC.gastoTotal(ultimoGasto));
-        
+
         //gasto por kilometro recorrido
         datos.setCostoXkm(logicaC.costoPorKm(ultimoGasto));
-        
+
         //litros de aceites consumidos por km recorrido
         datos.setConsXkm(logicaC.ltXkm(ultimoGasto));
-        
+
         // kilometros recorridos 
         datos.setKmRecorridos(logicaC.kmRecorridos(ultimoGasto));
-        
+
         // kilometros restantes 
         datos.setKmRestantes(logicaC.kmRestantes(ultimoGasto));
-        
+
         datos.setCaducidad(ultimoGasto.getAceite().getDuracion());
         
-        System.out.println(" datos calculados: " + datos.toString());
+        //enviamos la cantidad de rellenos que se han realizado
+        
+        datos.setRellenos(ultimoGasto.getRellenos().size());
+        
+
+        // Redondear los valores double a tres decimales
+        // Redondear los valores double a tres decimales
+        DecimalFormat df = new DecimalFormat("#.###");
+
+        datos.setGastoTotal(Double.parseDouble(df.format(logicaC.gastoTotal(ultimoGasto)).replace(",", ".")));
+        datos.setCostoXkm(Double.parseDouble(df.format(logicaC.costoPorKm(ultimoGasto)).replace(",", ".")));
+        datos.setConsXkm(Double.parseDouble(df.format(logicaC.ltXkm(ultimoGasto)).replace(",", ".")));
+
         return datos;
 
     }

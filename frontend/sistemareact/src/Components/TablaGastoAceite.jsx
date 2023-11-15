@@ -8,8 +8,7 @@ import ModalInsertarGastoA from "./ModalInsertarGastoA";
 import jsPDF from "jspdf";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Button } from '@mui/material';
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import EditIcon from '@mui/icons-material/EditOutlined';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
@@ -27,13 +26,13 @@ const TablaGastoAceite = ({ lista }) => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              handleEliminar(id);
-              Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
-            
+                handleEliminar(id);
+                Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success');
+
             }
-          });
+        });
     };
 
     const [idMantenimiento, setIdMantenimiento] = useState(null);
@@ -173,6 +172,16 @@ const TablaGastoAceite = ({ lista }) => {
                                     data-bs-target="#modalInsertarGastoA"
                                 >
                                     <FaPlus />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip arrow placement="right" title="Rellenos">
+                                <IconButton
+                                    size="small"
+                                    color="success"
+                                    component={Link}
+                                    to="/admin-relleno"
+                                >
+                                    {<LocalDrinkIcon style={{ color: 'red' }} />}
                                 </IconButton>
                             </Tooltip>
                         </Box>

@@ -224,4 +224,49 @@ public class DataGastoAceite extends DataBase {
         return listaRellenos;
     }
 
+    public LinkedList<RellenoAceite> listarRellenos() {
+        LinkedList<RellenoAceite> listaRellenos = new LinkedList<>();
+        Connection connection = getConexion();
+
+        String query = "SELECT * FROM relleno_aceite";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                RellenoAceite relleno = new RellenoAceite();
+                relleno.setId(resultSet.getInt(ID));
+                relleno.setId_mantenimiento(resultSet.getInt("mantenimiento"));
+                relleno.setCantidad(resultSet.getDouble("cantidad"));
+                relleno.setMonto(resultSet.getInt("monto"));
+                relleno.setObservaciones(resultSet.getString("observaciones"));
+                relleno.setKm_momento(resultSet.getInt("km_momento_relleno"));
+                relleno.setFecha(resultSet.getDate(FECHA));
+                listaRellenos.add(relleno);
+            }
+        } catch (SQLException e) {
+            System.out.println("\n error encontrado: " + e.toString());
+        }
+
+        return listaRellenos;
+    }
+
+    public boolean actualizarRelleno(int id, RellenoAceite relleno) {
+        try {
+            Connection cn = getConexion();
+            String query = "UPDATE relleno_aceite SET cantidad = ?, monto = ?, observaciones = ? WHERE id = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setDouble(1, relleno.getCantidad());
+            preparedStatement.setInt(2, relleno.getMonto());
+            preparedStatement.setString(3, relleno.getObservaciones());
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("\n error encontrado : " + e.toString());
+            return false;
+        }
+    }
+
 }

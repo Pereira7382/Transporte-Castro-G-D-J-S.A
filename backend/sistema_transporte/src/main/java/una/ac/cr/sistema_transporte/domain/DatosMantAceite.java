@@ -2,8 +2,10 @@
 package una.ac.cr.sistema_transporte.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class DatosMantAceite{
+    private int id_mantenimiento;
     private Date fecha;
     private int ltConsumidos;
     private double costoXkm;
@@ -11,7 +13,9 @@ public class DatosMantAceite{
     private double consXkm;
     private int litros;
     private int kmRecorridos;
+    private List<RellenoAceite> listaRellenos;
     private int kmRestantes;
+    private int rellenos;
     int caducidad;
 
     public int getCaducidad() {
@@ -21,8 +25,14 @@ public class DatosMantAceite{
     public void setCaducidad(int caducidad) {
         this.caducidad = caducidad;
     }
-    
-    
+
+    public int getRellenos() {
+        return rellenos;
+    }
+
+    public void setRellenos(int rellenos) {
+        this.rellenos = rellenos;
+    }
     
 
     public Date getFecha() {
@@ -100,6 +110,22 @@ public class DatosMantAceite{
 
     public void setGastoTotal(double gastoTotal) {
         this.gastoTotal = gastoTotal;
+    }
+
+    public int getId_mantenimiento() {
+        return id_mantenimiento;
+    }
+
+    public void setId_mantenimiento(int id_mantenimiento) {
+        this.id_mantenimiento = id_mantenimiento;
+    }
+
+    public List<RellenoAceite> getListaRellenos() {
+        return listaRellenos;
+    }
+
+    public void setListaRellenos(List<RellenoAceite> listaRellenos) {
+        this.listaRellenos = listaRellenos;
     }
     
     @Override

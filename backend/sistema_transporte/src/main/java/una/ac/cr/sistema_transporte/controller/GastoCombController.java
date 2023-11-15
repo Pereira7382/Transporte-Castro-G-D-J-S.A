@@ -77,19 +77,23 @@ public class GastoCombController {
         }
 
         // tengo los datos principales, comienzo a calcular los datos estadisticos
-        ltXkm = totalLitros / totalKm;
+        if(totalKm<=0){
+            ltXkm = 0;
+        }else{
+            ltXkm = totalLitros / totalKm;
+        }
         montoXkm = totalMonto / totalKm;
 
         // Formatear los valores double a 3 decimales
         DecimalFormat df = new DecimalFormat("#.###");
 
-// Tener en cuenta que se debe usar el formato para cada campo que contenga un valor double
+        // Tener en cuenta que se debe usar el formato para cada campo que contenga un valor double
         ltXkm = Double.parseDouble(df.format(totalLitros / totalKm).replace(',', '.'));
         montoXkm = Double.parseDouble(df.format(totalMonto / totalKm).replace(',', '.'));
 
         DatosConsumoComb datos = new DatosConsumoComb(totalKm, totalLitros, ltXkm, totalMonto, montoXkm);
 
-        datos.imprimirInfo();
+        //datos.imprimirInfo();
 
         return datos;
 
