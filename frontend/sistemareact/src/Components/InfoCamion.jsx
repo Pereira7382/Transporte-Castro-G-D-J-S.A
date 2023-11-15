@@ -9,7 +9,12 @@ import OpacityIcon from '@mui/icons-material/Opacity';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SpeedIcon from '@mui/icons-material/Speed';
+import EventIcon from '@mui/icons-material/Event';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import SearchIcon from '@mui/icons-material/Search';
+import ModalRellenos from './ModalRellenos';
 import axios from 'axios';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -21,14 +26,27 @@ const PaginaPrincipalCamion = () => {
   const { id } = useParams();
   const [camion, setCamion] = useState(null);
   const [datosConsumo, setDatosConsumo] = useState(null);
+  const [datosAceite, setDatosAceite] = useState(null);
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [datosLlantas, setDatosLLantas] = useState(null);
 
   const navigate = useNavigate();
 
- 
+  useEffect(() => {
+    obtenerCamion();
+
+  }, [id]);
+
+  useEffect(() => {
+    if (camion?.matricula) {
+      obtenerConsComb();
+      obtenerConsAceite();
+      obtenerConsLlantas();
+    }
+  }, [camion]);
 
   const obtenerCamion = () => {
     axios.get(`http://localhost:8080/camion/${id}`)
@@ -41,33 +59,57 @@ const PaginaPrincipalCamion = () => {
       });
   };
 
-  useEffect(() => {
-    obtenerCamion();
-  }, [id]);
 
-  useEffect(() => {
-    if (camion?.matricula) {
-      // Solicitar datos de consumo de combustible al servidor
-      axios.get(`http://localhost:8080/gastoCombustible/${camion.matricula}`)
-        .then(response => {
-          console.log(response.data);
-          setDatosConsumo(response.data);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de consumo de combustible: ', error);
-        });
-  
-      // Solicitar datos de consumo de llantas al servidor
-      axios.get(`http://localhost:8080/gastoLlanta/${camion.matricula}`)
-        .then(response => {
-          console.log(response.data);
-          setDatosLLantas(response.data);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de consumo de llantas: ', error);
-        });
-    }
-  }, [camion]);
+  const obtenerConsComb = () => {
+    // Solicitar datos de consumo de combustible al servidor
+    axios.get(`http://localhost:8080/gastoCombustible/${camion.matricula}`)
+      .then(response => {
+        console.log(response.data);
+        setDatosConsumo(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de consumo de combustible: ', error);
+      });
+  };
+
+  const obtenerConsAceite = () => {
+    //solicitar datos de consumo de aceite al servidor 
+    axios.get(`http://localhost:8080/gastoAceite/${camion.matricula}`)
+      .then(response => {
+        console.log(response.data);
+        setDatosAceite(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de consumo de aceite: ', error);
+      });
+  };
+
+  const obtenerConsLlantas = () => {
+    axios.get(`http://localhost:8080/gastoLlanta/${camion.matricula}`)
+      .then(response => {
+        console.log(response.data);
+        setDatosLLantas(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de consumo de llantas: ', error);
+      });
+  };
+
+  const handleVerDetalles = () => {
+    //para redirijir a ver los datelles del combustible
+    navigate('/info-combustible');
+
+  };
+  const handleVerDetallesLlnata = () => {
+    //para redirijir a ver los datelles del combustible
+
+    navigate('/info-llanta');
+  };
+  const handleVerDetallesAceite = () => {
+    //para redirijir a ver los datelles del combustible
+
+    navigate('/info-aceite');
+  };
 
   const handleFechaInicioChange = (e) => {
     setFechaInicio(e.target.value);
@@ -79,12 +121,12 @@ const PaginaPrincipalCamion = () => {
 
   const handleFiltrarClick = () => {
     setLoading(true);
-  
+
     const params = {
       fechaInicio: formatDate(fechaInicio),
       fechaFin: formatDate(fechaFin),
     };
-  
+
     axios.get(`http://localhost:8080/filtro/${camion.matricula}`, { params })
       .then(response => {
         console.log(response.data);
@@ -97,38 +139,19 @@ const PaginaPrincipalCamion = () => {
         setLoading(false);
       });
   };
-  
+
   // Función para formatear la fecha a 'YYYY-MM-DD'
   const formatDate = (date) => {
     const formattedDate = new Date(date).toISOString().split('T')[0];
     return formattedDate;
   };
-  
-  const handleVerDetalles = () => {
-   //para redirijir a ver los datelles del combustible
-    navigate('/info-combustible');
-   
-  };
-  const handleVerDetallesLlnata = () => {
-    //para redirijir a ver los datelles del combustible
-    
-     navigate('/info-llanta');
-   };
-   const handleVerDetallesAceite = () => {
-    //para redirijir a ver los datelles del combustible
-    
-     navigate('/info-aceite');
-   };
- 
+
 
   return (
     <Layout>
-      <div className="container-principal" style={{ marginBottom: '100px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-          <LocalShippingIcon sx={{ fontSize: 40, marginRight: '10px', color: 'blue' }} />
-          <Typography variant="h4" component="h1">
-            {camion ? ` ${camion.matricula}` : 'Cargando...'}
-          </Typography>
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '30px' }}>
+
         </div>
 
         <div className="grid-container">
@@ -140,9 +163,21 @@ const PaginaPrincipalCamion = () => {
 
             <div className="contenido">
               {camion ? (
-                <Typography variant="body1">
-                  <SpeedIcon style={{ fontSize: 20, verticalAlign: 'middle', marginRight: 5 }} /> {camion.kilometraje}
-                </Typography>
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <LocalShippingIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Matricula: {camion.matricula} .
+                    </Typography>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Rodaje: {camion.kilometraje} km.
+                    </Typography>
+                  </div>
+
+                </>
               ) : (
                 'Cargando...'
               )}
@@ -157,14 +192,14 @@ const PaginaPrincipalCamion = () => {
               {datosConsumo && (
                 <>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <LocalGasStationIcon style={{ fontSize: '20px', marginRight: '5px', color: 'blue' }} />
+                    <LocalGasStationIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       Lts consumidos: {datosConsumo.litrosConsumidos}
                     </Typography>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'green' }} />
+                    <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       Km recorridos: {datosConsumo.kmRecorrido}
                     </Typography>
@@ -178,82 +213,151 @@ const PaginaPrincipalCamion = () => {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
+                    <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       por km: {datosConsumo.gastoPorKm}
                     </Typography>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <LocalGasStationIcon style={{ fontSize: '20px', marginRight: '5px', color: 'red' }} />
+                    <LocalGasStationIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       Lts por km: {datosConsumo.promLitKm}
                     </Typography>
                   </div>
                   <br></br>
-                 
+
 
                 </>
               )}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '20px' }}>
-              <div style={{ display: 'flex', marginBottom: '10px' }}>
-                <TextField
-                  label="Fecha de inicio"
-                  type="date"
-                  value={fechaInicio}
-                  onChange={handleFechaInicioChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    style: { fontSize: '10px', marginRight: '10px' }, // Ajusta el tamaño de fuente y el margen
-                  }}
-                />
-                <TextField
-                  label="Fecha de fin"
-                  type="date"
-                  value={fechaFin}
-                  onChange={handleFechaFinChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    style: { fontSize: '10px' },
-                  }}
-                />
+                <div style={{ display: 'flex', marginBottom: '10px' }}>
+                  <TextField
+                    label="inicio"
+                    type="date"
+                    value={fechaInicio}
+                    onChange={handleFechaInicioChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      style: { fontSize: '10px', marginRight: '4px', width: '55px' }, // Ajusta el tamaño de fuente, el margen y el ancho
+                    }}
+                  />
+                  <TextField
+                    label="fin"
+                    type="date"
+                    value={fechaFin}
+                    onChange={handleFechaFinChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      style: { fontSize: '10px', width: '55px' }, // Ajusta el tamaño de fuente y el ancho
+                    }}
+                  />
+                  <Button
+                    onClick={handleFiltrarClick}
+                    disabled={loading}
+                    startIcon={<SearchIcon />}
+                    style={{ fontSize: '12px', minWidth: '20px', padding: '6px', marginLeft: '10px' }}
+                  >
+                  </Button>
+                </div>
+                <Button variant="contained" color="primary" onClick={handleVerDetalles}>
+                  Ver Detalles
+                </Button>
               </div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleFiltrarClick}
-                disabled={loading}
-              >
-                Filtrar
-              </Button>
-              <br></br>
-               {/* Botón de ver detalles */}
-               <Button variant="contained" color="primary" onClick={handleVerDetalles}>
-                      Ver Detalles
-               </Button>
-            </div>
+
             </div>
           </div>
 
           <div className="grid-item">
             <OpacityIcon fontSize="large" sx={{ color: 'purple' }} />
-            <div> Consumo de aceites</div>
-
+            <div> Mantenimiento de aceite</div>
             <div className="contenido">
+              {datosAceite && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <EventIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Fecha : {datosAceite.fecha}
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <HourglassEmptyIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Caducidad {datosAceite.caducidad} km.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Recorridos {datosAceite.kmRecorridos} km.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <TimelineIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Restantes {datosAceite.kmRestantes} km.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <OpacityIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Aceite consumido {datosAceite.ltConsumidos} lts.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <OpacityIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      x Km {datosAceite.consXkm} lts.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Total invertido {datosAceite.gastoTotal} ₡.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Costo por km {datosAceite.costoXkm} ₡.
+                    </Typography>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <OpacityIcon style={{ fontSize: '20px', marginRight: '5px', color: 'purple' }} />
+                    <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
+                      Cantidad: {datosAceite.rellenos}
+                      <Button onClick={() => setOpenModal(!openModal)}>
+                        <VisibilityIcon />
+                      </Button>
+                      <ModalRellenos listaRellenos={datosAceite.listaRellenos} handleClose={() => setOpenModal(false)} open={openModal} />
+
+                    </Typography>
+                  </div>
+
+                </>
+              )}
               Estadisticas
               <br></br>
               <br></br>
               <br></br>
               <br></br>
               <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-                {/* Botón de ver detalles */}
-                <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
-                      Ver Detalles
-                  </Button>
+              {/* Botón de ver detalles */}
+              <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
+                Ver Detalles
+              </Button>
             </div>
           </div>
 
@@ -261,12 +365,12 @@ const PaginaPrincipalCamion = () => {
             <DriveEtaIcon fontSize="large" sx={{ color: 'purple' }} />
             <div>Rodaje de llantas</div>
 
-            
+
             <div className="contenido" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {datosLlantas && (
                 <>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                  <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
+                    <MonetizationOnIcon style={{ fontSize: '20px', marginRight: '5px', color: 'orange' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       Total gasto: {datosLlantas.totalGastosParaCamion}
                     </Typography>
@@ -275,7 +379,7 @@ const PaginaPrincipalCamion = () => {
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                     <SpeedIcon style={{ fontSize: '20px', marginRight: '5px', color: 'green' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
-                     Gasto x KM: {datosLlantas.promedioGastoPorKilometro}
+                      Gasto x KM: {datosLlantas.promedioGastoPorKilometro}
                     </Typography>
                   </div>
 
@@ -287,7 +391,7 @@ const PaginaPrincipalCamion = () => {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                    <DriveEtaIcon  style={{ fontSize: '20px', marginRight: '5px', color: 'blue' }} />
+                    <DriveEtaIcon style={{ fontSize: '20px', marginRight: '5px', color: 'blue' }} />
                     <Typography variant="body1" style={{ fontSize: '16px', color: 'black' }}>
                       Llantas Remplazadas: {datosLlantas.cantidadRemplazo}
                     </Typography>
@@ -301,30 +405,30 @@ const PaginaPrincipalCamion = () => {
                   </div>
                 </>
               )}
-              
-              
-            
-            </div>
-           
-             
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
-               {/* Botón de ver detalles */}
-               <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
-                      Ver Detalles
-              </Button>
-            
+
+
+            </div>
+
+
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+
+            {/* Botón de ver detalles */}
+            <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
+              Ver Detalles
+            </Button>
+
           </div>
 
-          
-          
+
+
         </div>
       </div>
-    </Layout>
+    </Layout >
   );
 };
 

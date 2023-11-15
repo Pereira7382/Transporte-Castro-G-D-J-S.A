@@ -1,8 +1,5 @@
 package una.ac.cr.sistema_transporte.controller;
-
-import java.sql.Date;
 import java.text.DecimalFormat;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,15 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import una.ac.cr.sistema_transporte.Logica.LogicaGastoComb;
 import una.ac.cr.sistema_transporte.domain.GastoCombustible;
-
 import java.util.Calendar;
 import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import una.ac.cr.sistema_transporte.domain.DatosConsumoComb;
 
 @Controller
@@ -61,6 +54,7 @@ public class GastoCombController {
     @GetMapping("/{matricula}")
     @ResponseBody
     public DatosConsumoComb obtenerGastosCPorId(@PathVariable String matricula) {
+
         //aqui lo que ocupo retornar no es los gastos en si, sino una estructura que 
         // tenga los datos de consumo del camion calculados es decir suma de kilometros recorridos
         // en el intervalo de tiempo, suma de litros de combustible consumidos en el intervalo de tiempo
@@ -83,39 +77,39 @@ public class GastoCombController {
         }
 
         // tengo los datos principales, comienzo a calcular los datos estadisticos
-        ltXkm = totalLitros / totalKm;
+        if(totalKm<=0){
+            ltXkm = 0;
+        }else{
+            ltXkm = totalLitros / totalKm;
+        }
         montoXkm = totalMonto / totalKm;
 
         // Formatear los valores double a 3 decimales
         DecimalFormat df = new DecimalFormat("#.###");
 
-// Tener en cuenta que se debe usar el formato para cada campo que contenga un valor double
+        // Tener en cuenta que se debe usar el formato para cada campo que contenga un valor double
         ltXkm = Double.parseDouble(df.format(totalLitros / totalKm).replace(',', '.'));
         montoXkm = Double.parseDouble(df.format(totalMonto / totalKm).replace(',', '.'));
 
         DatosConsumoComb datos = new DatosConsumoComb(totalKm, totalLitros, ltXkm, totalMonto, montoXkm);
 
-        datos.imprimirInfo();
+        //datos.imprimirInfo();
 
         return datos;
 
     }
     
-    
-    
     @GetMapping
     @ResponseBody
     public List<GastoCombustible> listarGastosCombustible() {
-          
         return logica.obtenerGastosCamionConProveedor();
     }
     
-      @DeleteMapping("/{id}/{matricula}")
+    @DeleteMapping("/{id}/{matricula}")
     @ResponseBody
     public boolean eliminarGastoCombustible(@PathVariable int id, @PathVariable String matricula) {
         return logica.eliminarGastosCombustible(id, matricula);
     }
-
     
     
 }

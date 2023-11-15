@@ -19,6 +19,7 @@ import ValidarAcceso from './Components/ValidarAcceso';
 import AdminLlanta from './Components/AdminLlanta';
 import AdminAceite from './Components/AdminAceite';
 import InfoCamion from './Components/InfoCamion';
+import AdminRelleno from './Components/AdminRellenos';
 import CombustibleDetallado from './Components/CombustibleDetallado';
 import InfoRodajeLlanta from './Components/InfoRodajeLlanta';
 import InfoConsumoAceite from './Components/InfoConsumoAceite';
@@ -116,15 +117,19 @@ function App() {
             path="/admin-gastosL"
             element={<Seguridad element={<GastoLlanta />} />}
           />
-           <Route
+          <Route
             path="/admin-llanta"
             element={<Seguridad element={<AdminLlanta />} />}
           />
-            <Route
+          <Route
             path="/admin-aceite"
             element={<Seguridad element={<AdminAceite />} />}
           />
-          
+          <Route
+            path="/admin-relleno"
+            element={<Seguridad element={<AdminRelleno />} />}
+          />
+
           <Route
             path="/info-camion/:id"
             element={<Seguridad element={<InfoCamion />} />}

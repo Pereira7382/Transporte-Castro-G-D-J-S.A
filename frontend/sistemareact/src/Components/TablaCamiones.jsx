@@ -21,7 +21,6 @@ const TablaCamiones = ({ lista }) => {
   const [camiones, setCamiones] = useState(lista);
 
   const conectarConApp = (id) => {
-    console.log("Conectando con la app para el camión con ID:", id);
     window.location.href = `/info-camion/${id}`;
   };
 
@@ -172,7 +171,7 @@ const TablaCamiones = ({ lista }) => {
               </Button>
             </Box>
           )}
-          renderTopToolbarCustomActions={({ table }) => (
+          renderTopToolbarCustomActions={({ }) => (
             <Box
               sx={{
                 display: "flex",

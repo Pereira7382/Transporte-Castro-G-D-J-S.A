@@ -29,8 +29,6 @@ public class GastoAceitesController {
     @GetMapping
     @ResponseBody
     public List<GastosAceite> listarGastosAceite() {
-        System.out.println("LLEGÓ");
-          
         return logica.obtenerGastoAceite();
     }
     
