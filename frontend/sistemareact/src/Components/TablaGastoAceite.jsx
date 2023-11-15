@@ -14,6 +14,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import ModalRellenoAceite from "./ModalRellenoAceite";
 
+
 const TablaGastoAceite = ({ lista }) => {
     const [gastos, setGastos] = useState(lista);
 
@@ -52,6 +53,8 @@ const TablaGastoAceite = ({ lista }) => {
         });
         doc.save("tabla_Gastos_Cambio_Acite.pdf");
     };
+
+    
 
     const handleEliminar = (id) => {
         fetch(`http://localhost:8080/gastoAceite/${id}`, {

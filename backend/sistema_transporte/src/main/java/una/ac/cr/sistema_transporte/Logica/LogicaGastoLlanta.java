@@ -76,21 +76,28 @@ public class LogicaGastoLlanta {
     public int vidaUtilRestanteLLantas(String MatriculaCamion) {
 
         int kilometrajeActual = data.obtenerKilometrajePorMatricula(MatriculaCamion);
+        System.out.println("kilometraje actual: " + kilometrajeActual );
         int vidaLLantas = 0;
         int kilometrajeAlCambioActual = 0;
         LinkedList<GastoLlanta> gastos = obtenerGastoLlanta();
         for (GastoLlanta gasto : gastos) {
             if (gasto.getMatriculaCamion().equals(MatriculaCamion)) {
                 vidaLLantas = gasto.getDuracion();
+                System.out.println("vida de llantas:" + vidaLLantas);
                 kilometrajeAlCambioActual = gasto.getKmCamion();
-
+                System.out.println("kilemetraje al momento del cambio de llantas:"+kilometrajeAlCambioActual);
             }
         }
 
+        int x = kilometrajeActual - kilometrajeAlCambioActual;
+        
         if(vidaLLantas==0){
         return 0;
+        }else if(x==0){
+        return vidaLLantas;
         }
-        return vidaLLantas - (kilometrajeActual - kilometrajeAlCambioActual);
+        
+        return  vidaLLantas - (kilometrajeActual - kilometrajeAlCambioActual);
 
     }
 
