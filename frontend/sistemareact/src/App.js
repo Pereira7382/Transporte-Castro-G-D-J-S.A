@@ -20,6 +20,10 @@ import AdminLlanta from './Components/AdminLlanta';
 import AdminAceite from './Components/AdminAceite';
 import InfoCamion from './Components/InfoCamion';
 import AdminRelleno from './Components/AdminRellenos';
+import CombustibleDetallado from './Components/CombustibleDetallado';
+import InfoRodajeLlanta from './Components/InfoRodajeLlanta';
+import InfoConsumoAceite from './Components/InfoConsumoAceite';
+
 
 export const AuthContext = React.createContext();
 
@@ -129,6 +133,18 @@ function App() {
           <Route
             path="/info-camion/:id"
             element={<Seguridad element={<InfoCamion />} />}
+          />
+            <Route
+            path="/info-combustible"
+            element={<Seguridad element={<CombustibleDetallado />} />}
+          />
+            <Route
+            path="/info-llanta"
+            element={<Seguridad element={<InfoRodajeLlanta />} />}
+          />
+            <Route
+            path="/info-aceite"
+            element={<Seguridad element={<InfoConsumoAceite />} />}
           />
 
         </Routes>

@@ -107,11 +107,12 @@ const ModalInsertarGastoL = () => {
             return;
         }
 
-        const { id_camion, id_llanta, monto, numero_factura } = formData;
+        const { id_camion, id_llanta, monto, numero_factura, kilometrajeAnterior} = formData;
         const dataToSend = {
             id_camion,
             id_llanta,
             monto,
+            kilometrajeAnterior,
             numero_factura
         };
 

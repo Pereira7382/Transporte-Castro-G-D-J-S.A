@@ -20,7 +20,7 @@ p {
 
 .grid-item {
   width: 300px;
-  height: 400px;
+  height: 470px;
   border: 2px solid rgba(51, 51, 51, 0); /* Cambia el valor de opacidad aquí */
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ p {
   align-items: center;
   text-align: left; /* Alineación del texto a la izquierda */
   border-radius: 20px;
-  background-color: #f9f9f9;
+  background-color: #3d3b3b28;
   font-size: 1.2em;
   font-weight: bold;
   padding: 0 20px; /* Agrega un poco de margen a los lados */

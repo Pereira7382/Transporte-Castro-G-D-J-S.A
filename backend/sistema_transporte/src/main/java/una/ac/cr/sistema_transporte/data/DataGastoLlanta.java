@@ -14,6 +14,7 @@ public class DataGastoLlanta extends DataBase{
     public final static String FACTURA = "numero_factura";
     public final static String MONTO = "monto";
     public final static String FECHA = "fecha";
+    public final static String KILOMETRAJEALMOMENTO="kilometrajeAlMomento";
     public final static String ID_CAMION = "id_camion";
     public final static String ID_LLANTA = "id_llanta";
     public final static String ESTADO = "estado";
@@ -21,14 +22,15 @@ public class DataGastoLlanta extends DataBase{
     public boolean agregar(GastoLlanta gasto) {
         try {
             Connection cn = getConexion();
-            String query = "INSERT INTO " + TABLAGASTOSLLANTA + " (" + FACTURA + ", " + MONTO + ", " + FECHA + ", " + ID_CAMION + ", " + ID_LLANTA + ", " + ESTADO + ") VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLAGASTOSLLANTA + " (" + FACTURA + ", " + MONTO + ", " + FECHA + ", " + ID_CAMION + ", " + ID_LLANTA + ", " + KILOMETRAJEALMOMENTO + ", " + ESTADO + ") VALUES (?, ?, ?, ?, ?,?, ?)";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             preparedStatement.setString(1, gasto.getNumero_factura());
             preparedStatement.setDouble(2, gasto.getMonto());
             preparedStatement.setDate(3, new java.sql.Date(gasto.getFecha().getTime()));
             preparedStatement.setInt(4, gasto.getId_camion());
             preparedStatement.setInt(5, gasto.getId_llanta());
-            preparedStatement.setString(6,String.valueOf( gasto.getEstado()));
+            preparedStatement.setInt(6,gasto.getKilometrajeAnterior());
+            preparedStatement.setInt(7,gasto.getEstado());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -41,7 +43,7 @@ public class DataGastoLlanta extends DataBase{
         LinkedList<GastoLlanta> lista = new LinkedList<>();
         try {
             Connection cn = getConexion();
-            String query = "SELECT g.id, g.estado, g.numero_factura, g.monto, C.matricula, P.contacto, ll.marca, C.kilometraje, ll.duracion, g.fecha FROM gasto_rodaje_llantas as g INNER JOIN tb_camion C ON C.id = g.id_camion INNER JOIN llanta ll ON ll.id = g.id_llanta INNER JOIN proveedor P ON P.id_proveedor = ll.id_proveedor WHERE g.estado = 1";
+            String query = "SELECT g.id, g.estado, g.numero_factura, g.monto,g.kilometrajeAlMomento, C.matricula, P.contacto, ll.marca, ll.duracion, g.fecha FROM gasto_rodaje_llantas as g INNER JOIN tb_camion C ON C.id = g.id_camion INNER JOIN llanta ll ON ll.id = g.id_llanta INNER JOIN proveedor P ON P.id_proveedor = ll.id_proveedor WHERE g.estado = 1";
             PreparedStatement preparedStatement = cn.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -53,7 +55,7 @@ public class DataGastoLlanta extends DataBase{
                 gasto.setMatriculaCamion(rs.getString("matricula"));
                 gasto.setNombreProveedor(rs.getString("contacto"));
                 gasto.setMarcaLlanta(rs.getString("marca"));
-                gasto.setKmCamion(rs.getInt("kilometraje"));
+                gasto.setKmCamion(rs.getInt(KILOMETRAJEALMOMENTO));
                 gasto.setDuracion(rs.getInt("duracion"));
                 gasto.setFecha(rs.getDate("fecha"));
                 lista.add(gasto);
@@ -79,5 +81,25 @@ public class DataGastoLlanta extends DataBase{
             e.printStackTrace();
             return false;
         }
+        
+        }
+        
+
+    public int obtenerKilometrajePorMatricula(String matriculaCamion) {
+        int kilometraje = 0;
+        try {
+            Connection cn = getConexion();
+            String query = "SELECT " + "kilometraje" + " FROM " + "tb_camion" + " WHERE " + "matricula" + " = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(query);
+            preparedStatement.setString(1, matriculaCamion);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                kilometraje = rs.getInt("kilometraje");
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió un error al obtener el kilometraje del camión con matrícula " + matriculaCamion);
+        }
+        return kilometraje;
     }
+
 }
