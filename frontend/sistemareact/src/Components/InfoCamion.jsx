@@ -19,6 +19,9 @@ import axios from 'axios';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TimelineIcon from '@mui/icons-material/Timeline';
 
+import Tooltip from '@mui/material/Tooltip';
+
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -185,9 +188,12 @@ const PaginaPrincipalCamion = () => {
           </div>
 
           <div className="grid-item">
+          <Tooltip title="Se muestra el calculo del consumo del combistible a detalle">
             <LocalGasStationIcon fontSize="large" sx={{ color: 'purple' }} />
-            <div>Consumo de combustible</div>
+            </Tooltip>
 
+            <div>Consumo de combustible</div>
+            
             <div className="contenido" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {datosConsumo && (
                 <>
@@ -264,16 +270,25 @@ const PaginaPrincipalCamion = () => {
                   >
                   </Button>
                 </div>
-                <Button variant="contained" color="primary" onClick={handleVerDetalles}>
-                  Ver Detalles
-                </Button>
+                
+                <br></br>
+                <Tooltip title="Ver más detalles">
+                <Button
+                  variant="text"
+                  color="primary"
+                  startIcon={<VisibilityIcon />}
+                  onClick={handleVerDetalles}
+                />
+              </Tooltip>
               </div>
 
             </div>
           </div>
 
           <div className="grid-item">
+          <Tooltip title="Se muestra el calculo del consumo del aceite a detalle">
             <OpacityIcon fontSize="large" sx={{ color: 'purple' }} />
+            </Tooltip>
             <div> Mantenimiento de aceite</div>
             <div className="contenido">
               {datosAceite && (
@@ -355,14 +370,22 @@ const PaginaPrincipalCamion = () => {
               <br></br>
               <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
               {/* Botón de ver detalles */}
-              <Button variant="contained" color="primary" onClick={handleVerDetallesAceite}>
-                Ver Detalles
-              </Button>
+              <Tooltip title="Ver más detalles">
+                <Button
+                  variant="text"
+                  color="primary"
+                  startIcon={<VisibilityIcon />}
+                  onClick={handleVerDetallesAceite}
+                />
+              </Tooltip>
+             
             </div>
           </div>
 
           <div className="grid-item">
+          <Tooltip title="Se muestra la estadistica de las llantas a detalle">
             <DriveEtaIcon fontSize="large" sx={{ color: 'purple' }} />
+            </Tooltip>
             <div>Rodaje de llantas</div>
 
 
@@ -411,16 +434,20 @@ const PaginaPrincipalCamion = () => {
             </div>
 
 
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+            
+            
+            <br></br><br></br><br></br><br></br><br></br>
 
             {/* Botón de ver detalles */}
-            <Button variant="contained" color="primary" onClick={handleVerDetallesLlnata}>
-              Ver Detalles
-            </Button>
+            <Tooltip title="Ver más detalles">
+                <Button
+                  variant="text"
+                  color="primary"
+                  startIcon={<VisibilityIcon />}
+                  onClick={handleVerDetallesLlnata}
+                />
+              </Tooltip>
+           
 
           </div>
 

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../Asset/Css/fondo.css'; // Archivo de estilos CSS para el fondo gris
+import Layout from '../Components/Layout/Layout';
 import fondo from '../Asset/images/fondo.webp';
 
 const ComboBox = () => {
 
   
 
-  const opciones = ['Primer mes', 'Segundo mes', 'Tercer mes', 'Cuarto mes', 'Quinto mes'];
+  const opciones = ['Primer mes', 'Segundo mes', 'Tercer mes'];
   const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
   const [opcionesEspecificas, setOpcionesEspecificas] = useState([]);
 
@@ -20,15 +21,14 @@ const ComboBox = () => {
       case 'Primer mes':
         setOpcionesEspecificas([
           { tipo: 'Litros consumidos', valor: '100', icono: 'fas fa-gas-pump', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Kilometros Recorridos', valor: '500', icono: 'fas fa-road', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Litros por kilometro', valor: '0.2', icono: 'fas fa-tachometer-alt', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
+          
         ]);
         break;
       case 'Segundo mes':
         setOpcionesEspecificas([
           { tipo: 'Litros consumidos', valor: '120', icono: 'fas fa-gas-pump', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
           { tipo: 'Kilometros Recorridos', valor: '600', icono: 'fas fa-road', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Litros por kilometro', valor: '0.2', icono: 'fas fa-tachometer-alt', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
+         
         ]);
         break;
       case 'Tercer mes':
@@ -38,26 +38,14 @@ const ComboBox = () => {
           { tipo: 'Litros por kilometro', valor: '0.2', icono: 'fas fa-tachometer-alt', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
         ]);
         break;
-      case 'Cuarto mes':
-        setOpcionesEspecificas([
-          { tipo: 'Litros consumidos', valor: '90', icono: 'fas fa-gas-pump', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Kilometros Recorridos', valor: '450', icono: 'fas fa-road', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Litros por kilometro', valor: '0.2', icono: 'fas fa-tachometer-alt', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-        ]);
-        break;
-      case 'Quinto mes':
-        setOpcionesEspecificas([
-          { tipo: 'Litros consumidos', valor: '110', icono: 'fas fa-gas-pump', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Kilometros Recorridos', valor: '550', icono: 'fas fa-road', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-          { tipo: 'Litros por kilometro', valor: '0.2', icono: 'fas fa-tachometer-alt', dato1: 'Dato1', dato2: 'Dato2', dato3: 'Dato3', dato4: 'Dato4', dato5: 'Dato5' },
-        ]);
-        break;
+      
       default:
         setOpcionesEspecificas([]);
     }
   };
 
   return (
+    <Layout>
     <div className="page-container" style={{ position: 'relative' }}>
 
       <img src={fondo} alt="Camión de carga número 1" />
@@ -65,8 +53,8 @@ const ComboBox = () => {
       <div style={{ zIndex: 1 }}>
        
         <div>
-      <h1 style={{ color: 'purple', fontFamily: 'Arial, sans-serif', fontSize: '2em', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '20px' }}>Análisis de Consumo de Llanta</h1>
-      <label htmlFor="opciones" style={{ marginRight: '10px', fontSize: '1.2em', fontWeight: 'bold', color: 'purple' }}>Mes que desea filtrar: </label>
+      <h1 style={{ color: 'white', fontFamily: 'Arial, sans-serif', fontSize: '2em', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '20px' }}>Análisis de Consumo de Llanta</h1>
+      <label htmlFor="opciones" style={{ marginRight: '10px', fontSize: '1.2em', fontWeight: 'bold', color: 'white' }}>Mes que desea filtrar: </label>
       <select
         id="opciones"
         onChange={handleSeleccion}
@@ -80,7 +68,7 @@ const ComboBox = () => {
           </option>
         ))}
       </select>
-      {opcionSeleccionada && <p style={{ color: 'purple', marginTop: '90px', fontSize: '1.2em', fontWeight: 'bold' }}>Análisis de consumo de llanta del {opcionSeleccionada}</p>}
+      {opcionSeleccionada && <p style={{ color: 'white', marginTop: '90px', fontSize: '1.2em', fontWeight: 'bold' }}>Análisis de consumo de llanta del {opcionSeleccionada}</p>}
 
       {opcionesEspecificas.length > 0 && (
         <div>
@@ -144,7 +132,7 @@ const ComboBox = () => {
   
     </div>
 
-
+    </Layout>
 
   );
 };
