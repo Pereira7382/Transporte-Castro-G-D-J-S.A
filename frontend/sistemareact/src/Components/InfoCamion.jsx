@@ -36,11 +36,15 @@ const PaginaPrincipalCamion = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    obtenerCamion();
+
+  }, [id]);
+
+  useEffect(() => {
     if (camion?.matricula) {
       obtenerConsComb();
       obtenerConsAceite();
       obtenerConsLlantas();
-      obtenerCamion();
     }
   }, [camion]);
 
